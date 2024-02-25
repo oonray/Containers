@@ -1,10 +1,6 @@
-FROM kalilinux/kali-rolling:latest
+FROM oonray/kali:v1.1.43
 
 RUN apt-get update
-
-RUN apt-get install -y nmap curl gobuster
-
-RUN cp /etc/skel/.zshrc /root/ &&\
-    chsh -s /bin/zsh
+RUN apt-get install -y openvpn
 
 WORKDIR /root
