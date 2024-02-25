@@ -2,8 +2,7 @@ FROM kalilinux/kali-rolling:latest
 
 RUN apt-get update 
 
-RUN apt-get install -y nmap \
-    netcat git curl  
+RUN apt-get install -y nmap git curl  
 
 RUN apt-get install -y \
     python3 python3-pip python2 pass ruby openssh-server \
