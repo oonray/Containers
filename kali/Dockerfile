@@ -5,10 +5,9 @@ RUN apt-get update && \
 
 RUN apt-get install -y nmap \
     netcat-traditional \
-    git curl wget \
-    golang gcc 
+    git curl wget  
 
-RUN apt-get install -y nmap \
+RUN apt-get install -y \
     python3 python3-pip python2 pass ruby openssh-server \
     zsh zsh-syntax-highlighting zsh-autosuggestions \
     exploitdb radare2 gobuster ffuf smbmap sqlmap 
