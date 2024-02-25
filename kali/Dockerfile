@@ -5,8 +5,8 @@ RUN apt-get update && \
 
 RUN apt-get install -y nmap \
     netcat-traditional \
-    git nginx curl wget \
-    golang gcc apt-transport-https 
+    git curl wget \
+    golang gcc 
 
 RUN apt-get install -y nmap \
     python3 python3-pip python2 pass ruby openssh-server \
