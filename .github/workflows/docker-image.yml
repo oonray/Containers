@@ -14,5 +14,7 @@ jobs:
 
     steps:
     - uses: actions/checkout@v4
-    - name: Build the Docker image
-      run: docker build kali --file Dockerfile --tag oonray/kali:$(date +%s)
+    - name: Build the kali Docker image
+      run: docker build .\kali\ --file .\kali\Dockerfile --tag oonray/kali:$(date +%s)
+    - name: Build the vpn Docker image
+      run: docker build .\vpn\ --file .\vpn\Dockerfile --tag oonray/vpn:$(date +%s)
