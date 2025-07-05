@@ -1,0 +1,50 @@
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: guacamole-service
+  namespace: guacamole-ns
+spec:
+  selector:
+    app: guacamole
+  ports:
+    - name: http
+      port: 8080
+      targetPort: http
+  type: ClusterIP
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: guacd-service
+  namespace: guacamole-ns
+spec:
+  selector:
+    app: guacd
+  ports:
+    - name: guacd
+      port: 4822
+      targetPort: guacd
+  type: ClusterIP
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: ext-mariadb
+  namespace: guacamole-ns
+spec:
+ ports:
+    - protocol: TCP
+      port: 3306
+      targetPort: 3306
+---
+apiVersion: v1
+kind: Endpoints
+metadata:
+  name: ext-mariadb
+  namespace: guacamole-ns
+subsets:
+  - addresses:
+     - ip: # IP external MYSQL SERVER
+    ports:
+     - port: 3306

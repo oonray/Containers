@@ -1,0 +1,12 @@
+resources:
+- deployment.yaml
+- deployment.yaml
+- ingress.yaml
+- namespace.yaml
+- service.yaml
+
+configMapGenerator:
+- name: guacamole-config
+  namespace: guacamole-ns
+  files:
+  - guacamole.properties

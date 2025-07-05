@@ -1,0 +1,69 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: guacd
+  namespace: guacamole-ns
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: guacd
+  template:
+    metadata:
+      labels:
+        app: guacd
+    spec:
+      containers:
+        - name: guacd
+          image: guacamole/guacd
+          ports:
+            - name: guacd
+              containerPort: 4822
+          env:
+            - name: GUACD_LOG_LEVEL
+              value: "info"
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: guacamole
+  namespace: guacamole-ns
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: guacamole
+  template:
+    metadata:
+      labels:
+        app: guacamole
+    spec:
+      containers:
+        - name: guacamole
+          image: guacamole/guacamole
+          ports:
+            - name: http
+              containerPort: 8080
+          env:
+            - name: GUACAMOLE_HOME
+              value: /config
+            - name: GUACD_HOSTNAME
+              value: guacd-service.guacamole-ns.svc.cluster.local
+            - name: GUACD_PORT
+              value: "4822"
+            - name: MYSQL_HOSTNAME
+              value: ext-mariadb.guacamole-ns.svc.cluster.local
+            - name: MYSQL_DATABASE
+              value: guacamole
+            - name: MYSQL_USER
+              value: guacamole
+            - name: MYSQL_PASSWORD
+              value: guacamole
+          volumeMounts:
+            - name: config-volume
+              mountPath: /config
+      volumes:
+        - name: config-volume
+          configMap:
+            name: guacamole-config
+

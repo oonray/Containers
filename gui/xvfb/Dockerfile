@@ -1,0 +1,4 @@
+FROM comiq/xvfb:latest
+EXPOSE 6001
+ENV DISPLAY=1
+ENV SCREEN=0
