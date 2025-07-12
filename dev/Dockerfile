@@ -14,7 +14,8 @@ exuberant-ctags
 
 #user
 RUN useradd -s /bin/zsh -G sudo -m dev
-RUN mkdir /home/dev/.go
+RUN mkdir -p /home/dev/.go
+RUN mkdir -p /home/dev/.config/nvim/lua/config
 RUN echo "dev ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers.d/dev
 
 ENV APPIMAGE_EXTRACT_AND_RUN=1
@@ -41,14 +42,13 @@ USER dev
 WORKDIR /home/dev
 COPY zsh-config/zshrc .zshrc
 RUN git clone https://github.com/ohmyzsh/ohmyzsh.git .oh-my-zsh
-RUN mkdir /home/dev/.local/share/nvim/workspaces
+RUN mkdir -p /home/dev/.local/share/nvim/workspaces
 
 RUN curl -Lo /tmp/nvm.sh https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.1/install.sh && \
 chmod +x /tmp/nvm.sh && \
 /tmp/nvm.sh
 RUN . "$NVM_DIR/nvm.sh" && nvm install 23 && npm install yarn
 
-RUN mkdir -p .config/nvim/lua/config
 COPY nvim-config/init.lua .config/nvim/init.lua
 COPY nvim-config/config/* .config/nvim/lua/config
 

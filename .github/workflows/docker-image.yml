@@ -26,7 +26,7 @@ jobs:
           context: kali
           push: true
           tags: oonray/kali:latest
-      - name: Build and push vpn
+      - name: Build and push dev
         uses: docker/build-push-action@v6
         with:
           context: dev
@@ -35,7 +35,7 @@ jobs:
       - name: Build and push vpn
         uses: docker/build-push-action@v6
         with:
-          context: dev
+          context: vpn
           push: true
           tags: oonray/vpn:v1.0.0
 
