@@ -6,7 +6,7 @@ RUN apt-get update
 RUN apt-get install -y \
 openvpn dnsutils net-tools proxychains nginx dumb-init \
 socat mitmproxy tmux neovim \
-dante-server wireguard iptables wireguard-tools coredns
+dante-server wireguard iptables wireguard-tools
 
 COPY danted.conf /etc/danted.conf
 
