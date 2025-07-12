@@ -1,7 +1,9 @@
-FROM oonray/kali:v1.1.43
+FROM kalilinux/kali-rolling:latest
 
 RUN apt-get update
-RUN apt-get install -y openvpn mitmproxy \
-python3 python3-pip
+RUN apt-get install -y \
+curl mitmproxy tmux \
+python3 python3-pip dumb-init net-tools dnsutils netcat nmap \
+git jq curl zsh sudo zip tar
 
 WORKDIR /root
