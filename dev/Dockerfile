@@ -13,7 +13,7 @@ python3 python3-venv python3-pip \
 exuberant-ctags lua-check
 
 #user
-RUN useradd -s /bin/zsh -G sudo -m dev
+RUN useradd -s /usr/bin/zsh -G sudo -m dev
 RUN echo "dev ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers.d/dev
 
 ENV APPIMAGE_EXTRACT_AND_RUN=1
@@ -33,6 +33,9 @@ RUN curl -Lo /tmp/rustup.sh https://sh.rustup.rs && \
 chmod +x /tmp/rustup.sh && \
 /tmp/rustup.sh -y
 
+COPY entrypoint.sh /home/dev/entrypoint.sh
+RUN chmod +x /home/dev/entrypoint.sh
+RUN chown dev /home/dev/entrypoint.sh
 
 USER dev
 WORKDIR /home/dev
@@ -43,9 +46,9 @@ ENV PATH="$PATH:/home/dev/.nvm:$GOROOT/bin:$GOPATH/bin"
 
 RUN mkdir -p /home/dev/.go
 RUN mkdir -p /home/dev/.config/nvim/lua/config/
-RUN mkdir -p /home/dev/.local/share/nvim/
-#RUN mkdir -p /home/dev/.local/share/nvim/workspaces/
-#RUN mkdir -p /home/dev/.local/share/nvim/sessions/
+RUN mkdir -p /home/dev/.local/share/nvim/workspaces/
+RUN mkdir -p /home/dev/.local/share/nvim/sessions/
+RUN chown -R dev:dev /home/dev
 
 COPY zsh-config/zshrc .zshrc
 RUN git clone https://github.com/ohmyzsh/ohmyzsh.git .oh-my-zsh
@@ -61,4 +64,4 @@ COPY ./nvim-config/lua/config /home/dev/.config/nvim/lua/config
 RUN . "$NVM_DIR/nvm.sh" && nvim --headless -c':Lazy install | sleep 10 | qa'
 #RUN . "$NVM_DIR/nvm.sh" && nvim --headless -c':Mason | I | U | sleep 10 | qa'
 
-CMD /bin/zsh
+ENTRYPOINT ["dumb-init","zsh","-c","/home/dev/entrypoint.sh"]
