@@ -60,3 +60,5 @@ COPY ./nvim-config/lua/config /home/dev/.config/nvim/lua/config
 
 RUN . "$NVM_DIR/nvm.sh" && nvim --headless -c':Lazy install | sleep 10 | qa'
 #RUN . "$NVM_DIR/nvm.sh" && nvim --headless -c':Mason | I | U | sleep 10 | qa'
+
+CMD /bin/zsh
