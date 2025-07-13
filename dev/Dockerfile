@@ -33,14 +33,19 @@ RUN curl -Lo /tmp/rustup.sh https://sh.rustup.rs && \
 chmod +x /tmp/rustup.sh && \
 /tmp/rustup.sh -y
 
-ENV PATH="$PATH:/home/dev/.nvm"
-ENV NVM_DIR="/home/dev/.nvm"
 
 USER dev
 WORKDIR /home/dev
+ENV NVM_DIR="/home/dev/.nvm"
+ENV GOPATH="/home/dev/.go"
+ENV GOROOT="/usr/local/go"
+ENV PATH="$PATH:/home/dev/.nvm:$GOROOT/bin:$GOPATH/bin"
+
 RUN mkdir -p /home/dev/.go
-RUN mkdir -p /home/dev/.config/nvim/lua/config
-RUN mkdir -p /home/dev/.local/share/nvim/workspaces
+RUN mkdir -p /home/dev/.config/nvim/lua/config/
+RUN mkdir -p /home/dev/.local/share/nvim/
+#RUN mkdir -p /home/dev/.local/share/nvim/workspaces/
+#RUN mkdir -p /home/dev/.local/share/nvim/sessions/
 
 COPY zsh-config/zshrc .zshrc
 RUN git clone https://github.com/ohmyzsh/ohmyzsh.git .oh-my-zsh
@@ -53,6 +58,5 @@ RUN . "$NVM_DIR/nvm.sh" && nvm install 23 && npm install yarn
 COPY ./nvim-config/init.lua /home/dev/.config/nvim/init.lua
 COPY ./nvim-config/lua/config /home/dev/.config/nvim/lua/config
 
-RUN nvim --headless +Lazy install +qa
-RUN nvim --headless +Mason install +qa
-#RUN nvim --headless +qa
+RUN . "$NVM_DIR/nvm.sh" && nvim --headless -c':Lazy install | sleep 10 | qa'
+#RUN . "$NVM_DIR/nvm.sh" && nvim --headless -c':Mason | I | U | sleep 10 | qa'
