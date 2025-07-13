@@ -10,13 +10,10 @@ RUN apt-get install -y \
 gcc g++ make bear cmake llvm \
 mingw-w64 mingw-w64-tools build-essential \
 python3 python3-venv python3-pip \
-exuberant-ctags 
+exuberant-ctags lua-check
 
 #user
 RUN useradd -s /bin/zsh -G sudo -m dev
-RUN mkdir -p /home/dev/.go
-RUN mkdir -p /home/dev/.config/nvim/lua/config
-RUN mkdir -p /home/dev/.local/share/nvim/workspaces
 RUN echo "dev ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers.d/dev
 
 ENV APPIMAGE_EXTRACT_AND_RUN=1
@@ -41,6 +38,10 @@ ENV NVM_DIR="/home/dev/.nvm"
 
 USER dev
 WORKDIR /home/dev
+RUN mkdir -p /home/dev/.go
+RUN mkdir -p /home/dev/.config/nvim/lua/config
+RUN mkdir -p /home/dev/.local/share/nvim/workspaces
+
 COPY zsh-config/zshrc .zshrc
 RUN git clone https://github.com/ohmyzsh/ohmyzsh.git .oh-my-zsh
 
@@ -52,5 +53,6 @@ RUN . "$NVM_DIR/nvm.sh" && nvm install 23 && npm install yarn
 COPY ./nvim-config/init.lua /home/dev/.config/nvim/init.lua
 COPY ./nvim-config/lua/config /home/dev/.config/nvim/lua/config
 
-RUN nvim --headless +qa
-#RUN nvim --headless "+Lazy! sync" +qa
+RUN nvim --headless +Lazy install +qa
+RUN nvim --headless +Mason install +qa
+#RUN nvim --headless +qa

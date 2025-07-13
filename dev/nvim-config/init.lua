@@ -5,8 +5,6 @@ local system = require("config.system")
 system:checkOS()
 system:setVars()
 
-vars:osLibs(system:isLinux())
-
 lazy:setup()
 
 local req = require("config.require")

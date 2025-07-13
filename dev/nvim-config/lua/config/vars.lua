@@ -173,10 +173,5 @@ local vars = {
     }
 }
 
-function vars:osLibs(os)
-    if os then
-    	table.insert(self.libs, { 'nvim-telescope/telescope-fzf-native', build = 'cmake -S. -Bbuild -DCMAKE_BUILD_TYPE=Release && cmake --build build --config Release' })
-    end
-end
 
 return vars
