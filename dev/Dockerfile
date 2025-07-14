@@ -4,7 +4,8 @@ RUN apt-get update \
 && apt-get upgrade -y
 
 RUN apt-get install -y \
-fuse3 fd-find ripgrep git jq curl zsh sudo zip tar dumb-init tmux
+fuse3 fd-find ripgrep git jq curl zsh sudo zip tar dumb-init \
+tmux tmuxinator
 
 RUN apt-get install -y \
 gcc g++ make bear cmake llvm \
@@ -16,7 +17,12 @@ exuberant-ctags lua-check
 RUN useradd -s /usr/bin/zsh -G sudo -m dev
 RUN echo "dev ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers.d/dev
 
+#RUN NEOVIM
 ENV APPIMAGE_EXTRACT_AND_RUN=1
+
+#BAT
+RUN curl -Lo /tmp/bat.deb https://github.com/sharkdp/bat/releases/download/v{{ version }}/bat_{{ version }}_amd64.deb && \
+apt install -y /tmp/bat.deb
 
 #NVIM
 RUN curl -Lo /bin/nvim "https://github.com/neovim/neovim/releases/download/`curl https://api.github.com/repos/neovim/neovim/releases/latest | jq -r .tag_name`/nvim-linux-x86_64.appimage"
@@ -37,32 +43,44 @@ COPY entrypoint.sh /home/dev/entrypoint.sh
 RUN chmod +x /home/dev/entrypoint.sh
 RUN chown dev /home/dev/entrypoint.sh
 
+#USER RELATED
 USER dev
 WORKDIR /home/dev
+
+#SET ENV
 ENV NVM_DIR="/home/dev/.nvm"
 ENV GOPATH="/home/dev/.go"
 ENV GOROOT="/usr/local/go"
 ENV PATH="$PATH:/home/dev/.nvm:$GOROOT/bin:$GOPATH/bin"
 
+
+#SET UP ZSH
+COPY zsh-config/zshrc .zshrc
+RUN git clone https://github.com/ohmyzsh/ohmyzsh.git .oh-my-zsh
+
+#NODE
+RUN curl -Lo /tmp/nvm.sh https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.1/install.sh && \
+chmod +x /tmp/nvm.sh && \
+/tmp/nvm.sh
+RUN . "$NVM_DIR/nvm.sh" && nvm install 23 && npm install yarn
+
+#CONFIG
 RUN mkdir -p /home/dev/.go
 RUN mkdir -p /home/dev/.config/nvim/lua/config/
 RUN mkdir -p /home/dev/.local/share/nvim/workspaces/
 RUN mkdir -p /home/dev/.local/share/nvim/sessions/
 RUN chown -R dev:dev /home/dev
 
-COPY zsh-config/zshrc .zshrc
-RUN git clone https://github.com/ohmyzsh/ohmyzsh.git .oh-my-zsh
-
-RUN curl -Lo /tmp/nvm.sh https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.1/install.sh && \
-chmod +x /tmp/nvm.sh && \
-/tmp/nvm.sh
-RUN . "$NVM_DIR/nvm.sh" && nvm install 23 && npm install yarn
-
 COPY ./nvim-config/init.lua /home/dev/.config/nvim/init.lua
 COPY ./nvim-config/lua/config /home/dev/.config/nvim/lua/config
+COPY ./tmux-config/tmux.conf /home/dev/.tmux.conf
 
+#Run nvim init install
 RUN . "$NVM_DIR/nvm.sh" && nvim --headless -c':Lazy install | sleep 10 | qa'
-#RUN . "$NVM_DIR/nvm.sh" && nvim --headless -c':Mason | I | U | sleep 10 | qa'
 
+#Cleanup tmp
+RUN sudo rm -rf /tmp/*
+
+#ENTRYPINT
 ENTRYPOINT ["dumb-init", "--"]
 CMD ["zsh","-c","/home/dev/entrypoint.sh"]
