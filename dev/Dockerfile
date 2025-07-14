@@ -64,4 +64,5 @@ COPY ./nvim-config/lua/config /home/dev/.config/nvim/lua/config
 RUN . "$NVM_DIR/nvm.sh" && nvim --headless -c':Lazy install | sleep 10 | qa'
 #RUN . "$NVM_DIR/nvm.sh" && nvim --headless -c':Mason | I | U | sleep 10 | qa'
 
-ENTRYPOINT ["dumb-init","zsh","-c","/home/dev/entrypoint.sh"]
+ENTRYPOINT ["dumb-init", "--"]
+CMD ["zsh","-c","/home/dev/entrypoint.sh"]

@@ -1,5 +1,4 @@
 #!/usr/bin/zsh
-sudo chown -R dev:dev /home/dev
-cd /home/dev/git
-tmux new -t dev
-
+sudo chown -R dev:dev /home/dev &
+tmux new-session -d -s dev -t dev -c /home/dev
+sleep infinity
