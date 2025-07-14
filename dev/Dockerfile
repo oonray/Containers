@@ -21,8 +21,8 @@ RUN echo "dev ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers.d/dev
 ENV APPIMAGE_EXTRACT_AND_RUN=1
 
 #BAT
-RUN BAT_RELEASE=`curl -L https://github.com/sharkdp/bat/tags | grep -oE ">(*v.*\.*\..*)<" | grep -oE "[0-9]+\.[0-9]+\.[0-9]+" | awk 'NR==1{print $1}'`\
-`curl -Lo /tmp/bat.deb https://github.com/sharkdp/bat/releases/download/$BAT_RELEASE/bat_$BAT_RELEASE_amd64.deb && \
+#curl -L https://github.com/sharkdp/bat/tags | grep -oE '>(*v.*\.*\..*)<\' | grep -oE '[0-9]+\.[0-9]+\.[0-9]+' | awk 'NR==1{print $1}'
+RUN curl -Lo /tmp/bat.deb https://github.com/sharkdp/bat/releases/download/v0.25.0/bat_0.25.0_amd64.deb && \
 apt install -y /tmp/bat.deb
 
 #NVIM
