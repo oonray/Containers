@@ -14,8 +14,9 @@ python3 python3-venv python3-pip \
 exuberant-ctags lua-check
 
 #user
-RUN useradd -s /usr/bin/zsh -G sudo -m dev
-RUN echo "dev ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers.d/dev
+RUN useradd -u 1000 -s /usr/bin/zsh -m dev
+#-G sudo
+#RUN echo "dev ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers.d/dev
 
 #RUN NEOVIM
 ENV APPIMAGE_EXTRACT_AND_RUN=1
@@ -40,13 +41,12 @@ RUN curl -Lo /tmp/rustup.sh https://sh.rustup.rs && \
 chmod +x /tmp/rustup.sh && \
 /tmp/rustup.sh -y
 
-COPY entrypoint.sh /home/dev/entrypoint.sh
-RUN chmod +x /home/dev/entrypoint.sh
-RUN chown dev /home/dev/entrypoint.sh
+COPY entrypoint.sh /opt/entrypoint.sh
 
 #USER RELATED
 USER dev
 WORKDIR /home/dev
+
 
 #SET ENV
 ENV NVM_DIR="/home/dev/.nvm"
@@ -67,21 +67,28 @@ RUN . "$NVM_DIR/nvm.sh" && nvm install 23 && npm install yarn
 
 #CONFIG
 RUN mkdir -p /home/dev/.go
+RUN mkdir -p /home/dev/.config
 RUN mkdir -p /home/dev/.config/nvim/lua/config/
 RUN mkdir -p /home/dev/.local/share/nvim/workspaces/
 RUN mkdir -p /home/dev/.local/share/nvim/sessions/
-RUN chown -R dev:dev /home/dev
 
 COPY ./nvim-config/init.lua /home/dev/.config/nvim/init.lua
 COPY ./nvim-config/lua/config /home/dev/.config/nvim/lua/config
 COPY ./tmux-config/tmux.conf /home/dev/.tmux.conf
 
+COPY ./dircolors /home/dev/.config/dircolors
+
 #Run nvim init install
 RUN . "$NVM_DIR/nvm.sh" && nvim --headless -c':Lazy install | sleep 10 | qa'
 
-#Cleanup tmp
-RUN sudo rm -rf /tmp/*
+#Cleanup
+USER root
+RUN rm -rf /tmp/*
+USER dev
+
+ENV PUID=1000
+ENV PGID=1000
 
 #ENTRYPINT
 ENTRYPOINT ["dumb-init", "--"]
-CMD ["zsh","-c","/home/dev/entrypoint.sh"]
+CMD ["sleep","infinity"]
