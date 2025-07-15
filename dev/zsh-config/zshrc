@@ -1,9 +1,8 @@
 export PATH=/usr/local/sbi:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/snap/bin
 export PATH=$PATH:$HOME/.local/bin/:$HOME/bin
 #zsh
-export ZSH="$HOME/.oh-my-zsh"
 export DISABLE_MAGIC_FUNCTIONS=true #remove auto complete
-source $ZSH/oh-my-zsh.sh
+source /home/dev/.oh-my-zsh/oh-my-zsh.sh
 #golang
 export GOPATH=$HOME/.go
 export GOROOT=/usr/local/go
@@ -58,5 +57,3 @@ alias l='ls -CF'
 eval "$(dircolors -b ~/.config/dircolors)"
 plugins=(git, docker, docker-compose, python, man, nmap, golang, kubectl, sudo, vi-mode)
 bindkey -v #VIM mode
-#bindkey ^R history-incremental-search-backward
-#bindkey ^S history-incremental-search-forward
