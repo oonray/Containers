@@ -69,12 +69,11 @@ alias ll='ls -l'
 alias la='ls -A'
 alias l='ls -CF'
 
-export XAUTHORITY=$HOME/.Xauthority
-
 eval "$(dircolors -b ~/.config/dircolors)"
 
 plugins=(git, docker, docker-compose, python, man, nmap, golang, kubectl, sudo, vi-mode)
 
 bindkey -v #VIM mode
-bindkey ^R history-incremental-search-backward
-bindkey ^S history-incremental-search-forward
+#bindkey ^R history-incremental-search-backward
+#bindkey ^S history-incremental-search-forward
+
