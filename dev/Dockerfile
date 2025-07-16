@@ -84,6 +84,7 @@ RUN . "$NVM_DIR/nvm.sh" && nvim --headless -c':Lazy install | sleep 10 | qa'
 #Cleanup
 USER root
 RUN rm -rf /tmp/*
+RUN chown -R dev /home/dev
 USER dev
 
 ENV PUID=1000
