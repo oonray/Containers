@@ -86,8 +86,8 @@ COPY ./tmux-config/tmux.conf /home/dev/.tmux.conf
 COPY ./dircolors /home/dev/.config/dircolors
 
 #Run nvim init install
-RUN . "$NVM_DIR/nvm.sh" && nvim --headless -c':Lazy install | sleep 10 | qa'
-RUN . "$NVM_DIR/nvm.sh" && nvim --headless -c':sleep 20 | qa'
+RUN zsh -c "nvim --headless -c':Lazy install | sleep 10 | qa'"
+RUN zsh -c "nvim --headless -c':sleep 20 | qa'"
 
 #Cleanup
 USER root
