@@ -11,6 +11,8 @@ export GOROOT=/usr/local/go
 export PATH="$PATH:$GOROOT/bin"
 export PATH="$PATH:$GOPATH/bin"
 
+#rust
+export PATH=$PATH:$HOME/.cargo/bin
 #node 
 export PATH="$PATH:$HOME/.nvm"
 export NVM_DIR="$HOME/.nvm"
@@ -64,4 +66,3 @@ alias l='ls -CF'
 eval "$(dircolors -b ~/.config/dircolors)"
 plugins=(git, docker, docker-compose, python, man, nmap, golang, kubectl, sudo, vi-mode)
 bindkey -v #VIM vi-mode
-
