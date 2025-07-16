@@ -1,0 +1,8 @@
+services:
+  dev:
+    image: oonray/dev:latest
+    restart: unless-stopped
+    volumes:
+      - "F:/git/:/home/dev/git/:rw"
+      - "F:/git/workspaces:/home/dev/.local/share/nvim/workspaces/:rw"
+      - "F:/git/sessions:/home/dev/.local/share/nvim/sessions:rw"
