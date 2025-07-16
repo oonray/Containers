@@ -5,7 +5,8 @@ RUN apt-get update \
 
 RUN apt-get install -y \
 fuse3 fd-find ripgrep git jq curl zsh sudo zip tar dumb-init \
-tmux tmuxinator openssh-server
+tmux tmuxinator
+#openssh-server
 
 RUN apt-get install -y \
 gcc g++ make bear cmake llvm \
@@ -24,11 +25,12 @@ RUN useradd -u 1000 -s /usr/bin/zsh -m dev
 ENV APPIMAGE_EXTRACT_AND_RUN=1
 
 #SSH
-RUN mkdir -p /home/dev/.ssh && \
-echo "sk-ssh-ed25519@openssh.com AAAAGnNrLXNzaC1lZDI1NTE5QG9wZW5zc2guY29tAAAAIGTCxFD2UzUYYWAuDnFzwMmeWsVkPZLNfObG3hJZ4GuKAAAABHNzaDo=" >> /home/dev/authorized_keys
+#RUN mkdir -p /home/dev/.ssh && \
+#echo "sk-ssh-ed25519@openssh.com AAAAGnNrLXNzaC1lZDI1NTE5QG9wZW5zc2guY29tAAAAIGTCxFD2UzUYYWAuDnFzwMmeWsVkPZLNfObG3hJZ4GuKAAAABHNzaDo=" >> /home/dev/authorized_keys
+#EXPOSE 22
 
 #BAT
-#curl -L https://github.com/sharkdp/bat/tags | grep -oE '>(*v.*\.*\..*)<\' | grep -oE '[0-9]+\.[0-9]+\.[0-9]+' | awk 'NR==1{print $1}'
+#export VERSION=`curl -L https://github.com/sharkdp/bat/tags | grep -oE '>(*v.*\.*\..*)<\' | grep -oE '[0-9]+\.[0-9]+\.[0-9]+' | awk 'NR==1{print $1}'`
 RUN curl -Lo /tmp/bat.deb https://github.com/sharkdp/bat/releases/download/v0.25.0/bat_0.25.0_amd64.deb && \
 apt install -y /tmp/bat.deb
 
@@ -97,7 +99,6 @@ USER dev
 ENV PUID=1000
 ENV PGID=1000
 
-EXPOSE 22
 
 #ENTRYPINT
 ENTRYPOINT ["/opt/entrypoint.sh"]
