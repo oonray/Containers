@@ -13,7 +13,7 @@ gcc g++ make bear cmake llvm \
 mingw-w64 mingw-w64-tools build-essential \
 python3 python3-venv python3-pip \
 exuberant-ctags lua-check \
-gdb file readelf nm ps
+gdb
 
 RUN apt-get autoremove && apt-get clean
 
