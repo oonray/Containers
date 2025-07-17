@@ -12,7 +12,8 @@ RUN apt-get install -y \
 gcc g++ make bear cmake llvm \
 mingw-w64 mingw-w64-tools build-essential \
 python3 python3-venv python3-pip \
-exuberant-ctags lua-check
+exuberant-ctags lua-check \
+gdb file readelf nm ps
 
 RUN apt-get autoremove && apt-get clean
 
@@ -88,6 +89,7 @@ COPY ./dircolors /home/dev/.config/dircolors
 #Run nvim init install
 RUN zsh -c "nvim --headless -c':Lazy install | sleep 10 | qa'"
 RUN zsh -c "nvim --headless -c':sleep 20 | qa'"
+RUN zsh -c "$(curl -fsSL https://gef.blah.cat/sh)"
 
 #Cleanup
 USER root
