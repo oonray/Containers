@@ -3,7 +3,8 @@ name: Docker image Kali
 on:
   push:
     paths:
-      - kali/**
+      - 'kali/*'
+      - 'kali/**'
 
 jobs:
   build_kali:

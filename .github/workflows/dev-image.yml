@@ -3,7 +3,9 @@ name: Docker image Dev
 on:
   push:
     paths:
-      - dev
+      - 'dev/*'
+      - 'dev/**'
+      - '!dev/compose/**'
 
 jobs:
   build_dev:

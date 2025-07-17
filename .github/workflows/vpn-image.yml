@@ -3,7 +3,8 @@ name: Docker image VPN
 on:
   push:
     paths:
-      - vpn/**
+      - 'vpn/*'
+      - 'vpn/**'
 
 jobs:
   build_dev:
