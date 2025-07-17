@@ -3,6 +3,7 @@ name: Docker image Dev
 on:
   push:
     paths:
+      - '.github/workflows/dev-image.yml'
       - 'dev/*'
       - 'dev/**'
       - '!dev/compose/**'

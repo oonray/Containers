@@ -3,6 +3,7 @@ name: Docker image Kali
 on:
   push:
     paths:
+      - '.github/workflows/kali-image.yml'
       - 'kali/*'
       - 'kali/**'
 
