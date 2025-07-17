@@ -51,6 +51,12 @@ RUN curl -sSf https://sh.rustup.rs | sh -s -- -y
 COPY entrypoint.sh /opt/entrypoint.sh
 RUN chmod +x /opt/entrypoint.sh
 
+#gf2
+RUN git clone https://github.com/nakst/gf.git /tmp/gf2
+WORKDIR /tmp/gf2
+RUN ./build.sh
+RUN cp ./gf2 /usr/bin
+
 #USER RELATED
 USER dev
 WORKDIR /home/dev
