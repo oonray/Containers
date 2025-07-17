@@ -6,7 +6,10 @@ curl mitmproxy tmux \
 python3 python3-pip dumb-init net-tools dnsutils netcat-traditional nmap \
 git jq curl zsh sudo zip tar
 
-COPY zsh-config/zshrc .zshrc
 RUN usermod --shell /usr/bin/zsh root
+
+WORKDIR /root
+COPY zsh-config/zshrc .zshrc
+COPY tmux-config/tmux.conf .tmux.conf
 
 WORKDIR /root
