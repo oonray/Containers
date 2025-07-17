@@ -48,8 +48,8 @@ rm /tmp/go.tar.gz
 #RUST
 RUN curl -sSf https://sh.rustup.rs | sh -s -- -y
 
-COPY entrypoint.sh /opt/entrypoint.sh
-RUN chmod +x /opt/entrypoint.sh
+#COPY entrypoint.sh /opt/entrypoint.sh
+#RUN chmod +x /opt/entrypoint.sh
 
 #USER RELATED
 USER dev
@@ -96,11 +96,9 @@ RUN rm -rf /tmp/*
 RUN chown -R dev /home/dev
 USER dev
 
-
 ENV PUID=1000
 ENV PGID=1000
 
-
 #ENTRYPINT
-ENTRYPOINT ["/opt/entrypoint.sh"]
+ENTRYPOINT ["dumb-init","--"]
 CMD ["sleep","infinity"]
