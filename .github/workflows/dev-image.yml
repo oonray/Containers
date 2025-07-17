@@ -3,7 +3,7 @@ name: Docker image Dev
 on:
   push:
     paths:
-      - dev/**
+      - dev
 
 jobs:
   build_dev:
