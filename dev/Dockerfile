@@ -76,8 +76,7 @@ RUN . "$NVM_DIR/nvm.sh" && nvm install 23 && npm install yarn
 RUN mkdir -p /home/dev/.go
 RUN mkdir -p /home/dev/.config
 RUN mkdir -p /home/dev/.config/nvim/lua/config/
-RUN mkdir -p /home/dev/.local/share/nvim/workspaces/
-RUN mkdir -p /home/dev/.local/share/nvim/sessions/
+RUN mkdir -p /home/dev/.local/share/nvim/ws/worskpaces/
 
 COPY ./nvim-config/init.lua /home/dev/.config/nvim/init.lua
 COPY ./nvim-config/lua/config /home/dev/.config/nvim/lua/config

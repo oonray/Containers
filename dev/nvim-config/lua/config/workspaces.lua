@@ -1,5 +1,5 @@
 return {
-    path =  vim.fn.stdpath("data") .. "/workspaces",
+    path =  vim.fn.stdpath("data") .. "/ws/workspaces",
     mru_sort = true,
     auto_open = true,
     auto_dir = true,

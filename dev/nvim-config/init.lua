@@ -116,7 +116,7 @@ req.tls.tls.setup{
 -- sessions
 req.sess.setup({
     events = vars.events.sessions,
-    session_filepath = vim.fn.stdpath("data") .. "/sessions",
+    session_filepath = vim.fn.stdpath("data") .. "/ws/sessions",
     absolute = true,
 })
 -- Workspaces
