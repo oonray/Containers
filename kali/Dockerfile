@@ -6,7 +6,7 @@ curl mitmproxy tmux dumb-init \
 kali-linux-headless \
 python3 python3-pip \
 net-tools dnsutils netcat-traditional proxychains socat nmap \
-git jq curl zsh sudo zip tar\
+git jq curl zsh sudo zip tar \
 mitmproxy responder peass
 
 RUN usermod --shell /usr/bin/zsh root
