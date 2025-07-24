@@ -1,11 +1,14 @@
 #!/usr/bin/dumb-init /bin/bash
-cp /opt/dante/proxy_danted.conf /etc/danted.conf
+set -xe
 
-export DCONF=/opt/dante/proxy_danted.conf
-export DWORKERS=3
-export DPID=/run/dante.pid
+export VPN_DEV=$(cat /opt/vpn/| grep dev | awk '{print $2}')
+export DANTED_CONF=/etc/danted/danted.conf
 
-[ -s "/opt/vpn/vpn.ovpn" ] && export DCONF=/opt/dante/vpn_danted.conf
-[ -s "/etc/danted.conf" ] && sockd -f $DCONF -p $DPID -N $DWORKERS
-[ -s "/opt/vpn/vpn.ovpn" ] && openvpn /opt/vpn/vpn.ovpn #&
-#disown -r
+if [ -s $VPNF ] then
+    openvpn $VPNF --dev "${VPN_DEV}0" &
+    cat $DANCFG | sed 's/external:.*/external: ${VPN_DEV}0/g' | tee $DANTED_CONF
+else
+    cp $DANCFG $DANTED_CONF
+fi
+#sockd -f $DANTED_CONF -p $DPID -N $DWORKERS &
+disown -r
