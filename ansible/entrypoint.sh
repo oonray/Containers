@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/dumb-init /bin/bash
 if [ -d "/opt/ssh" ]; then
     cp /opt/ssh/* ~/.ssh
     chmod 400 ~/.ssh/id_rsa

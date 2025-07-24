@@ -3,13 +3,12 @@ name: Docker image Dev
 on:
   push:
     paths:
-      - '.github/workflows/dev-image.yml'
       - 'dev/*'
       - 'dev/**'
       - '!dev/compose/**'
 
 jobs:
-  build_dev:
+  build:
     runs-on: ubuntu-latest
     steps:
       - name: Login to Docker Hub

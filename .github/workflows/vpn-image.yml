@@ -3,12 +3,11 @@ name: Docker image VPN
 on:
   push:
     paths:
-      - '.github/workflows/vpn-image.yml'
       - 'vpn/*'
       - 'vpn/**'
 
 jobs:
-  build_dev:
+  build:
     runs-on: ubuntu-latest
     steps:
       - name: Login to Docker Hub

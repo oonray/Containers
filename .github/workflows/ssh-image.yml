@@ -1,10 +1,10 @@
-name: Docker image Kali
+name: Docker image ssh
 
 on:
   push:
     paths:
-      - 'kali/*'
-      - 'kali/**'
+      - 'ssh/*'
+      - 'ssh/**'
 
 jobs:
   build:
@@ -24,6 +24,6 @@ jobs:
       - name: Build and push kali
         uses: docker/build-push-action@v6
         with:
-          context: kali
+          context: ssh
           push: true
-          tags: oonray/kali:latest
+          tags: oonray/ssh:lates
