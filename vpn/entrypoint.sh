@@ -8,7 +8,7 @@ if [ -s $VPNF ] then
     openvpn $VPNF --dev "${VPN_DEV}0" &
     cat $DANCFG | sed 's/external:.*/external: ${VPN_DEV}0/g' | tee $DANTED_CONF
 else
-    cp $DANCFG $DANTED_CONF
+    cp $DANCFG | tee $DANTED_CONF
 fi
 #sockd -f $DANTED_CONF -p $DPID -N $DWORKERS &
 disown -r
