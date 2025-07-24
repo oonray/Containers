@@ -12,3 +12,4 @@ fi
 
 service danted start || true
 disown -r
+sleep infinity
