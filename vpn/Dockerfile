@@ -16,7 +16,8 @@ RUN chmod +x /opt/entrypoint.sh
 ENV VPNDIR=/opt/vpn
 ENV VPNF=${VPNDIR}/vpn.ovpn
 
-ENV DANCFG=/opt/dante/dated.conf
+ENV DANTECFG=/etc/danted.conf
+ENV DANCFG=/opt/dante/danted.conf
 ENV DANPID=/run/danted.pid
 ENV WORKERS=3
 
