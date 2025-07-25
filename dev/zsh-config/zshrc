@@ -3,6 +3,7 @@ export PATH=$PATH:$HOME/.local/bin/:$HOME/bin
 
 #zsh
 export DISABLE_MAGIC_FUNCTIONS=true #remove auto complete
+plugins=(git docker docker-compose python man nmap golang kubectl sudo vi-mode)
 source /home/dev/.oh-my-zsh/oh-my-zsh.sh
 
 #golang
@@ -13,6 +14,7 @@ export PATH="$PATH:$GOPATH/bin"
 
 #rust
 export PATH=$PATH:$HOME/.cargo/bin
+. "$HOME/.cargo/env"
 #node 
 export PATH="$PATH:$HOME/.nvm"
 export NVM_DIR="$HOME/.nvm"
@@ -64,5 +66,4 @@ alias la='ls -A'
 alias l='ls -CF'
 
 eval "$(dircolors -b ~/.config/dircolors)"
-plugins=(git, docker, docker-compose, python, man, nmap, golang, kubectl, sudo, vi-mode)
 bindkey -v #VIM vi-mode
