@@ -13,7 +13,7 @@ gcc g++ make bear cmake llvm \
 mingw-w64 mingw-w64-tools build-essential \
 python3 python3-venv python3-pip \
 exuberant-ctags lua-check \
-gdb swig aspnetcore-runtime-9.0 dotnet-sdk-9.0
+gdb swig 
 
 RUN apt-get autoremove && apt-get clean
 
@@ -50,6 +50,11 @@ RUN curl -sSf https://sh.rustup.rs | sh -s -- -y
 
 #COPY entrypoint.sh /opt/entrypoint.sh
 #RUN chmod +x /opt/entrypoint.sh
+
+#dotnet
+RUN curl -Lo /tmp/dotnet.deb https://packages.microsoft.com/config/debian/12/packages-microsoft-prod.deb && \
+apt install -y /tmp/dotnet.deb && \
+apt-get install -y aspnetcore-runtime-9.0 dotnet-sdk-9.0
 
 #USER RELATED
 USER dev

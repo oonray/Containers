@@ -19,5 +19,8 @@ COPY zsh-config/zshrc .zshrc
 COPY tmux-config/tmux.conf .tmux.conf
 COPY dircolors ~/.config/dircolors
 
+ENV PUID=1000
+ENV PGID=1000
+
 ENTRYPOINT [ "dumb-init", "--" ]
 CMD [ "sleep","infinity" ]
