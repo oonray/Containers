@@ -15,9 +15,11 @@ RUN echo "dev ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers.d/kali
 
 USER kali
 WORKDIR /home/kali
-COPY zsh-config/zshrc .zshrc
-COPY tmux-config/tmux.conf .tmux.conf
-COPY dircolors ~/.config/dircolors
+COPY zsh-config/zshrc /home/kali.zshrc
+RUN git clone https://github.com/ohmyzsh/ohmyzsh.git /home/kali/.oh-my-zsh
+
+COPY tmux-config/tmux.conf /home/kali/.tmux.conf
+COPY dircolors /home/kali/.config/dircolors
 
 ENV PUID=1000
 ENV PGID=1000
