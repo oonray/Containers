@@ -54,6 +54,7 @@ RUN curl -sSf https://sh.rustup.rs | sh -s -- -y
 #dotnet
 RUN curl -Lo /tmp/dotnet.deb https://packages.microsoft.com/config/debian/12/packages-microsoft-prod.deb && \
 apt install -y /tmp/dotnet.deb && \
+apt-get update && \
 apt-get install -y aspnetcore-runtime-9.0 dotnet-sdk-9.0
 
 #USER RELATED
