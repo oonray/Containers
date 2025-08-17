@@ -4,7 +4,7 @@ RUN apt-get update && \
 apt-get install -y \
 openvpn dnsutils net-tools proxychains dumb-init \
 socat netcat-traditional nmap \
-dante-server
+dante-server iproute2 vim
 
 RUN mkdir /opt/dante/
 
