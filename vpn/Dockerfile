@@ -1,4 +1,4 @@
-FROM debian:latest
+FROM ubunut:latest
 
 RUN apt-get update
 RUN apt-get install -y \
