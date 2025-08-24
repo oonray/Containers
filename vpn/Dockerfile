@@ -1,6 +1,6 @@
 FROM ubuntu:latest
 
-RUN apt-get update && apt-get upgrade
+RUN apt-get update
 RUN apt-get install -y dumb-init openvpn dnsutils net-tools
 RUN apt-get install -y proxychains socat netcat-traditional iproute2
 RUN apt-get install -y dante-server
