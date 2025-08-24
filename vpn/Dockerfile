@@ -1,10 +1,9 @@
 FROM debian:latest
 
-RUN apt-get update
-RUN apt-get install -y \
-openvpn dnsutils net-tools proxychains dumb-init \
-socat netcat-traditional nmap \
-iproute2 vim
+RUN apt-get update && apt-get upgrade
+RUN apt-get install -y dumb-init openvpn dnsutils net-tools 
+RUN apt-get install -y proxychains socat netcat-traditional iproute2
+RUN apt-get install -y danted
 RUN apt-get install -y dante-server
 
 COPY entrypoint.sh /opt/entrypoint.sh
