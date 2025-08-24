@@ -4,7 +4,8 @@ RUN apt-get update
 RUN apt-get install -y \
 openvpn dnsutils net-tools proxychains dumb-init \
 socat netcat-traditional nmap \
-dante-server iproute2 vim
+iproute2 vim
+RUN apt-get install -y dante-server
 
 COPY entrypoint.sh /opt/entrypoint.sh
 RUN chmod +x /opt/entrypoint.sh
