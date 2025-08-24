@@ -11,7 +11,7 @@ local lazy = {
 "mfussenegger/nvim-dap","leoluz/nvim-dap-go","rcarriga/nvim-dap-ui","theHamsta/nvim-dap-virtual-text",
 "nvim-neotest/nvim-nio","jay-babu/mason-nvim-dap.nvim","hrsh7th/cmp-buffer","neovim/nvim-lspconfig",
 "hrsh7th/cmp-nvim-lsp","hrsh7th/cmp-buffer","hrsh7th/cmp-path","hrsh7th/cmp-cmdline","hrsh7th/nvim-cmp",
-"glench/vim-jinja2-syntax","universal-ctags/ctags","stevearc/vim-arduino","rhysd/vim-clang-format"
+"glench/vim-jinja2-syntax","universal-ctags/ctags","stevearc/vim-arduino","rhysd/vim-clang-format",
     }
 }
 
