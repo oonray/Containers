@@ -1,6 +1,8 @@
 #!/usr/bin/dumb-init /bin/bash
 set -x
 
+export VPN_DEV=$(cat $VPNF | grep dev | awk '{print $2}')
+
 if [ -s $VPNF ]; then
     /usr/sbin/openvpn $VPNF --dev "${VPN_DEV}0" > $OPIPE &
 fi

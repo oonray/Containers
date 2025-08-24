@@ -1,10 +1,10 @@
-FROM debian:latest
+FROM ubunut:latest
 
-RUN apt-get update && \
-apt-get install -y \
+RUN apt-get update
+RUN apt-get install -y \
 openvpn dnsutils net-tools proxychains dumb-init \
 socat netcat-traditional nmap \
-dante-server
+dante-server iproute2 vim
 
 COPY entrypoint.sh /opt/entrypoint.sh
 RUN chmod +x /opt/entrypoint.sh
