@@ -4,7 +4,7 @@ set -x
 export VPN_DEV=$(cat $VPNF | grep dev | awk '{print $2}')
 
 if [ -s $VPNF ]; then
-    /usr/sbin/openvpn $VPNF --dev "${VPN_DEV}0" > $OPIPE &
+    /usr/sbin/openvpn $VPNF > $OPIPE &
 fi
 
 if [ -s $DANTECFG ]; then
