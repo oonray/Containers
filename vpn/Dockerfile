@@ -1,4 +1,4 @@
-FROM debian:latest
+FROM ubuntu:latest
 
 RUN apt-get update && apt-get upgrade
 RUN apt-get install -y dumb-init openvpn dnsutils net-tools
