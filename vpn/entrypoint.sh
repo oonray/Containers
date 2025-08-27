@@ -10,12 +10,4 @@ fi
 if [ -s $DANTECFG ]; then
     service danted start
 fi
-
-while true
-do
-    if read line < $OPIPE; then
-        echo $line
-    else
-        sleep 1
-    fi
-done
+sleep infinity
