@@ -4,7 +4,7 @@ set -x
 export VPN_DEV=$(cat $VPNF | grep dev | awk '{print $2}')
 
 if [ -s $VPNF ]; then
-    /usr/sbin/openvpn $VPNF &
+    /usr/sbin/openvpn $VPNF > $OPIPE &
 fi
 
 if [ -s $DANTECFG ]; then
@@ -13,7 +13,7 @@ fi
 
 while true
 do
-    if read line <$pipe; then
+    if read line < $OPIPE; then
         echo $line
     else
         sleep 1
