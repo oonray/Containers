@@ -5,4 +5,3 @@ RUN apt-get update \
 
 COPY sshd_config /etc/ssh/sshd_config
 RUN ssh-import-id gh:oonray
-
