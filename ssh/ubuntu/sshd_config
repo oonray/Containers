@@ -1,0 +1,35 @@
+#	$OpenBSD: sshd_config,v 1.105 2024/12/03 14:12:47 dtucker Exp $
+
+# This is the sshd server system-wide configuration file.  See
+# sshd_config(5) for more information.
+
+# This sshd was compiled with PATH=/usr/bin:/bin:/usr/sbin:/sbin
+
+# The strategy used for options in the default sshd_config shipped with
+# OpenSSH is to specify options with their default value where
+# possible, but leave them commented.  Uncommented options override the
+# default value.
+
+Port 2222
+ListenAddress 0.0.0.0
+
+HostKey /opt/ssh/id_rsa
+PermitRootLogin no
+PubkeyAuthentication yes
+AuthorizedKeysFile /opt/ssh/authorized_keys
+# Don't read the user's ~/.rhosts and ~/.shosts files
+IgnoreRhosts yes
+
+# To disable tunneled clear text passwords, change to "no" here!
+PasswordAuthentication no
+PermitEmptyPasswords no
+#UsePAM no
+AllowAgentForwarding yes
+AllowTcpForwarding yes
+#X11Forwarding no
+PermitTTY yes
+TCPKeepAlive yes
+#UseDNS no
+PidFile /var/run/sshd.pid
+PermitTunnel yes
+Subsystem	sftp	/usr/libexec/sftp-server
