@@ -60,10 +60,10 @@ ENV GOROOT="/usr/local/go"
 ENV PATH="$PATH:/home/dev/.nvm:$GOROOT/bin:$GOPATH/bin"
 
 FROM oonray/tmux:latest
-RUN cp ${T_CONF} ~/.tmux.conf && \
-cp ${Z_CONF} ~/.zshrc && \
-cp -r ${Z_DIR}/.oh-my-zsh ~/.oh-my-zsh && \
-cp ${C_CONF} ~/.config/dircolors
+RUN cp $T_CONF ~/.tmux.conf && \
+cp $Z_CONF ~/.zshrc && \
+cp -r $Z_DIR/.oh-my-zsh ~/.oh-my-zsh && \
+cp $C_CONF ~/.config/dircolors
 
 #SET UP ZSH
 COPY zsh-config/zshrc .zshrc
