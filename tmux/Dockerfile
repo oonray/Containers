@@ -1,25 +1,28 @@
 FROM debian:latest
 
 RUN apt-get update && \
-apt-get install -y tmux tmuxinator zsh git
-
-ENV CONF_DIR /opt/conf
-RUN mkdir -p ${CONF_DIR}
+apt-get install -y tmux tmuxinator zsh git jq curl sudo zip tar dumb-init 
 
 ENV T_DIR ${CONF_DIR}/tmux
-RUN mkdir -p /opt/conf/tmux
 ENV T_CONF /opt/conf/tmux/tmux.conf
+ENV Z_DIR ${CONF_DIR}/zsh
+ENV Z_CONF ${Z_DIR}/zshrc
+ENV C_DIR ${CONF_DIR}/dircolors
+ENV C_CONF ${C_DIR}/dircolors
+RUN mkdir -p ${CONF_DIR}
+
+RUN mkdir -p /opt/conf/tmux
 COPY tmux.conf ${T_CONF}
 
-ENV Z_DIR ${CONF_DIR}/zsh
 RUN mkdir -p ${Z_DIR}
-ENV Z_CONF ${Z_DIR}/zshrc
 COPY zshrc ${Z_CONF}
 RUN git clone https://github.com/ohmyzsh/ohmyzsh.git ${Z_CONF}/.oh-my-zsh
 
-ENV C_DIR ${CONF_DIR}/dircolors
 RUN mkdir -p ${C_DIR}
-ENV C_CONF ${C_DIR}/dircolors
 COPY dircolors ${C_CONF}
 
 RUN chmod -R 0755 /opt/conf
+
+RUN curl -Lo /tmp/bat.deb https://github.com/sharkdp/bat/releases/download/v0.25.0/bat_0.25.0_amd64.deb && \
+apt install -y /tmp/bat.deb && \
+rm /tmp/bat.deb

@@ -1,13 +1,26 @@
+FROM golang:latest
+FROM python:latest
+FROM oonray/ssh:latest
+FROM oonray/tmux:latest
 FROM kalilinux/kali-rolling:latest
+
+ENV GOPATH="/home/kali/.go"
+ENV GOROOT="/usr/local/go"
+ENV CONF_DIR /opt/conf
+ENV T_DIR ${CONF_DIR}/tmux
+ENV T_CONF /opt/conf/tmux/tmux.conf
+ENV Z_DIR ${CONF_DIR}/zsh
+ENV Z_CONF ${Z_DIR}/zshrc
+ENV C_DIR ${CONF_DIR}/dircolors
+ENV C_CONF ${C_DIR}/dircolors
+ENV PUID=1000
+ENV PGID=1000
 
 RUN apt-get update
 RUN apt-get install -y kali-linux-headless
 RUN apt-get install -y \
-curl mitmproxy tmux dumb-init \
-python3 python3-pip \
-net-tools dnsutils netcat-traditional \
+mitmproxy net-tools dnsutils netcat-traditional \
 proxychains socat nmap \
-git jq sudo zip tar \
 responder peass netexec
 
 RUN usermod --shell /usr/bin/zsh root
@@ -17,7 +30,6 @@ RUN echo "kali ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers.d/kali
 USER kali
 WORKDIR /home/kali
 
-FROM oonray/tmux:latest
 RUN cp $T_CONF ~/.tmux.conf && \
 cp $Z_CONF ~/.zshrc && \
 cp -r $Z_DIR/.oh-my-zsh ~/.oh-my-zsh && \
@@ -26,5 +38,4 @@ cp $C_CONF ~/.config/dircolors
 ENV PUID=1000
 ENV PGID=1000
 
-ENTRYPOINT [ "dumb-init", "--" ]
-CMD [ "sleep","infinity" ]
+ENTRYPOINT ["/opt/entrypoint.sh"]
