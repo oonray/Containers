@@ -1,4 +1,4 @@
-FROM debian:latest
+FROM oonray/ssh:latest
 
 RUN apt-get update \
 && apt-get upgrade -y
@@ -6,7 +6,6 @@ RUN apt-get update \
 RUN apt-get install -y \
 fuse3 fd-find ripgrep git jq curl zsh sudo zip tar dumb-init \
 tmux tmuxinator
-#openssh-server
 
 RUN apt-get install -y \
 gcc g++ make bear cmake llvm \
