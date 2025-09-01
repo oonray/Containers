@@ -5,9 +5,10 @@ RUN apt-get install -y kali-linux-headless
 RUN apt-get install -y \
 curl mitmproxy tmux dumb-init \
 python3 python3-pip \
-net-tools dnsutils netcat-traditional proxychains socat nmap \
-git jq curl zsh sudo zip tar \
-responder peass
+net-tools dnsutils netcat-traditional \
+proxychains socat nmap \
+git jq sudo zip tar \
+responder peass netexec
 
 RUN usermod --shell /usr/bin/zsh root
 RUN useradd -u 1000 -s /usr/bin/zsh -m kali
