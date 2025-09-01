@@ -15,7 +15,7 @@ ENV Z_DIR ${CONF_DIR}/zsh
 RUN mkdir -p ${Z_DIR}
 ENV Z_CONF ${Z_DIR}/zshrc
 COPY zshrc ${Z_CONF}
-RUN git clone https://github.com/ohmyzsh/ohmyzsh.git ${CONF_DIR}/.oh-my-zsh
+RUN git clone https://github.com/ohmyzsh/ohmyzsh.git ${Z_CONF}/.oh-my-zsh
 
 ENV C_DIR ${CONF_DIR}/dircolors
 RUN mkdir -p ${C_DIR}
