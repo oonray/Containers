@@ -49,6 +49,6 @@ RUN rm -rf /tmp/* && \
 chown -R $USR /home/$USR && \
 apt-get autoremove && apt-get clean
 
-USER dev
+USER kali
 
 ENTRYPOINT ["/opt/entrypoint.sh"]

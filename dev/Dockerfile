@@ -87,6 +87,9 @@ COPY ./nvim-config/ /home/dev/.config/nvim/
 #
 RUN zsh -c "nvim --headless -c':Lazy install | sleep 10 | qa'"
 RUN zsh -c "nvim --headless -c':sleep 20 | qa'"
+#
+# gdb gef
+#
 RUN zsh -c "$(curl -fsSL https://gef.blah.cat/sh)"
 
 #
