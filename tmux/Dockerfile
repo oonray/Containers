@@ -22,7 +22,4 @@ RUN mkdir -p ${C_DIR}
 ENV C_CONF ${C_DIR}/dircolors
 COPY dircolors ${C_CONF}
 
-
 RUN chmod -R 0755 /opt/conf
-
-RUN usermod
