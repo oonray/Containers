@@ -11,7 +11,7 @@ gcc g++ make bear cmake llvm \
 mingw-w64 mingw-w64-tools build-essential \
 python3 python3-venv python3-pip \
 exuberant-ctags lua-check \
-gdb swig 
+gdb swig
 
 RUN apt-get autoremove && apt-get clean
 
@@ -20,16 +20,10 @@ RUN useradd -u 1000 -s /usr/bin/zsh -m dev
 #-G sudo
 #RUN echo "dev ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers.d/dev
 
+
 #RUN NEOVIM
 ENV APPIMAGE_EXTRACT_AND_RUN=1
 
-#SSH
-#RUN mkdir -p /home/dev/.ssh && \
-#echo "sk-ssh-ed25519@openssh.com AAAAGnNrLXNzaC1lZDI1NTE5QG9wZW5zc2guY29tAAAAIGTCxFD2UzUYYWAuDnFzwMmeWsVkPZLNfObG3hJZ4GuKAAAABHNzaDo=" >> /home/dev/authorized_keys
-#EXPOSE 22
-
-#BAT
-#export VERSION=`curl -L https://github.com/sharkdp/bat/tags | grep -oE '>(*v.*\.*\..*)<\' | grep -oE '[0-9]+\.[0-9]+\.[0-9]+' | awk 'NR==1{print $1}'`
 RUN curl -Lo /tmp/bat.deb https://github.com/sharkdp/bat/releases/download/v0.25.0/bat_0.25.0_amd64.deb && \
 apt install -y /tmp/bat.deb
 
@@ -65,6 +59,11 @@ ENV GOPATH="/home/dev/.go"
 ENV GOROOT="/usr/local/go"
 ENV PATH="$PATH:/home/dev/.nvm:$GOROOT/bin:$GOPATH/bin"
 
+FROM oonray/tmux:latest
+RUN cp ${T_CONF} ~/.tmux.conf && \
+cp ${Z_CONF} ~/.zshrc && \
+cp -r ${Z_DIR}/.oh-my-zsh ~/.oh-my-zsh && \
+cp ${C_CONF} ~/.config/dircolors
 
 #SET UP ZSH
 COPY zsh-config/zshrc .zshrc

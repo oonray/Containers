@@ -6,3 +6,5 @@ RUN apt-get update \
 RUN mkdir /opt/ssh && chmod 0755 /opt/ssh
 COPY sshd_config /etc/ssh/sshd_config
 RUN ssh-import-id gh:oonray
+
+EXPOSE 22
