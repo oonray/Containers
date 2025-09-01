@@ -3,15 +3,20 @@ FROM debian:latest
 RUN apt-get update && \
 apt-get install -y tmux tmuxinator zsh git jq curl sudo zip tar dumb-init 
 
-ENV CONF_DIR /opt/conf
-ENV T_DIR $CONF_DIR/tmux
-ENV T_CONF $CONF_DIR/tmux/tmux.conf
+ENV GOPATH="/home/$USR/.go"
+ENV GOROOT="/usr/local/go"
+ENV PATH="$PATH:$GOROOT/bin:$GOPATH/bin"
 
-ENV Z_DIR $CONF_DIR/zsh
-ENV Z_CONF $Z_DIR/zshrc
+ENV CONF_DIR="/opt/conf"
+ENV T_DIR="$CONF_DIR/tmux"
+ENV T_CONF="$CONF_DIR/tmux/tmux.conf"
 
-ENV C_DIR $CONF_DIR/colors
-ENV C_CONF $C_DIR/dircolors
+ENV Z_DIR="$CONF_DIR/zsh"
+ENV Z_CONF="$Z_DIR/zshrc"
+
+ENV C_DIR="$CONF_DIR/colors"
+ENV C_CONF="$C_DIR/dircolors"
+
 
 RUN mkdir -p $CONF_DIR && \
 mkdir -p $T_DIR && \
