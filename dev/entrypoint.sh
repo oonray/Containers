@@ -1,3 +1,3 @@
 #!/usr/bin/dumb-init /usr/bin/zsh
-#/usr/sbin/sshd -D
+service start sshd
 sleep infinity #never die unless killed

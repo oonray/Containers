@@ -1,5 +1,7 @@
-FROM ubuntu:latest
+FROM oonray/ssh:latest
+
 USER root
+
 RUN apt-get update && \
     apt-get install -y gcc python3 python3-pip software-properties-common dumb-init openssh-client && \
     apt-get clean all

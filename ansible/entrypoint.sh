@@ -6,4 +6,5 @@ if [ -d "/opt/ssh" ]; then
     ssh-agent
     ssh-add ~/.ssh/id_rsa
 fi
-exec $@
+service start sshd
+sleep infinity
