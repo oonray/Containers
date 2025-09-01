@@ -35,9 +35,8 @@ RUN echo "$USR ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers.d/$USR
 USER kali
 WORKDIR /home/kali
 
-RUN find $CONF_DIR
-
-RUN cp $T_CONF ~/.tmux.conf && \
+RUN mkdir ~/.config && \
+cp $T_CONF ~/.tmux.conf && \
 cp $Z_CONF ~/.zshrc && \
 cp -r $Z_DIR/.oh-my-zsh ~/.oh-my-zsh && \
 cp $C_CONF ~/.config/dircolors

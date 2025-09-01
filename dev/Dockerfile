@@ -67,9 +67,8 @@ apt-get autoremove && apt-get clean
 USER dev
 WORKDIR /home/dev
 
-RUN find $CONF_DIR
-
-RUN cp $T_CONF ~/.tmux.conf && \
+RUN mkdir ~/.config && \
+cp $T_CONF ~/.tmux.conf && \
 cp $Z_CONF ~/.zshrc && \
 cp -r $Z_DIR/.oh-my-zsh ~/.oh-my-zsh && \
 cp $C_CONF ~/.config/dircolors

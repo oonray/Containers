@@ -29,8 +29,6 @@ COPY zshrc /opt/conf/zsh/zshrc
 RUN git clone https://github.com/ohmyzsh/ohmyzsh.git $Z_DIR/.oh-my-zsh
 COPY dircolors /opt/conf/colors/dircolors
 
-RUN find $CONF_DIR
-
 RUN chmod -R 0755 /opt/conf
 
 RUN curl -Lo /tmp/bat.deb https://github.com/sharkdp/bat/releases/download/v0.25.0/bat_0.25.0_amd64.deb && \
