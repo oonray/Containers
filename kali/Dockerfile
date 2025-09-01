@@ -18,10 +18,10 @@ USER kali
 WORKDIR /home/kali
 
 FROM oonray/tmux:latest
-RUN cp ${T_CONF} ~/.tmux.conf && \
-cp ${Z_CONF} ~/.zshrc && \
-cp -r ${Z_DIR}/.oh-my-zsh ~/.oh-my-zsh && \
-cp ${C_CONF} ~/.config/dircolors
+RUN cp $T_CONF ~/.tmux.conf && \
+cp $Z_CONF ~/.zshrc && \
+cp -r $Z_DIR/.oh-my-zsh ~/.oh-my-zsh && \
+cp $C_CONF ~/.config/dircolors
 
 ENV PUID=1000
 ENV PGID=1000
