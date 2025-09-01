@@ -9,18 +9,23 @@ FROM oonray/tmux:latest
 
 #SET ENV
 ENV APPIMAGE_EXTRACT_AND_RUN=1
-ENV GOPATH="/home/dev/.go"
+
+ENV USR dev
+ENV GOPATH="/home/$USR/.go"
 ENV GOROOT="/usr/local/go"
-ENV NVM_DIR="/home/dev/.nvm"
+ENV NVM_DIR="/home/$USR/.nvm"
 ENV PATH="$PATH:/home/dev/.nvm:$GOROOT/bin:$GOPATH/bin"
 
 ENV CONF_DIR /opt/conf
-ENV T_DIR ${CONF_DIR}/tmux
-ENV T_CONF /opt/conf/tmux/tmux.conf
-ENV Z_DIR ${CONF_DIR}/zsh
-ENV Z_CONF ${Z_DIR}/zshrc
-ENV C_DIR ${CONF_DIR}/dircolors
-ENV C_CONF ${C_DIR}/dircolors
+ENV T_DIR $CONF_DIR/tmux
+ENV T_CONF $CONF_DIR/tmux/tmux.conf
+
+ENV Z_DIR $CONF_DIR/zsh
+ENV Z_CONF $Z_DIR/zshrc
+
+ENV C_DIR $CONF_DIR/colors
+ENV C_CONF $C_DIR/dircolors
+
 ENV PUID=1000
 ENV PGID=1000
 
@@ -37,9 +42,10 @@ exuberant-ctags lua-check \
 gdb swig
 
 #
-#user
+#USR
 #
-RUN useradd -u 1000 -s /usr/bin/zsh -m dev
+RUN useradd -u 1000 -s /usr/bin/zsh -m $USR
+RUN echo "$USR ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers.d/$USR
 
 #
 #Install NVIM
@@ -52,11 +58,11 @@ RUN chmod +x /bin/nvim
 #
 USER root
 RUN rm -rf /tmp/* && \
-chown -R dev /home/dev
-RUN apt-get autoremove && apt-get clean
+chown -R $USR /home/$USR && \
+apt-get autoremove && apt-get clean
 
 #
-#USER
+#USR
 #
 USER dev
 WORKDIR /home/dev

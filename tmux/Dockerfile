@@ -4,24 +4,25 @@ RUN apt-get update && \
 apt-get install -y tmux tmuxinator zsh git jq curl sudo zip tar dumb-init 
 
 ENV CONF_DIR /opt/conf
-ENV T_DIR ${CONF_DIR}/tmux
-ENV T_CONF ${CONF_DIR}/tmux/tmux.conf
+ENV T_DIR $CONF_DIR/tmux
+ENV T_CONF $CONF_DIR/tmux/tmux.conf
 
-ENV Z_DIR ${CONF_DIR}/zsh
-ENV Z_CONF ${Z_DIR}/zshrc
+ENV Z_DIR $CONF_DIR/zsh
+ENV Z_CONF $Z_DIR/zshrc
 
-ENV C_DIR ${CONF_DIR}/dircolors
-ENV C_CONF ${C_DIR}/dircolors
-RUN mkdir -p ${CONF_DIR} && \
-mkdir -p ${T_DIR} && \
-mkdir -p ${Z_DIR} && \
-mkdir -p ${C_DIR}
+ENV C_DIR $CONF_DIR/colors
+ENV C_CONF $C_DIR/dircolors
+
+RUN mkdir -p $CONF_DIR && \
+mkdir -p $T_DIR && \
+mkdir -p $Z_DIR && \
+mkdir -p $C_DIR
 
 RUN mkdir -p /opt/conf/tmux
-COPY tmux.conf ${T_CONF}
-COPY zshrc ${Z_CONF}
-RUN git clone https://github.com/ohmyzsh/ohmyzsh.git ${Z_CONF}/.oh-my-zsh
-COPY dircolors ${C_CONF}
+COPY tmux.conf $T_CONF
+COPY zshrc $Z_CONF
+RUN git clone https://github.com/ohmyzsh/ohmyzsh.git $Z_CONF/.oh-my-zsh
+COPY dircolors $C_CONF
 
 RUN chmod -R 0755 /opt/conf
 
