@@ -24,10 +24,12 @@ mkdir -p $Z_DIR && \
 mkdir -p $C_DIR
 
 RUN mkdir -p /opt/conf/tmux
-COPY tmux.conf ${T_CONF}
-COPY zshrc ${Z_CONF}
+COPY tmux.conf /opt/conf/tmux/tmux.conf
+COPY zshrc /opt/conf/zsh/zshrc
 RUN git clone https://github.com/ohmyzsh/ohmyzsh.git $Z_DIR/.oh-my-zsh
-COPY dircolors ${C_CONF}
+COPY dircolors /opt/conf/colors/dircolors
+
+RUN find $CONF_DIR
 
 RUN chmod -R 0755 /opt/conf
 
