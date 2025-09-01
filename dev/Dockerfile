@@ -4,8 +4,7 @@ RUN apt-get update \
 && apt-get upgrade -y
 
 RUN apt-get install -y \
-fuse3 fd-find ripgrep git jq curl zsh sudo zip tar dumb-init \
-tmux tmuxinator
+fuse3 fd-find ripgrep git jq curl zsh sudo zip tar dumb-init
 
 RUN apt-get install -y \
 gcc g++ make bear cmake llvm \

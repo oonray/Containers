@@ -1,13 +1,16 @@
 #!/usr/bin/dumb-init /bin/bash
 set -x
 
-export VPN_DEV=$(cat $VPNF | grep dev | awk '{print $2}')
-
-if [ -s $VPNF ]; then
-    /usr/sbin/openvpn $VPNF > $OPIPE &
+if [ -s $VPN_F ]; then
+    /usr/sbin/openvpn $VPN_F &
+else
+    echo "no vpn.ovpn in ${VPN_DIR}"
 fi
 
-if [ -s $DANTECFG ]; then
+if [ -s $DANTE_CONF ]; then
     service danted start
+else
+    echo "${DANTE_CONF} not found"
 fi
+
 sleep infinity

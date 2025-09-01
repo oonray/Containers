@@ -8,11 +8,13 @@ RUN apt-get install -y dante-server
 COPY entrypoint.sh /opt/entrypoint.sh
 RUN chmod +x /opt/entrypoint.sh
 
-ENV VPNDIR=/opt/vpn
-ENV VPNF=${VPNDIR}/vpn.ovpn
+ENV CONF_DIR /opt/conf
+RUN mkdir -p ${CONF_DIR}
 
-ENV DANTECFG=/etc/danted.conf
-ENV OPIPE=/tmp/output
+ENV VPN_DIR=${CONF_DIR}/vpn
+ENV VPN_F=${VPN_DIR}/vpn.ovpn
+
+ENV DANTE_CONF=/etc/danted.conf
 
 ENTRYPOINT ["/opt/entrypoint.sh"]
 CMD ["sleep","infinity"]
