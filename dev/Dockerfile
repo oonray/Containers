@@ -9,10 +9,11 @@ FROM oonray/tmux:latest
 
 #SET ENV
 ENV APPIMAGE_EXTRACT_AND_RUN=1
-ENV NVM_DIR="/home/dev/.nvm"
 ENV GOPATH="/home/dev/.go"
 ENV GOROOT="/usr/local/go"
+ENV NVM_DIR="/home/dev/.nvm"
 ENV PATH="$PATH:/home/dev/.nvm:$GOROOT/bin:$GOPATH/bin"
+
 ENV CONF_DIR /opt/conf
 ENV T_DIR ${CONF_DIR}/tmux
 ENV T_CONF /opt/conf/tmux/tmux.conf

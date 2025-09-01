@@ -6,13 +6,18 @@ FROM kalilinux/kali-rolling:latest
 
 ENV GOPATH="/home/kali/.go"
 ENV GOROOT="/usr/local/go"
+ENV PATH="$PATH:$GOROOT/bin:$GOPATH/bin"
+
 ENV CONF_DIR /opt/conf
 ENV T_DIR ${CONF_DIR}/tmux
 ENV T_CONF /opt/conf/tmux/tmux.conf
+
 ENV Z_DIR ${CONF_DIR}/zsh
 ENV Z_CONF ${Z_DIR}/zshrc
+
 ENV C_DIR ${CONF_DIR}/dircolors
 ENV C_CONF ${C_DIR}/dircolors
+
 ENV PUID=1000
 ENV PGID=1000
 
