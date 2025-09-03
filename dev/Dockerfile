@@ -23,11 +23,6 @@ ENV C_CONF="$C_DIR/dircolors"
 ENV PUID=1000
 ENV PGID=1000
 
-ADD https://go.dev/dl/go1.25.0.linux-amd64.tar.gz ${GOROOT}
-#COPY --from=rust:latest / /
-#COPY --from=mcr.microsoft.com/dotnet/runtime:9.0 / /
-#COPY --from=mcr.microsoft.com/dotnet/sdk:9.0 / /
-#COPY --from=node:latest / /
 
 #
 #install deps
@@ -56,6 +51,32 @@ RUN echo "$USR ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers.d/$USR
 #
 RUN curl -Lo /bin/nvim "https://github.com/neovim/neovim/releases/download/`curl https://api.github.com/repos/neovim/neovim/releases/latest | jq -r .tag_name`/nvim-linux-x86_64.appimage"
 RUN chmod +x /bin/nvim
+
+#
+#RUST
+#
+RUN curl -sSf https://sh.rustup.rs | sh -s -- -y
+
+# 
+#GO
+#
+COPY --from=golang:latest ${GOROOT} ${GOROOT}
+
+# 
+#DOTNET
+#
+RUN curl -Lo /tmp/dotnet.deb https://packages.microsoft.com/config/debian/12/packages-microsoft-prod.deb && \
+apt install -y /tmp/dotnet.deb && \
+apt-get update && \
+apt-get install -y aspnetcore-runtime-9.0 dotnet-sdk-9.0
+
+#
+#NODE
+#
+RUN curl -Lo /tmp/nvm.sh https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.1/install.sh && \
+chmod +x /tmp/nvm.sh && \
+/tmp/nvm.sh
+RUN . "$NVM_DIR/nvm.sh" && nvm install 23 && npm install yarn
 
 #
 #USR

@@ -40,7 +40,7 @@ wordlists wpscan xxd
 RUN --mount=type=bind,from=tmux \
 apt install -y /opt/deb/bat.deb
 
-ADD https://go.dev/dl/go1.25.0.linux-amd64.tar.gz ${GOROOT}
+COPY --from=golang:latest ${GOROOT} ${GOROOT}
 COPY --from=tmux /etc/ssh/sshd_config /etc/ssh/sshd_config
 COPY --from=tmux /opt/entrypoint.sh /opt/entrypoint.sh
 

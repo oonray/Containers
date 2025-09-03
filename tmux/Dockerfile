@@ -18,7 +18,6 @@ ENV Z_CONF="$Z_DIR/zshrc"
 ENV C_DIR="$CONF_DIR/colors"
 ENV C_CONF="$C_DIR/dircolors"
 
-
 RUN mkdir -p $CONF_DIR && \
 mkdir -p $T_DIR && \
 mkdir -p $Z_DIR && \
