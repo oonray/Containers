@@ -1,5 +1,5 @@
 #mine
-FROM oonray/tmux:latest as tmux
+FROM oonray/tmux:latest
 
 #SET ENV
 ENV APPIMAGE_EXTRACT_AND_RUN=1

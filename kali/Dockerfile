@@ -1,6 +1,3 @@
-FROM golang:latest
-FROM python:latest
-FROM oonray/tmux:latest
 FROM kalilinux/kali-rolling:latest
 
 ENV USR kali
@@ -20,6 +17,10 @@ ENV C_CONF="$C_DIR/dircolors"
 
 ENV PUID=1000
 ENV PGID=1000
+
+COPY --from=golang:latest ${GOROOT} ${GOROOT}
+COPY --from=python:latest /usr/local /usr/local
+COPY --from=oonray/tmux:latest /opt /opt
 
 RUN apt-get update
 RUN apt-get install -y kali-linux-headless
