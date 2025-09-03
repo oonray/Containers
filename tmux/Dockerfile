@@ -1,8 +1,9 @@
 FROM oonray/ssh:latest
 
 RUN apt-get update && \
-apt-get install -y tmux tmuxinator zsh git jq curl sudo zip tar dumb-init 
+apt-get install -y tmux tmuxinator zsh git jq curl sudo zip tar
 
+ENV APPIMAGE_EXTRACT_AND_RUN=1
 ENV GOPATH="/home/$USR/.go"
 ENV GOROOT="/usr/local/go"
 ENV PATH="$PATH:$GOROOT/bin:$GOPATH/bin"
@@ -23,7 +24,8 @@ mkdir -p $T_DIR && \
 mkdir -p $Z_DIR && \
 mkdir -p $C_DIR
 
-RUN mkdir -p /opt/conf/tmux
+RUN mkdir -p /opt/conf/tmux && \
+mkdir -p /opt/deb
 COPY tmux.conf /opt/conf/tmux/tmux.conf
 COPY zshrc /opt/conf/zsh/zshrc
 RUN git clone https://github.com/ohmyzsh/ohmyzsh.git $Z_DIR/.oh-my-zsh
@@ -31,6 +33,5 @@ COPY dircolors /opt/conf/colors/dircolors
 
 RUN chmod -R 0755 /opt/conf
 
-RUN curl -Lo /tmp/bat.deb https://github.com/sharkdp/bat/releases/download/v0.25.0/bat_0.25.0_amd64.deb && \
-apt install -y /tmp/bat.deb && \
-rm /tmp/bat.deb
+RUN curl -Lo /opt/deb/bat.deb https://github.com/sharkdp/bat/releases/download/v0.25.0/bat_0.25.0_amd64.deb && \
+apt install -y /opt/deb/bat.deb

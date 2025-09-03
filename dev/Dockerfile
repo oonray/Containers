@@ -23,7 +23,7 @@ ENV C_CONF="$C_DIR/dircolors"
 ENV PUID=1000
 ENV PGID=1000
 
-COPY --from=golang:latest ${GOROOT} ${GOROOT}
+ADD https://go.dev/dl/go1.25.0.linux-amd64.tar.gz ${GOROOT}
 #COPY --from=rust:latest / /
 #COPY --from=mcr.microsoft.com/dotnet/runtime:9.0 / /
 #COPY --from=mcr.microsoft.com/dotnet/sdk:9.0 / /
@@ -58,24 +58,10 @@ RUN curl -Lo /bin/nvim "https://github.com/neovim/neovim/releases/download/`curl
 RUN chmod +x /bin/nvim
 
 #
-#Cleanup
-#
-USER root
-RUN rm -rf /tmp/* && \
-chown -R $USR /home/$USR && \
-apt-get autoremove && apt-get clean
-
-#
 #USR
 #
 USER dev
 WORKDIR /home/dev
-
-RUN mkdir -p ~/.config && \
-cp $T_CONF ~/.tmux.conf && \
-cp $Z_CONF ~/.zshrc && \
-cp -r $Z_DIR/.oh-my-zsh ~/.oh-my-zsh && \
-cp $C_CONF ~/.config/dircolors
 
 #
 #NVIM CONFIG
@@ -85,6 +71,16 @@ RUN mkdir -p /home/dev/.config && \
 mkdir -p /home/dev/.local/share/nvim/ws/worskpaces/
 
 COPY ./nvim-config/ /home/dev/.config/nvim/
+
+#
+#Cleanup
+#
+USER root
+RUN rm -rf /opt/* && \
+chown -R $USR /home/$USR && \
+apt-get autoremove && apt-get clean
+
+USER dev
 
 #
 #NVIM INIT
