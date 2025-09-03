@@ -24,9 +24,9 @@ ENV PUID=1000
 ENV PGID=1000
 
 COPY --from=golang:latest ${GOROOT} ${GOROOT}
-COPY --from=rust:latest / /
-COPY --from=mcr.microsoft.com/dotnet/runtime:9.0 / /
-COPY --from=mcr.microsoft.com/dotnet/sdk:9.0 / /
+#COPY --from=rust:latest / /
+#COPY --from=mcr.microsoft.com/dotnet/runtime:9.0 / /
+#COPY --from=mcr.microsoft.com/dotnet/sdk:9.0 / /
 #COPY --from=node:latest / /
 
 #
