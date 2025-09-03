@@ -19,7 +19,8 @@ ENV PUID=1000
 ENV PGID=1000
 
 COPY --from=golang:latest ${GOROOT} ${GOROOT}
-COPY --from=oonray/ssh:latest / /
+COPY --from=oonray/tmux:latest /opt /opt
+COPY --from=oonray/ssh:latest /opt /opt
 
 RUN apt-get update && \
 apt-get install -y kali-tools-passwords \
