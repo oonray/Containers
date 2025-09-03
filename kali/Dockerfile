@@ -19,7 +19,7 @@ ENV PUID=1000
 ENV PGID=1000
 
 COPY --from=golang:latest ${GOROOT} ${GOROOT}
-COPY --from=oonray/tmux:latest / /
+COPY --from=oonray/ssh:latest / /
 
 RUN apt-get update
 RUN apt-get install -y kali-tools-passwords \
@@ -35,7 +35,8 @@ RUN echo "$USR ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers.d/$USR
 USER kali
 WORKDIR /home/kali
 
-RUN mkdir -p ~/.config && \
+RUN mkdir -p ~/.config
+RUN --mount=type=bind,from=oonray/tmux:latest \
 cp $T_CONF ~/.tmux.conf && \
 cp $Z_CONF ~/.zshrc && \
 cp -r $Z_DIR/.oh-my-zsh ~/.oh-my-zsh && \
