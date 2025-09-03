@@ -19,11 +19,11 @@ ENV PUID=1000
 ENV PGID=1000
 
 COPY --from=golang:latest ${GOROOT} ${GOROOT}
-COPY --from=python:latest /usr/local /usr/local
-COPY --from=oonray/tmux:latest /opt /opt
+COPY --from=python:latest / /
+COPY --from=oonray/tmux:latest / /
 
 RUN apt-get update
-RUN apt-get install -y kali-linux-headless
+RUN apt-get install -y kali-linux-core
 RUN apt-get install -y \
 mitmproxy net-tools dnsutils netcat-traditional \
 proxychains socat nmap \
