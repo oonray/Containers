@@ -24,7 +24,6 @@ ENV PUID=1000
 ENV PGID=1000
 
 COPY --from=golang:latest ${GOROOT} ${GOROOT}
-COPY --from=python:latest / /
 COPY --from=rust:latest / /
 COPY --from=mcr.microsoft.com/dotnet/runtime:9.0 / /
 COPY --from=mcr.microsoft.com/dotnet/sdk:9.0 / /
@@ -33,6 +32,9 @@ COPY --from=node:latest / /
 #
 #install deps
 #
+RUN apt-get install -y \
+python3 python3-pip python3-venv
+
 RUN apt-get install -y \
 fuse3 fd-find ripgrep sudo
 
@@ -68,7 +70,7 @@ apt-get autoremove && apt-get clean
 USER dev
 WORKDIR /home/dev
 
-RUN mkdir ~/.config && \
+RUN mkdir -p ~/.config && \
 cp $T_CONF ~/.tmux.conf && \
 cp $Z_CONF ~/.zshrc && \
 cp -r $Z_DIR/.oh-my-zsh ~/.oh-my-zsh && \

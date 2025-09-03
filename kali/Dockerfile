@@ -19,14 +19,14 @@ ENV PUID=1000
 ENV PGID=1000
 
 COPY --from=golang:latest ${GOROOT} ${GOROOT}
-COPY --from=python:latest / /
 COPY --from=oonray/tmux:latest / /
 
 RUN apt-get update
-RUN apt-get install -y kali-linux-core
+RUN apt-get install -y kali-tools-passwords \
+python3 python3-pip python3-venv
 RUN apt-get install -y \
 mitmproxy net-tools dnsutils netcat-traditional \
-proxychains socat nmap \
+proxychains socat nmap responder\
 responder peass netexec
 
 RUN useradd -u 1000 -s /usr/bin/zsh -m $USR
@@ -35,7 +35,7 @@ RUN echo "$USR ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers.d/$USR
 USER kali
 WORKDIR /home/kali
 
-RUN mkdir ~/.config && \
+RUN mkdir -p ~/.config && \
 cp $T_CONF ~/.tmux.conf && \
 cp $Z_CONF ~/.zshrc && \
 cp -r $Z_DIR/.oh-my-zsh ~/.oh-my-zsh && \
