@@ -1,4 +1,4 @@
-FROM oonray/tmux:latest as tmux
+FROM oonray/tmux:latest AS tmux
 FROM kalilinux/kali-rolling:latest
 
 ENV APPIMAGE_EXTRACT_AND_RUN=1
@@ -37,8 +37,8 @@ thc-pptp-bruter traceroute udptunnel unix-privesc-check unrar|unar upx-ucl vboot
 vboot-utils neovim vlan voiphopper vpnc wce webshells wfuzz whatweb whois windows-binaries \
 wordlists wpscan xxd
 
-RUN --mount=type=bind,from=tmux \
-apt install -y /opt/deb/bat.deb
+COPY --from=tmux /opt/dev/bar.deb /tmp/bat.deb
+RUN apt install -y /opt/deb/bat.deb
 
 COPY --from=golang:latest ${GOROOT} ${GOROOT}
 COPY --from=tmux /etc/ssh/sshd_config /etc/ssh/sshd_config
