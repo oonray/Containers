@@ -27,7 +27,7 @@ COPY --from=golang:latest ${GOROOT} ${GOROOT}
 COPY --from=rust:latest / /
 COPY --from=mcr.microsoft.com/dotnet/runtime:9.0 / /
 COPY --from=mcr.microsoft.com/dotnet/sdk:9.0 / /
-COPY --from=node:latest / /
+#COPY --from=node:latest / /
 
 #
 #install deps
