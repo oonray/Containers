@@ -7,6 +7,7 @@ FROM node:latest
 #mine
 FROM oonray/ssh:latest
 FROM oonray/tmux:latest
+FROM debian:latest
 
 #SET ENV
 ENV APPIMAGE_EXTRACT_AND_RUN=1
