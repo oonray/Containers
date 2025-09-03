@@ -21,10 +21,11 @@ ENV PGID=1000
 COPY --from=golang:latest ${GOROOT} ${GOROOT}
 COPY --from=oonray/ssh:latest / /
 
-RUN apt-get update
-RUN apt-get install -y kali-tools-passwords \
-python3 python3-pip python3-venv
-RUN apt-get install -y \
+RUN apt-get update && \
+apt-get install -y kali-tools-passwords \
+python3 python3-pip python3-venv && \
+\
+apt-get install -y \
 mitmproxy net-tools dnsutils netcat-traditional \
 proxychains socat nmap responder\
 responder peass netexec

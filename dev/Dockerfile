@@ -32,13 +32,14 @@ COPY --from=mcr.microsoft.com/dotnet/sdk:9.0 / /
 #
 #install deps
 #
-RUN apt-get install -y \
-python3 python3-pip python3-venv
-
-RUN apt-get install -y \
-fuse3 fd-find ripgrep sudo
-
-RUN apt-get install -y \
+RUN apt-get update && \
+apt-get install -y \
+python3 python3-pip python3-venv && \
+\
+apt-get install -y \
+fuse3 fd-find ripgrep sudo && \
+\
+apt-get install -y \
 gcc g++ make bear cmake llvm \
 mingw-w64 mingw-w64-tools build-essential \
 exuberant-ctags lua-check \
