@@ -1,13 +1,5 @@
-FROM golang:latest
-FROM python:latest
-FROM rust:latest
-FROM mcr.microsoft.com/dotnet/runtime:9.0
-FROM mcr.microsoft.com/dotnet/sdk:9.0
-FROM node:latest
 #mine
-FROM oonray/ssh:latest
-FROM oonray/tmux:latest
-FROM debian:latest
+FROM oonray/tmux:latest as tmux
 
 #SET ENV
 ENV APPIMAGE_EXTRACT_AND_RUN=1
@@ -30,6 +22,13 @@ ENV C_CONF="$C_DIR/dircolors"
 
 ENV PUID=1000
 ENV PGID=1000
+
+COPY --from=golang:latest ${GOROOT} ${GOROOT}
+COPY --from=python:latest / /
+COPY --from=rust:latest / /
+COPY --from=mcr.microsoft.com/dotnet/runtime:9.0 / /
+COPY --from=mcr.microsoft.com/dotnet/sdk:9.0 / /
+COPY --from=node:latest / /
 
 #
 #install deps

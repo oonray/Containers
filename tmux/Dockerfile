@@ -1,4 +1,4 @@
-FROM debian:latest
+FROM oonray/ssh:latest
 
 RUN apt-get update && \
 apt-get install -y tmux tmuxinator zsh git jq curl sudo zip tar dumb-init 

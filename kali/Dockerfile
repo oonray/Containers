@@ -1,6 +1,5 @@
 FROM golang:latest
 FROM python:latest
-FROM oonray/ssh:latest
 FROM oonray/tmux:latest
 FROM kalilinux/kali-rolling:latest
 
