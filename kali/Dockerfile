@@ -21,7 +21,7 @@ tmux tmuxinator zsh git jq curl sudo zip tar
 RUN apt-get install -y \
 mitmproxy net-tools dnsutils netcat-traditional \
 git proxychains socat nmap responder peass netexec gobuster  \
-7zip arp-scan arping | iputils-arping bind9-dnsutils \
+7zip arp-scan arping iputils-arping bind9-dnsutils \
 binwalk binwalk3 bulk-extractor cewl cifs-utils clang commix creddump7 \
 crunch cryptcat cryptsetup cryptsetup-initramfs cryptsetup-nuke-password \
 curlftpfs dirb dmitry dns2tcp dnschef dnsenum dnsrecon dos2unix enum4linux \
@@ -29,11 +29,11 @@ evil-winrm exe2hexbat exiv2 expect exploitdb ffuf gdisk gobuster gpp-decrypt \
 hash-identifier hashcat hashcat-utils hashdeep hashid hotpatch hydra i2c-tools \
 ifenslave impacket-scripts iodine john libimage-exiftool-perl minicom multimac \
 nbtscan ncrack ncurses-hexedit netdiscover netmask netsed ngrep nikto onesixtyone \
-passing-the-hash pdf-parser pdfid peass pipal pipx pixiewps plocate|mlocate powershell \
+passing-the-hash pdf-parser pdfid peass pipal pipx pixiewps plocate mlocate powershell \
 powersploit proxychains4 proxytunnel ptunnel pwnat qsslcaudit rebind rsmangler \
 samdump2 sbd screen set smbmap snmp snmpcheck snmpd sqlmap ssldump sslh sslscan sslsplit \
 sslyze statsprocessor stunnel4 swaks tcpick tcpreplay telnet testdisk tftp-hpa thc-ipv6 \
-thc-pptp-bruter traceroute udptunnel unix-privesc-check unrar|unar upx-ucl vboot-kernel-utils \
+thc-pptp-bruter traceroute udptunnel unix-privesc-check unrar upx-ucl vboot-kernel-utils \
 vboot-utils neovim vlan voiphopper vpnc wce webshells wfuzz whatweb whois windows-binaries \
 wordlists wpscan xxd
 
