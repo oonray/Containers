@@ -82,7 +82,7 @@ curl -Lo /tmp/nvm.sh https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.1/instal
 chmod +x /tmp/nvm.sh && \
 ./tmp/nvm.sh && \
 source $NVM_DIR/nvm.sh && \
-nvm install 23
+nvm install 23'
 
 RUN mkdir -p /home/dev/.ssh && \
 cp /root/.ssh/authorized_keys /home/dev/.ssh/authorized_keys && \
@@ -92,7 +92,12 @@ chown -r dev:dev /home/dev/.ssh
 #Configure User
 #
 USER dev
-WORKDIR /home/dev
+WORKDIR /home/dev 
+
+RUN zsh -c 'source $NVM_DIR/nvm.sh && \
+npm install yarn'
+
+
 
 #
 #Configure NVIM
