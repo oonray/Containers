@@ -3,7 +3,7 @@ FROM kalilinux/kali-rolling:latest
 
 ENV APPIMAGE_EXTRACT_AND_RUN=1
 
-ENV USR kali
+ENV USR=kali
 ENV GOROOT="/usr/local/go"
 ENV CONF_DIR="/opt/conf"
 ENV T_CONF="$CONF_DIR/tmux/tmux.conf"
@@ -38,7 +38,8 @@ vboot-utils neovim vlan voiphopper vpnc wce webshells wfuzz whatweb whois window
 wordlists wpscan xxd
 
 COPY --from=tmux /opt/dev/bar.deb /tmp/bat.deb
-RUN apt install -y /opt/deb/bat.deb
+RUN apt install -y /tmp/bat.deb && \
+rm /tmp/bat.deb
 
 COPY --from=golang:latest ${GOROOT} ${GOROOT}
 COPY --from=tmux /etc/ssh/sshd_config /etc/ssh/sshd_config
@@ -51,10 +52,11 @@ USER kali
 WORKDIR /home/kali
 RUN mkdir -p ~/.config
 
-COPY --from=tmux ${T_CONF} ~/.tmux.conf
-COPY --from=tmux ${Z_CONF} ~/.zshrc
-COPY --from=tmux ${CONF_DIR}/zsh/.oh-my-zsh ~/.oh-my-zsh
-COPY --from=tmux $C_CONF ~/.config/dircolors
+COPY --from=tmux --chown=kali:kali ${T_CONF} ~/.tmux.conf
+COPY --from=tmux --chown=kali:kali ${Z_CONF} ~/.zshrc
+COPY --from=tmux --chown=kali:kali ${CONF_DIR}/zsh/.oh-my-zsh ~/.oh-my-zsh
+COPY --from=tmux --chown=kali:kali $C_CONF ~/.config/dircolors
+COPY --from=tmux --chown=kali:kali /root/.ssh/authorized_keys ~/.ssh/authorized_keys
 
 ENV PUID=1000
 ENV PGID=1000
@@ -63,8 +65,8 @@ ENV PGID=1000
 #Cleanup
 #
 USER root
-RUN rm -rf /tmp/* && \
-chown -R $USR /home/$USR && \
-apt-get autoremove && apt-get clean
+RUN chown -R $USR /home/$USR && \
+apt-get autoremove && \
+apt-get clean
 
 ENTRYPOINT ["/opt/entrypoint.sh"]

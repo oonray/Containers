@@ -1,10 +1,14 @@
-#mine
+#
+#SSH + TMUX
+#
 FROM oonray/tmux:latest
 
-#SET ENV
+#
+#Set ENV
+#
 ENV APPIMAGE_EXTRACT_AND_RUN=1
 
-ENV USR dev
+ENV USR=dev
 ENV GOPATH="/home/$USR/.go"
 ENV GOROOT="/usr/local/go"
 ENV NVM_DIR="/home/$USR/.nvm"
@@ -25,7 +29,7 @@ ENV PGID=1000
 
 
 #
-#install deps
+#Install deps
 #
 RUN apt-get update && \
 apt-get install -y \
@@ -41,7 +45,7 @@ exuberant-ctags lua-check \
 gdb swig
 
 #
-#USR
+#Create user
 #
 RUN useradd -u 1000 -s /usr/bin/zsh -m $USR
 RUN echo "$USR ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers.d/$USR
@@ -53,17 +57,17 @@ RUN curl -Lo /bin/nvim "https://github.com/neovim/neovim/releases/download/`curl
 RUN chmod +x /bin/nvim
 
 #
-#RUST
+#Install RUST
 #
 RUN curl -sSf https://sh.rustup.rs | sh -s -- -y
 
 # 
-#GO
+#Install GO
 #
 COPY --from=golang:latest ${GOROOT} ${GOROOT}
 
 # 
-#DOTNET
+#Install DOTNET
 #
 RUN curl -Lo /tmp/dotnet.deb https://packages.microsoft.com/config/debian/12/packages-microsoft-prod.deb && \
 apt install -y /tmp/dotnet.deb && \
@@ -71,7 +75,7 @@ apt-get update && \
 apt-get install -y aspnetcore-runtime-9.0 dotnet-sdk-9.0
 
 #
-#NODE
+#Install NODE
 #
 RUN zsh -c '\
 curl -Lo /tmp/nvm.sh https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.1/install.sh && \
@@ -86,13 +90,13 @@ cp /root/.ssh/authorized_keys /home/dev/.ssh/authorized_keys && \
 chown -r dev:dev /home/dev/.ssh
 
 #
-#USR
+#Configure User
 #
 USER dev
 WORKDIR /home/dev
 
 #
-#NVIM CONFIG
+#Configure NVIM
 #
 RUN mkdir -p ${GOPATH} && \
 mkdir -p /home/dev/.config && \
@@ -101,26 +105,26 @@ mkdir -p /home/dev/.local/share/nvim/ws/worskpaces/
 COPY ./nvim-config/ /home/dev/.config/nvim/
 
 #
-#Cleanup
-#
-USER root
-RUN rm -rf /opt/* && \
-chown -R $USR /home/$USR && \
-apt-get autoremove && apt-get clean
-
-USER dev
-
-#
 #NVIM INIT
 #
 RUN zsh -c "nvim --headless -c':Lazy install | sleep 10 | qa'"
 RUN zsh -c "nvim --headless -c':sleep 20 | qa'"
 #
-# gdb gef
+#Install debuggers gdb gef + radare
 #
-RUN zsh -c "$(curl -fsSL https://gef.blah.cat/sh)"
+RUN zsh -c "$(curl -fsSL https://gef.blah.cat/sh)" && \
+apt-get install -y radare2 xxd ncurses-hexedit
 
 #
-#entrypoint
+#Cleanup
+#
+USER root
+RUN rm -rf /opt/* && \
+chown -R $USR /home/$USR && \
+apt-get autoremove && \
+apt-get clean
+
+#
+#Entrypoint
 #
 ENTRYPOINT ["/opt/entrypoint.sh"]
