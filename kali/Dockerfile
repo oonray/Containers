@@ -21,7 +21,7 @@ tmux tmuxinator zsh git jq curl sudo zip tar
 RUN apt-get install -y \
 mitmproxy net-tools dnsutils netcat-traditional \
 git proxychains socat nmap responder peass netexec gobuster  \
-7zip arp-scan arping iputils-arping bind9-dnsutils \
+7zip arp-scan iputils-arping bind9-dnsutils \
 binwalk binwalk3 bulk-extractor cewl cifs-utils clang commix creddump7 \
 crunch cryptcat cryptsetup cryptsetup-initramfs cryptsetup-nuke-password \
 curlftpfs dirb dmitry dns2tcp dnschef dnsenum dnsrecon dos2unix enum4linux \
