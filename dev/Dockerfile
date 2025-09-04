@@ -73,11 +73,17 @@ apt-get install -y aspnetcore-runtime-9.0 dotnet-sdk-9.0
 #
 #NODE
 #
-RUN mkdir $NVM_DIR && \
+RUN zsh -c '\
 curl -Lo /tmp/nvm.sh https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.1/install.sh && \
 chmod +x /tmp/nvm.sh && \
-/tmp/nvm.sh
-RUN . "$NVM_DIR/nvm.sh" && nvm install 23 && npm install yarn
+/tmp/nvm.sh && \
+source /opt/conf/zsh/zshrc && \
+nvm install 23 && \
+npm install yarn'
+
+RUN mkdir -p /home/dev/.ssh && \
+cp /root/.ssh/authorized_keys /home/dev/.ssh/authorized_keys && \
+chown -r dev:dev /home/dev/.ssh
 
 #
 #USR
@@ -88,8 +94,8 @@ WORKDIR /home/dev
 #
 #NVIM CONFIG
 #
-RUN mkdir -p ${GOPATH}
-RUN mkdir -p /home/dev/.config && \
+RUN mkdir -p ${GOPATH} && \
+mkdir -p /home/dev/.config && \
 mkdir -p /home/dev/.local/share/nvim/ws/worskpaces/
 
 COPY ./nvim-config/ /home/dev/.config/nvim/
