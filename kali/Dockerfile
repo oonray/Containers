@@ -37,7 +37,7 @@ thc-pptp-bruter traceroute udptunnel unix-privesc-check unrar|unar upx-ucl vboot
 vboot-utils neovim vlan voiphopper vpnc wce webshells wfuzz whatweb whois windows-binaries \
 wordlists wpscan xxd
 
-COPY --from=tmux /opt/dev/bar.deb /tmp/bat.deb
+COPY --from=tmux /opt/deb/bar.deb /tmp/bat.deb
 RUN apt install -y /tmp/bat.deb && \
 rm /tmp/bat.deb
 
