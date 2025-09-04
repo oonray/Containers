@@ -80,8 +80,8 @@ apt-get install -y aspnetcore-runtime-9.0 dotnet-sdk-9.0
 RUN zsh -c 'mkdir -p $NVM_DIR &&\
 curl -Lo /tmp/nvm.sh https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.1/install.sh && \
 chmod +x /tmp/nvm.sh && \
+./tmp/nvm.sh && \
 source $NVM_DIR/nvm.sh && \
-source /opt/conf/zsh/zshrc && \
 nvm install 23 && \
 npm install yarn'
 
