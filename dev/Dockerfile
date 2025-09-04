@@ -74,15 +74,6 @@ apt install -y /tmp/dotnet.deb && \
 apt-get update && \
 apt-get install -y aspnetcore-runtime-9.0 dotnet-sdk-9.0
 
-#
-#Install NODE
-#
-RUN zsh -c 'mkdir -p $NVM_DIR &&\
-curl -Lo /tmp/nvm.sh https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.1/install.sh && \
-chmod +x /tmp/nvm.sh && \
-./tmp/nvm.sh && \
-source $NVM_DIR/nvm.sh && \
-nvm install 23'
 
 RUN mkdir -p /home/dev/.ssh && \
 cp /root/.ssh/authorized_keys /home/dev/.ssh/authorized_keys && \
@@ -92,9 +83,17 @@ chown -r dev:dev /home/dev/.ssh
 #Configure User
 #
 USER dev
-WORKDIR /home/dev 
+WORKDIR /home/dev
 
-RUN zsh -c 'source $NVM_DIR/nvm.sh && \
+#
+#Install NODE
+#
+RUN zsh -c 'mkdir -p $NVM_DIR &&\
+curl -Lo /tmp/nvm.sh https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.1/install.sh && \
+chmod +x /tmp/nvm.sh && \
+./tmp/nvm.sh && \
+source $NVM_DIR/nvm.sh && \
+nvm install 23 && \
 npm install yarn'
 
 
