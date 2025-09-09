@@ -77,7 +77,7 @@ apt-get install -y aspnetcore-runtime-9.0 dotnet-sdk-9.0
 
 RUN mkdir -p /home/dev/.ssh && \
 cp /root/.ssh/authorized_keys /home/dev/.ssh/authorized_keys && \
-chown -r dev:dev /home/dev/.ssh
+chown -R dev:dev /home/dev/.ssh
 
 #
 #Configure User
