@@ -38,7 +38,7 @@ FROM oonray/tmux:latest AS tmux
 ENV APPIMAGE_EXTRACT_AND_RUN=1
 
 ARG USR=evilginx
-ENV USR=${USR}
+ENV USR="$USR"
 ENV CONF_DIR="/opt/conf"
 
 ENV T_CONF="$CONF_DIR/tmux/tmux.conf"
