@@ -1,8 +1,7 @@
+FROM oonray/tmux:latest AS tmux
 FROM golang:latest AS evilginx3
 
 ENV GOROOT="/usr/local/go"
-
-ENV E_PRO=false
 
 ENV B_DIR="/opt/bin"
 ENV GOBIN="$B_DIR"
@@ -27,10 +26,9 @@ RUN mkdir $G_DIR \
 RUN go install -mod=vendor $E_DIR \
     && chmod 755 $E_BIN
 
-FROM oonray/tmux:latest AS tmux
-
 FROM debian:latest AS prod
 
+ENV E_PRO=false
 ENV APPIMAGE_EXTRACT_AND_RUN=1
 
 ARG USR=evilginx
@@ -62,6 +60,8 @@ RUN mkdir -p $B_DIR \
     && mkdir -p $E_EILPUPPET \
     && mkdir -p $E_STATIC
 
+COPY --from=evilnginx /opt/bin/evilginx3 /opt/bin/evilginx
+
 RUN apt-get update && \
 apt-get install -y  \
 python3 python3-pip python3-venv \
@@ -81,7 +81,6 @@ RUN apt install -y /tmp/bat.deb && \
 rm /tmp/bat.deb
 
 COPY --from=tmux /etc/ssh/sshd_config /etc/ssh/sshd_config
-COPY --from=tmux /opt/bin/evilginx3 /opt/bin/evilginx
 
 RUN useradd -u 1000 -s /usr/bin/zsh -m $USR
 RUN echo "$USR ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers.d/$USR
@@ -97,10 +96,10 @@ RUN curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.3/install.sh | b
     && nvm install 23 \
     && npm install yarn
 
-COPY --from=tmux  $T_CONF     ~/.tmux.conf
-COPY --from=tmux  $Z_CONF     ~/.zshrc
-COPY --from=tmux  $CONF_DIR/zsh/.oh-my-zsh    ~/.oh-my-zsh
-COPY --from=tmux  $C_CONF       ~/.config/dircolors
+COPY --from=tmux  $T_CONF ~/.tmux.conf
+COPY --from=tmux  $Z_CONF ~/.zshrc
+COPY --from=tmux  $CONF_DIR/zsh/.oh-my-zsh ~/.oh-my-zsh
+COPY --from=tmux  $C_CONF ~/.config/dircolors
 RUN ssh-import-id gh:oonray
 
 ENV PUID=1000
