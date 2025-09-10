@@ -1,5 +1,5 @@
 FROM oonray/tmux:latest AS tmux
-FROM golang:latest AS evilginx3
+FROM golang:latest AS build
 
 ENV GOROOT="/usr/local/go"
 
@@ -60,7 +60,7 @@ RUN mkdir -p $B_DIR \
     && mkdir -p $E_EILPUPPET \
     && mkdir -p $E_STATIC
 
-COPY --from=evilnginx /opt/bin/evilginx3 /opt/bin/evilginx
+COPY --from=build /opt/bin/evilginx3 /opt/bin/evilginx
 
 RUN apt-get update && \
 apt-get install -y  \
