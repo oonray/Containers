@@ -75,9 +75,9 @@ COPY --from=base /opt/sliver-server  /opt/sliver-server
 USER sliver
 RUN /opt/sliver-server unpack --force
 
-COPY --from=tmux --chown=sliver:sliver ${T_CONF} ~/.tmux.conf
-COPY --from=tmux --chown=sliver:sliver ${Z_CONF} ~/.zshrc
-COPY --from=tmux --chown=sliver:sliver ${CONF_DIR}/zsh/.oh-my-zsh ~/.oh-my-zsh
+COPY --from=tmux --chown=sliver:sliver $T_CONF ~/.tmux.conf
+COPY --from=tmux --chown=sliver:sliver $Z_CONF ~/.zshrc
+COPY --from=tmux --chown=sliver:sliver $CONF_DIR/zsh/.oh-my-zsh ~/.oh-my-zsh
 COPY --from=tmux --chown=sliver:sliver $C_CONF ~/.config/dircolors
 COPY --from=tmux --chown=sliver:sliver /root/.ssh/authorized_keys ~/.ssh/authorized_keys
 

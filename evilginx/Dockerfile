@@ -90,9 +90,9 @@ RUN curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.3/install.sh | b
     && nvm install 23 \
     && npm install yarn
 
-COPY --from=tmux  ${T_CONF}     ~/.tmux.conf
-COPY --from=tmux  ${Z_CONF}     ~/.zshrc
-COPY --from=tmux  ${CONF_DIR}/zsh/.oh-my-zsh    ~/.oh-my-zsh
+COPY --from=tmux  $T_CONF     ~/.tmux.conf
+COPY --from=tmux  $Z_CONF     ~/.zshrc
+COPY --from=tmux  $CONF_DIR/zsh/.oh-my-zsh    ~/.oh-my-zsh
 COPY --from=tmux  $C_CONF       ~/.config/dircolors
 RUN ssh-import-id gh:oonray
 
