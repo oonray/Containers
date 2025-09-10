@@ -83,11 +83,10 @@ RUN mkdir -p /home/dev/.ssh && \
 cp /root/.ssh/authorized_keys /home/dev/.ssh/authorized_keys && \
 chown -R dev:dev /home/dev/.ssh
 
-COPY --from=tmux --chown=$USR:$USR ${T_CONF} /home/$USR/.tmux.conf
-COPY --from=tmux --chown=$USR:$USR ${Z_CONF} /home/$USR/.zshrc
-COPY --from=tmux --chown=$USR:$USR ${CONF_DIR}/zsh/.oh-my-zsh /home/$USR/.oh-my-zsh
-COPY --from=tmux --chown=$USR:$USR $C_CONF /home/$USR/.config/dircolors
-
+RUN cp ${T_CONF} /home/$USR/.tmux.conf \
+    && cp ${Z_CONF} /home/$USR/.zshrc \
+    && cp ${CONF_DIR}/zsh/.oh-my-zsh /home/$USR/.oh-my-zsh \
+    && cp $C_CONF /home/$USR/.config/dircolors
 
 #
 #Configure User
