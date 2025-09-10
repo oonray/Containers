@@ -4,6 +4,7 @@ RUN apt-get update && \
 apt-get install -y tmux tmuxinator zsh git jq curl sudo zip tar
 
 ENV APPIMAGE_EXTRACT_AND_RUN=1
+
 ENV GOPATH="/home/$USR/.go"
 ENV GOROOT="/usr/local/go"
 ENV PATH="$PATH:$GOROOT/bin:$GOPATH/bin"

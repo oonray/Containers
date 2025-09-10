@@ -88,11 +88,11 @@ WORKDIR /home/dev
 #
 #Install NODE
 #
-#NODE
-RUN curl -Lo /tmp/nvm.sh https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.1/install.sh && \
-chmod +x /tmp/nvm.sh && \
-/tmp/nvm.sh
-RUN . "$NVM_DIR/nvm.sh" && nvm install 23 && npm install yarn
+ENV NVM_DIR="/home/$USR/.nvm"
+RUN curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.3/install.sh | bash \
+    && [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh" \
+    && nvm install 23 \
+    && npm install yarn
 
 
 #

@@ -23,9 +23,9 @@ RUN mkdir -p /home/sliver/ && chown -R sliver:sliver /home/sliver
 
 ADD https://github.com/BishopFox/sliver.git /go/src/github.com/bishopfox/sliver/
 WORKDIR /go/src/github.com/bishopfox/sliver
-RUN make clean-all 
-RUN make 
-RUN cp -vv sliver-server /opt/sliver-server 
+RUN make clean-all
+RUN make
+RUN cp -vv sliver-server /opt/sliver-server
 
 FROM debian:latest AS production
 
