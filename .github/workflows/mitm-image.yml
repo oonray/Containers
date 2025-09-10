@@ -1,10 +1,10 @@
-name: Docker image kali
+name: Docker image Mitmproxy
 
 on:
   push:
     paths:
-      - 'kali/*'
-      - 'kali/**'
+      - 'mitmproxy/*'
+      - 'mitmproxy/**'
 
 jobs:
   build:
@@ -21,9 +21,9 @@ jobs:
         uses: docker/setup-qemu-action@v3
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
-      - name: Build and push kali
+      - name: Build and push mitmproxy
         uses: docker/build-push-action@v6
         with:
-          context: kali
+          context: mitmproxy
           push: true
-          tags: oonray/kali:latest
+          tags: oonray/mitmproxy:latest

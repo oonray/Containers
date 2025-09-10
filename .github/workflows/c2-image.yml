@@ -1,10 +1,10 @@
-name: Docker image kali
+name: Docker image c2
 
 on:
   push:
     paths:
-      - 'kali/*'
-      - 'kali/**'
+      - 'c2/*'
+      - 'c2/**'
 
 jobs:
   build:
@@ -21,9 +21,9 @@ jobs:
         uses: docker/setup-qemu-action@v3
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
-      - name: Build and push kali
+      - name: Build and push c2
         uses: docker/build-push-action@v6
         with:
-          context: kali
+          context: c2
           push: true
-          tags: oonray/kali:latest
+          tags: oonray/c2:latest
