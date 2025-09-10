@@ -22,7 +22,8 @@ RUN cp -vv sliver-server /opt/sliver-server
 
 FROM debian:latest AS production
 
-ENV USR=sliver
+ARG USR=sliver
+ENV USR=$USR
 ENV GOROOT="/usr/local/go"
 ENV CONF_DIR="/opt/conf"
 ENV T_CONF="$CONF_DIR/tmux/tmux.conf"
@@ -41,7 +42,7 @@ RUN apt-get update --fix-missing \
     libpcap-dev libsqlite3-dev libgmp3-dev \
     nasm dumb-init tmux zsh
 
-# Install METASPLOITE
+# Install METASPLOIT
 RUN curl https://raw.githubusercontent.com/rapid7/metasploit-omnibus/master/config/templates/metasploit-framework-wrappers/msfupdate.erb > msfinstall \
     && chmod 755 msfinstall \
     && ./msfinstall \

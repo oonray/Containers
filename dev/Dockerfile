@@ -1,7 +1,7 @@
 #
 #SSH + TMUX
 #
-FROM oonray/tmux:latest
+FROM oonray/tmux:latest AS tmux
 
 #
 #Set ENV
