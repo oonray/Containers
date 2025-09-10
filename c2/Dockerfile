@@ -1,13 +1,6 @@
 # MY tmux config
 FROM oonray/tmux:latest AS tmux
 
-ENV USR=sliver
-ENV GOROOT="/usr/local/go"
-ENV CONF_DIR="/opt/conf"
-ENV T_CONF="$CONF_DIR/tmux/tmux.conf"
-ENV Z_CONF="$CONF_DIR/zsh/zshrc"
-ENV C_CONF="$CONF_DIR/colors/dircolors"
-
 #
 # https://github.com/BishopFox/sliver/blob/master/Dockerfile
 #
@@ -28,6 +21,13 @@ RUN make
 RUN cp -vv sliver-server /opt/sliver-server
 
 FROM debian:latest AS production
+
+ENV USR=sliver
+ENV GOROOT="/usr/local/go"
+ENV CONF_DIR="/opt/conf"
+ENV T_CONF="$CONF_DIR/tmux/tmux.conf"
+ENV Z_CONF="$CONF_DIR/zsh/zshrc"
+ENV C_CONF="$CONF_DIR/colors/dircolors"
 
 RUN apt-get update --fix-missing \
     && apt-get -y upgrade \

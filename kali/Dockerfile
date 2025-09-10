@@ -3,12 +3,18 @@ FROM kalilinux/kali-rolling:latest
 
 ENV APPIMAGE_EXTRACT_AND_RUN=1
 
-ENV USR=kali
+ARG USR=kali
+ENV USR=$USR
+
 ENV GOROOT="/usr/local/go"
+ENV G_DIR="/opt/git"
+ENV D_DIR="/opt/deb"
 ENV CONF_DIR="/opt/conf"
+
 ENV T_CONF="$CONF_DIR/tmux/tmux.conf"
 ENV Z_CONF="$CONF_DIR/zsh/zshrc"
 ENV C_CONF="$CONF_DIR/colors/dircolors"
+
 
 RUN apt-get update && \
 apt-get install -y kali-tools-passwords \
@@ -37,7 +43,7 @@ thc-pptp-bruter traceroute udptunnel unix-privesc-check unrar upx-ucl vboot-kern
 vboot-utils neovim vlan voiphopper vpnc wce webshells wfuzz whatweb whois windows-binaries \
 wordlists wpscan xxd
 
-COPY --from=tmux /opt/deb/bat.deb /tmp/bat.deb
+COPY --from=tmux $D_DIR/bat.deb /tmp/bat.deb
 RUN apt install -y /tmp/bat.deb && \
 rm /tmp/bat.deb
 
@@ -48,15 +54,14 @@ COPY --from=tmux /opt/entrypoint.sh /opt/entrypoint.sh
 RUN useradd -u 1000 -s /usr/bin/zsh -m $USR
 RUN echo "$USR ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers.d/$USR
 
-USER kali
-WORKDIR /home/kali
-RUN mkdir -p ~/.config
+USER $USR
+WORKDIR /home/$USR
+RUN mkdir -p /home/$USR/.config
 
-COPY --from=tmux --chown=kali:kali ${T_CONF} ~/.tmux.conf
-COPY --from=tmux --chown=kali:kali ${Z_CONF} ~/.zshrc
-COPY --from=tmux --chown=kali:kali ${CONF_DIR}/zsh/.oh-my-zsh ~/.oh-my-zsh
-COPY --from=tmux --chown=kali:kali $C_CONF ~/.config/dircolors
-COPY --from=tmux --chown=kali:kali /root/.ssh/authorized_keys ~/.ssh/authorized_keys
+COPY --from=tmux --chown=$USR:$USR ${T_CONF} /home/$USR/.tmux.conf
+COPY --from=tmux --chown=$USR:$USR ${Z_CONF} /home/$USR/.zshrc
+COPY --from=tmux --chown=$USR:$USR ${CONF_DIR}/zsh/.oh-my-zsh /home/$USR/.oh-my-zsh
+COPY --from=tmux --chown=$USR:$USR $C_CONF /home/$USR/.config/dircolors
 
 ENV PUID=1000
 ENV PGID=1000

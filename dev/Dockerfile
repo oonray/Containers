@@ -8,9 +8,16 @@ FROM oonray/tmux:latest
 #
 ENV APPIMAGE_EXTRACT_AND_RUN=1
 
-ENV USR=dev
+ARG USR=dev
+ENV USR=$USR
+
+ENV G_DIR="/opt/git"
+ENV D_DIR="/opt/deb"
+ENV CONF_DIR="/opt/conf"
+
 ENV GOPATH="/home/$USR/.go"
 ENV GOROOT="/usr/local/go"
+
 ENV NVM_DIR="/home/$USR/.nvm"
 ENV PATH="$PATH:/home/dev/.nvm:$GOROOT/bin:$GOPATH/bin"
 
@@ -76,6 +83,12 @@ RUN mkdir -p /home/dev/.ssh && \
 cp /root/.ssh/authorized_keys /home/dev/.ssh/authorized_keys && \
 chown -R dev:dev /home/dev/.ssh
 
+COPY --from=tmux --chown=$USR:$USR ${T_CONF} /home/$USR/.tmux.conf
+COPY --from=tmux --chown=$USR:$USR ${Z_CONF} /home/$USR/.zshrc
+COPY --from=tmux --chown=$USR:$USR ${CONF_DIR}/zsh/.oh-my-zsh /home/$USR/.oh-my-zsh
+COPY --from=tmux --chown=$USR:$USR $C_CONF /home/$USR/.config/dircolors
+
+
 #
 #Configure User
 #
@@ -85,7 +98,6 @@ WORKDIR /home/dev
 #
 #Install NODE
 #
-ENV NVM_DIR="/home/$USR/.nvm"
 RUN curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.3/install.sh | bash \
     && [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh" \
     && nvm install 23 \
