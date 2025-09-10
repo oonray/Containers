@@ -16,12 +16,6 @@ ENV E_REDIRECTORS="$E_DIR/redirectors"
 ENV E_EILPUPPET="$E_DIR/evilpuppet"
 ENV E_STATIC="$E_DIR/evilpuppet"
 
-ARG DISPLAY=":99"
-ENV DISPLAY="${DISPLAY}"
-
-ARG E_PORT=33500
-ENV E_PORT=${E_PORT}
-
 ENV GOPATH="$E_DIR"
 
 ENV E_BIN="$B_DIR/evilginx3"
@@ -35,6 +29,8 @@ RUN go install -mod=vendor $E_DIR \
 
 FROM oonray/tmux:latest AS tmux
 
+FROM debian:latest AS prod
+
 ENV APPIMAGE_EXTRACT_AND_RUN=1
 
 ARG USR=evilginx
@@ -45,7 +41,19 @@ ENV T_CONF="$CONF_DIR/tmux/tmux.conf"
 ENV Z_CONF="$CONF_DIR/zsh/zshrc"
 ENV C_CONF="$CONF_DIR/colors/dircolors"
 
-FROM debian:latest AS prod
+ENV B_DIR="/opt/bin"
+
+ENV E_DIR="/opt/evilginx"
+ENV E_PHISHLETS="$E_DIR/phislets"
+ENV E_REDIRECTORS="$E_DIR/redirectors"
+ENV E_EILPUPPET="$E_DIR/evilpuppet"
+ENV E_STATIC="$E_DIR/evilpuppet"
+
+ARG E_PORT=33500
+ENV E_PORT=${E_PORT}
+
+ARG DISPLAY=":99"
+ENV DISPLAY="${DISPLAY}"
 
 RUN mkdir -p $G_DIR \
     && mkdir -p $B_DIR \
