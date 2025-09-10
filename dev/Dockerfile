@@ -33,12 +33,9 @@ ENV PGID=1000
 #
 RUN apt-get update && \
 apt-get install -y \
-python3 python3-pip python3-venv && \
-\
-apt-get install -y \
+python3 python3-pip python3-venv \
+radare2 xxd ncurses-hexedit \
 fuse3 fd-find ripgrep sudo && \
-\
-apt-get install -y \
 gcc g++ make bear cmake llvm \
 mingw-w64 mingw-w64-tools build-essential \
 exuberant-ctags lua-check \
@@ -112,8 +109,7 @@ RUN zsh -c "nvim --headless -c':sleep 20 | qa'"
 #
 #Install debuggers gdb gef + radare
 #
-RUN zsh -c "$(curl -fsSL https://gef.blah.cat/sh)" && \
-apt-get install -y radare2 xxd ncurses-hexedit
+RUN zsh -c "$(curl -fsSL https://gef.blah.cat/sh)"
 
 #
 #Cleanup
