@@ -55,8 +55,7 @@ ENV E_PORT=${E_PORT}
 ARG DISPLAY=":99"
 ENV DISPLAY="${DISPLAY}"
 
-RUN mkdir -p $G_DIR \
-    && mkdir -p $B_DIR \
+RUN mkdir -p $B_DIR \
     && mkdir -p $E_DIR \
     && mkdir -p $E_PHISHLETS \
     && mkdir -p $E_REDIRECTORS \
