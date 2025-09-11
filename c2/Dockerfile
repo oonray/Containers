@@ -1,3 +1,4 @@
+#c2
 # MY tmux config
 FROM oonray/tmux:latest AS tmux
 
@@ -65,26 +66,27 @@ RUN apt-get remove -y curl gnupg \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
-RUN groupadd -g 999 sliver \
-    && useradd -r -u 999 -s /usr/bin/zsh -g sliver sliver \
-    && mkdir -p /home/sliver/ \
-    && chown -R sliver:sliver /home/sliver \
-    && su -l sliver -c 'mkdir -p ~/.msf4/ && touch ~/.msf4/initial_setup_complete'
+RUN groupadd -g 999 $USR \
+    && useradd -r -u 999 -s /usr/bin/zsh -g $USR $USR \
+    && mkdir -p /home/$USR/ \
+    && chown -R $USR:$USR /home/$USR \
+    && su -l $USR -c 'mkdir -p ~/.msf4/ && touch ~/.msf4/initial_setup_complete'
 
-COPY --from=base /opt/sliver-server  /opt/sliver-server
+COPY --from=base /opt/sliver-server /opt/sliver-server
 
-USER sliver
+USER $USR
 RUN /opt/sliver-server unpack --force
+WORKDIR /home/$USR
+RUN mkdir -p /home/$USR/.config
 
-COPY --from=tmux --chown=sliver:sliver $T_CONF ~/.tmux.conf
-COPY --from=tmux --chown=sliver:sliver $Z_CONF ~/.zshrc
-COPY --from=tmux --chown=sliver:sliver $CONF_DIR/zsh/.oh-my-zsh ~/.oh-my-zsh
-COPY --from=tmux --chown=sliver:sliver $C_CONF ~/.config/dircolors
-COPY --from=tmux --chown=sliver:sliver /root/.ssh/authorized_keys ~/.ssh/authorized_keys
+COPY --from=tmux --chown=$USR:$USR ${T_CONF} /home/$USR/.tmux.conf
+COPY --from=tmux --chown=$USR:$USR ${Z_CONF} /home/$USR/.zshrc
+COPY --from=tmux --chown=$USR:$USR ${CONF_DIR}/zsh/.oh-my-zsh /home/$USR/.oh-my-zsh
+COPY --from=tmux --chown=$USR:$USR $C_CONF /home/$USR/.config/dircolors
 
 COPY entrypoint.sh /opt/entrypoint.sh
 RUN chmod +x /opt/entrypoint.sh
 
-WORKDIR /home/sliver/
+WORKDIR /home/$USR/
 VOLUME [ "/home/sliver/.sliver" ]
 ENTRYPOINT [ "/opt/entrypoint.sh" ]

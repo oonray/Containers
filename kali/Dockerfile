@@ -70,8 +70,9 @@ ENV PGID=1000
 #Cleanup
 #
 USER root
-RUN chown -R $USR /home/$USR && \
-apt-get autoremove && \
-apt-get clean
+RUN chown -R $USR /home/$USR \
+    && apt-get autoremove \
+    && apt-get clean \
+    && rm -rf /opt/* /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
 ENTRYPOINT ["/opt/entrypoint.sh"]

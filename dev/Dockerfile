@@ -1,3 +1,4 @@
+#dev
 #
 #SSH + TMUX
 #
@@ -41,12 +42,15 @@ ENV PGID=1000
 RUN apt-get update && \
 apt-get install -y \
 python3 python3-pip python3-venv \
-radare2 xxd ncurses-hexedit \
+xxd ncurses-hexedit \
 fuse3 fd-find ripgrep sudo && \
 gcc g++ make bear cmake llvm \
 mingw-w64 mingw-w64-tools build-essential \
 exuberant-ctags lua-check \
 gdb swig
+
+RUN curl -LO /opt/dev/radare2.deb https://github.com/radareorg/radare2/releases/download/6.0.2/radare2_6.0.2_amd64.deb \
+    && apt install /opt/dev/radare2.deb
 
 #
 #Create user
@@ -126,10 +130,10 @@ RUN zsh -c "$(curl -fsSL https://gef.blah.cat/sh)"
 #Cleanup
 #
 USER root
-RUN rm -rf /opt/* && \
-chown -R $USR /home/$USR && \
-apt-get autoremove && \
-apt-get clean
+RUN chown -R $USR /home/$USR \
+    && apt-get autoremove \
+    && apt-get clean \
+    && rm -rf /opt/* /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
 #
 #Entrypoint
