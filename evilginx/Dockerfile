@@ -21,7 +21,7 @@ ENV E_BIN="$B_DIR/evilginx3"
 
 RUN mkdir $G_DIR \
     && mkdir $B_DIR \
-    && git clone https://github.com/kgretzky/evilginx3.git $E_DIR 
+    && git clone https://github.com/kgretzky/evilginx2.git $E_DIR
 
 RUN go install -mod=vendor $E_DIR \
     && chmod 755 $E_BIN
