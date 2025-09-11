@@ -5,6 +5,8 @@ on:
     paths:
       - 'kali/*'
       - 'kali/**'
+      - 'base/kali/*'
+      - 'base/kali/**'
 
 jobs:
   build-kali-base:

@@ -48,12 +48,12 @@ COPY ../tmux/tmux.conf /opt/conf
 COPY ../tmux/zshrc /opt/conf
 COPY ../tmux/dircolors /opt/conf
 
-FROM install as install-go
+FROM install AS installgo
 ENV GOROOT="/usr/local/go"
 ENV PATH="$PATH:$GOROOT/bin"
 COPY --from=golang:latest ${GOROOT} ${GOROOT}
 
-FROM install-go AS user
+FROM installgo AS user
 ONBUILD ARG USR
 ONBUILD ARG GH_USR
 ONBUILD ARG PUID
