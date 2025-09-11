@@ -1,10 +1,14 @@
 #!/usr/bin/dumb-init /usr/bin/zsh
 
-if [ $E_PRO ]; then
-    unzip -o /opt/tar/evilginx/evilginx-pro-linux-*.zip -d $E_DIR
+if [ -s $E_PRO ]; then
+    unzip -o $E_PRO -d $E_USR_CONF_DIR
 fi
 
-if [ -d $HOME/.evilginx ]; then
+if [ -s $E_CONFIG ]; then
+    cat $E_CONFIG | envsubst > $E_USR_CONFIG
+fi
+
+if [ ! -d $E_CONF ]; then
     ln -s $E_DIR $HOME/.evilginx
 fi
 

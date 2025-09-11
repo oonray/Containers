@@ -1,12 +1,12 @@
-#c2
-# MY tmux config
-FROM oonray/tmux:latest AS tmux
+ARG IMAGE=oonray/kali
+ARG USR=sliver
+ARG GH_USR=oonray
+ARG ENTRY=/opt/entrypoint.sh
+ARG B_VER=0.25.0
+ARG ARCH=amd64 #amd64 arm64 i386
+ARG PUID=999
+ARG PGID=999
 
-#
-# https://github.com/BishopFox/sliver/blob/master/Dockerfile
-#
-# Modified to fit my needs
-## Compiles Sliver for use
 FROM golang:latest AS base
 
 RUN apt-get update --fix-missing && apt-get -y install \
@@ -22,14 +22,6 @@ RUN make
 RUN cp -vv sliver-server /opt/sliver-server
 
 FROM debian:latest AS production
-
-ARG USR=sliver
-ENV USR=$USR
-ENV GOROOT="/usr/local/go"
-ENV CONF_DIR="/opt/conf"
-ENV T_CONF="$CONF_DIR/tmux/tmux.conf"
-ENV Z_CONF="$CONF_DIR/zsh/zshrc"
-ENV C_CONF="$CONF_DIR/colors/dircolors"
 
 RUN apt-get update --fix-missing \
     && apt-get -y upgrade \
