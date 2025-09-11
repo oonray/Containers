@@ -23,7 +23,8 @@ RUN mkdir $G_DIR \
     && mkdir $B_DIR \
     && git clone https://github.com/kgretzky/evilginx2.git $E_DIR
 
-RUN go install -mod=vendor $E_DIR \
+WORKDIR $E_DIR
+RUN go build -o $E_BIN -mod=vendor main.go \
     && chmod 755 $E_BIN
 
 FROM debian:latest AS prod
