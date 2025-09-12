@@ -1,12 +1,12 @@
-name: Docker image Install
+name: Docker image user
 
 on:
   push:
     paths:
-      - '.github/workflows/install.yml'
+      - '.github/workflows/user.yml'
       - '.github/workflows/container.yml'
-      - 'base/install/*'
-      - 'base/install/**'
+      - 'base/user/*'
+      - 'base/user/**'
 
 jobs:
   build-kali-amd64:
@@ -16,8 +16,8 @@ jobs:
       image: kali
       tag: install
       platform: linux/amd64
-      base: kalilinux/kali-rolling:amd64
-      context: base/install
+      base: oonray/kali:install
+      context: base/user
     secrets:
       username: ${{ secrets.DOCKERHUB_USERNAME }}
       password: ${{ secrets.DOCKERHUB_TOKEN }}
@@ -27,10 +27,10 @@ jobs:
     with:
       arch: arm64
       image: kali
-      tag: install-arm64
+      tag: install
       platform: linux/arm64
-      base: kalilinux/kali-rolling:arm64
-      context: base/install
+      base: oonray/kali:install-arm64
+      context: base/user
     secrets:
       username: ${{ secrets.DOCKERHUB_USERNAME }}
       password: ${{ secrets.DOCKERHUB_TOKEN }}
@@ -42,8 +42,8 @@ jobs:
       image: debian
       tag: install
       platform: linux/amd64
-      base: debian:latest
-      context: base/install
+      base: oonray/debian:install
+      context: base/user
     secrets:
       username: ${{ secrets.DOCKERHUB_USERNAME }}
       password: ${{ secrets.DOCKERHUB_TOKEN }}
@@ -53,10 +53,10 @@ jobs:
     with:
       arch: arm64
       image: debian
-      tag: install-arm64
+      tag: install
       platform: linux/arm64
-      base: debian:latest
-      context: base/install
+      base: oonray/debian:install-arm64
+      context: base/user
     secrets:
       username: ${{ secrets.DOCKERHUB_USERNAME }}
       password: ${{ secrets.DOCKERHUB_TOKEN }}
