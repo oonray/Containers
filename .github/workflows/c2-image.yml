@@ -20,15 +20,3 @@ jobs:
       username: ${{ secrets.DOCKERHUB_USERNAME }}
       password: ${{ secrets.DOCKERHUB_TOKEN }}
 
-  build-c2-arm64:
-    uses: oonray/Containers/.github/workflows/container.yml@main
-    with:
-      arch: arm64
-      image: c2
-      tag: latest-arm64
-      platform: linux/arm64
-      base: oonray/c2:user-arm64
-      context: c2
-    secrets:
-      username: ${{ secrets.DOCKERHUB_USERNAME }}
-      password: ${{ secrets.DOCKERHUB_TOKEN }}
