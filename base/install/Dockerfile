@@ -23,8 +23,8 @@ RUN apt-get update \
     \
     kali-linux-core kali-system-cli
 
-COPY ../ssh/sshd_config /etc/ssh/sshd_config
-COPY ../ssh/entrypoint.sh ${ENTRY}
+COPY sshd_config /etc/ssh/sshd_config
+COPY entrypoint.sh ${ENTRY}
 
 RUN curl -Lo /tmp/bat.deb \
     https://github.com/sharkdp/bat/releases/download/v${B_VER}/bat_${B_VER}_${ARC}.deb \
@@ -32,7 +32,7 @@ RUN curl -Lo /tmp/bat.deb \
 
 SHELL ["/usr/bin/zsh","-c"]
 
-COPY ../../tmux/tmux.conf /opt/conf
-COPY ../../tmux/zshrc /opt/conf
-COPY ../../tmux/dircolors /opt/conf
+COPY tmux.conf /opt/conf
+COPY zshrc /opt/conf
+COPY dircolors /opt/conf
 
