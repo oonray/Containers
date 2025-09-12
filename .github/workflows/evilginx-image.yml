@@ -22,6 +22,18 @@ jobs:
     secrets:
       username: ${{ secrets.DOCKERHUB_USERNAME }}
       password: ${{ secrets.DOCKERHUB_TOKEN }}
+  build-evilginx-go-arm64:
+    uses: oonray/Containers/.github/workflows/container.yml@main
+    with:
+      arch: arm64
+      image: evilginx
+      tag: golang-arm64
+      platform: linux/arm64
+      base: oonray/evilginx:user-arm64
+      context: base/dev/go
+    secrets:
+      username: ${{ secrets.DOCKERHUB_USERNAME }}
+      password: ${{ secrets.DOCKERHUB_TOKEN }}
   build-evilginx-node-amd64:
     uses: oonray/Containers/.github/workflows/container.yml@main
     needs: build-evilginx-go-amd64
@@ -35,18 +47,6 @@ jobs:
     secrets:
       username: ${{ secrets.DOCKERHUB_USERNAME }}
       password: ${{ secrets.DOCKERHUB_TOKEN }}
-  build-evilginx-go-arm64:
-    uses: oonray/Containers/.github/workflows/container.yml@main
-    with:
-      arch: arm64
-      image: evilginx
-      tag: golang-arm64
-      platform: linux/arm64
-      base: oonray/evilginx:user-arm64
-      context: base/dev/go
-    secrets:
-      username: ${{ secrets.DOCKERHUB_USERNAME }}
-      password: ${{ secrets.DOCKERHUB_TOKEN }}
   build-evilginx-node-arm64:
     uses: oonray/Containers/.github/workflows/container.yml@main
     needs: build-evilginx-go-arm64
@@ -55,11 +55,12 @@ jobs:
       image: evilginx
       tag: node-arm64
       platform: linux/arm64
-      base: oonray/evilginx:node-arm64
+      base: oonray/evilginx:golang-arm64
       context: base/dev/node
     secrets:
       username: ${{ secrets.DOCKERHUB_USERNAME }}
       password: ${{ secrets.DOCKERHUB_TOKEN }}
+
   build-evilginx-amd64:
     uses: oonray/Containers/.github/workflows/container.yml@main
     needs: build-evilginx-node-amd64
