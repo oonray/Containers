@@ -17,7 +17,7 @@ RUN apt-get update \
     sudo zip 7zip tar xxd \
     net-tools netcat-traditional \
     python3 python3-pip python3-venv pipx \
-    i2c-tools screen set cifs-utils \
+    i2c-tools screen cifs-utils \
     cryptsetup cryptsetup-initramfs \
     cryptsetup-nuke-password 
 
