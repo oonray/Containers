@@ -8,17 +8,14 @@ on:
 
 jobs:
   build-kali-amd64:
-    runs-on: ubuntu-latest
-    steps:
-      - name: build-kali-amd64
-        uses: oonray/Containers/.github/workflows/container.yml@main
-        with: 
-          arch: amd64
-          image: kali
-          tag: install
-          platform: linux/amd64
-          base: kalilinux/kali-rolling:amd64
-          context: base/install
+    uses: oonray/Containers/.github/workflows/container.yml@main
+    with: 
+      arch: amd64
+      image: kali
+      tag: install
+      platform: linux/amd64
+      base: kalilinux/kali-rolling:amd64
+      context: base/install
 
   build-kali-arm64:
     runs-on: ubuntu-latest
