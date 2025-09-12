@@ -83,7 +83,7 @@ jobs:
     with:
       arch: arm64
       image: evilginx
-      tag: user
+      tag: user-arm64
       platform: linux/arm64
       base: oonray/debian:install-arm64
       context: base/user
@@ -113,7 +113,7 @@ jobs:
     with:
       arch: arm64
       image: c2
-      tag: user
+      tag: user-arm64
       platform: linux/arm64
       base: oonray/debian:install-arm64
       context: base/user
