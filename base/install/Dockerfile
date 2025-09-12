@@ -32,7 +32,7 @@ RUN curl -Lo /tmp/bat.deb \
 
 SHELL ["/usr/bin/zsh","-c"]
 
-COPY ../tmux/tmux.conf /opt/conf
-COPY ../tmux/zshrc /opt/conf
-COPY ../tmux/dircolors /opt/conf
+COPY ../../tmux/tmux.conf /opt/conf
+COPY ../../tmux/zshrc /opt/conf
+COPY ../../tmux/dircolors /opt/conf
 
