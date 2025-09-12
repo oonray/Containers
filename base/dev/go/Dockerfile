@@ -10,7 +10,7 @@ ARG GOROOT="/usr/local/go"
 ARG GOROOT_TINY="/usr/local/tinygo"
 
 ENV GOROOT=${GOROOT}
-ENV GOROOT_TINY=${GOROOT_TINY}}
+ENV GOROOT_TINY=${GOROOT_TINY}
 
 USER root
 
