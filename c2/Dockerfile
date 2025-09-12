@@ -41,6 +41,7 @@ RUN curl https://raw.githubusercontent.com/rapid7/metasploit-omnibus/master/conf
     https://raw.githubusercontent.com/carlospolop/PEASS-ng/master/metasploit/peass.rb  \
     && msfupdate
 
+USER $USR
 # Install EMPIRE
 RUN git clone --recursive https://github.com/BC-SECURITY/Empire.git /opt/Empire
 WORKDIR /opt/Empire
@@ -50,8 +51,6 @@ RUN chmod 755 ./setup/install.sh \
 RUN apt-get autoremove -y \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
-
-USER $USR
 
 RUN mkdir -p /home/$USR/.sliver \
     && mkdir -p /home/$USR/.msf4/ \
