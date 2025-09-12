@@ -19,10 +19,9 @@ USER ${USR}
 ENV PGID=${PGID} PUID=${PUID}
 WORKDIR "/home/$USR/"
 
-RUN mkdir -p .config \
-    && cp -r /opt/conf/zshrc ${Z_USR_CONF} \
-    && cp -r /opt/conf/tmux.conf ${T_USR_CONF} \
-    && cp -r /opt/conf/dircolors ${T_USR_CONF}
+COPY tmux.conf ${T_USR_CONF}
+COPY zshrc ${Z_USR_CONF}
+COPY dircolors ${C_USR_CONF}
 
 RUN git clone https://github.com/ohmyzsh/ohmyzsh.git $CONF_USR_DIR/.oh-my-zsh
 
