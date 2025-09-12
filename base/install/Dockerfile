@@ -14,8 +14,8 @@ RUN apt-get update \
     ssh-import-id \
     \
     tmux tmuxinator zsh git jq yq curl unrar \
-    sudo zip 7zip tar xxd netcat-traditional \
-    net-tools dns-utils netcat-traditional \
+    sudo zip 7zip tar xxd \
+    net-tools netcat-traditional \
     python3 python3-pip python3-venv pipx \
     i2c-tools screen set cifs-utils \
     cryptsetup cryptsetup-initramfs \
