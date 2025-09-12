@@ -3,8 +3,6 @@ name: Docker image user
 on:
   push:
     paths:
-      - '.github/workflows/user.yml'
-      - '.github/workflows/container.yml'
       - 'base/user/*'
       - 'base/user/**'
 
