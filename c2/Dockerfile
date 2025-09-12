@@ -64,6 +64,7 @@ COPY entrypoint.sh /opt/entrypoint.sh
 RUN chmod +x /opt/entrypoint.sh \
     && chmod +x /usr/bin/sliver-server
 
+
 WORKDIR /home/$USR/
 RUN sliver-server unpack --force
 
