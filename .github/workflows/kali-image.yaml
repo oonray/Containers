@@ -18,16 +18,3 @@ jobs:
     secrets:
       username: ${{ secrets.DOCKERHUB_USERNAME }}
       password: ${{ secrets.DOCKERHUB_TOKEN }}
-
-  build-kali-arm64:
-    uses: oonray/Containers/.github/workflows/container.yml@main
-    with:
-      arch: arm64
-      image: kali
-      tag: latest-arm64
-      platform: linux/arm64
-      base: oonray/kali:user-arm64
-      context: kali
-    secrets:
-      username: ${{ secrets.DOCKERHUB_USERNAME }}
-      password: ${{ secrets.DOCKERHUB_TOKEN }}

@@ -18,6 +18,7 @@ FROM base AS c2
 ARG USR
 ENV USR=${USR}
 
+USER root
 RUN apt-get update --fix-missing \
     && apt-get -y upgrade \
     && apt-get -y install \
