@@ -19,9 +19,7 @@ RUN apt-get update \
     python3 python3-pip python3-venv pipx \
     i2c-tools screen set cifs-utils \
     cryptsetup cryptsetup-initramfs \
-    cryptsetup-nuke-password \
-    \
-    kali-linux-core kali-system-cli
+    cryptsetup-nuke-password 
 
 COPY sshd_config /etc/ssh/sshd_config
 COPY entrypoint.sh ${ENTRY}
