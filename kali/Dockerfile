@@ -1,24 +1,12 @@
-ARG IMAGE=oonray/kali
-ARG USR=kali
-ARG GH_USR=oonray
-ARG ENTRY=/opt/entrypoint.sh
-ARG B_VER=0.25.0
-ARG ARCH=amd64 #amd64 arm64 i386
-ARG PUID=999
-ARG PGID=999
-
 FROM base as kali
-ARG IMAGE
 ARG USR
-ARG GH_USR
-ARG ENTRY
-ARG B_VER
 ARG ARCH
 ARG PUID
 ARG PGID
 
 RUN apt-get update && \
 apt-get install -y \
+kali-linux-core kali-system-cli \
 mitmproxy python3-impacket python3-scapy \
 proxychains socat nmap responder peass netexec gobuster  \
 arp-scan iputils-arping bind9-dnsutils \
