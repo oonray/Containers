@@ -1,10 +1,11 @@
 ARG ARCH=amd64 #amd64 arm64 i386
+
+FROM --platform=linux/$ARCH base  AS install
+ARG ARCH
 ARG ENTRY=/opt/entrypoint.sh
 ARG B_VER=0.25.0
 
-FROM --platform=linux/$ARCH base  AS install
-
-ENV ARC=${ARCH} APPIMAGE_EXTRACT_AND_RUN=1 \
+ENV APPIMAGE_EXTRACT_AND_RUN=1 \
     ENTRY=${ENTRY} B_VER=${B_VER} ENTRY=${ENTRY}
 
 
@@ -26,8 +27,9 @@ RUN apt-get update \
 COPY sshd_config /etc/ssh/sshd_config
 COPY entrypoint.sh ${ENTRY}
 
-RUN curl -Lo /tmp/bat.deb \
-    https://github.com/sharkdp/bat/releases/download/v${B_VER}/bat_${B_VER}_${ARC}.deb \
+ARG G_URL=https://github.com
+ARG B_URL=${G_URL}/sharkdp/bat/releases/download/v${B_VER}/bat_${B_VER}_${ARCH}.deb
+RUN curl -Lo /tmp/bat.deb ${B_URL}\
     && apt install -y /tmp/bat.deb
 
 SHELL ["/usr/bin/zsh","-c"]
