@@ -11,7 +11,7 @@ ENV  \
     Z_USR_CONF="/home/$USR/.zshrc" \
     C_USR_CONF="/home/$USR/.config/dircolors"
 
-RUN useradd -r -m -u $PUID -g $USR -s /usr/bin/zsh $USR \
+RUN useradd -r -m -u $PUID -s /usr/bin/zsh $USR \
     && echo "$USR ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers.d/$USR
 
 USER ${USR}
