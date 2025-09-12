@@ -9,7 +9,7 @@ on:
       - 'base/install/**'
 
 jobs:
-  build-kali-amd64:
+  build-install-kali-amd64:
     uses: oonray/Containers/.github/workflows/container.yml@main
     with:
       arch: amd64
@@ -22,7 +22,7 @@ jobs:
       username: ${{ secrets.DOCKERHUB_USERNAME }}
       password: ${{ secrets.DOCKERHUB_TOKEN }}
 
-  build-kali-arm64:
+  build-install-kali-arm64:
     uses: oonray/Containers/.github/workflows/container.yml@main
     with:
       arch: arm64
@@ -35,7 +35,7 @@ jobs:
       username: ${{ secrets.DOCKERHUB_USERNAME }}
       password: ${{ secrets.DOCKERHUB_TOKEN }}
 
-  build-debian-amd64:
+  build-install-debian-amd64:
     uses: oonray/Containers/.github/workflows/container.yml@main
     with:
       arch: amd64
@@ -48,7 +48,7 @@ jobs:
       username: ${{ secrets.DOCKERHUB_USERNAME }}
       password: ${{ secrets.DOCKERHUB_TOKEN }}
 
-  build-debian-arm64:
+  build-install-debian-arm64:
     uses: oonray/Containers/.github/workflows/container.yml@main
     with:
       arch: arm64
