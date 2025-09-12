@@ -42,10 +42,11 @@ RUN curl https://raw.githubusercontent.com/rapid7/metasploit-omnibus/master/conf
     && msfupdate
 
 USER $USR
+
 # Install EMPIRE
-RUN git clone --recursive https://github.com/BC-SECURITY/Empire.git /opt/Empire
+RUN sudo git clone --recursive https://github.com/BC-SECURITY/Empire.git /opt/Empire
 WORKDIR /opt/Empire
-RUN chmod 755 ./setup/install.sh \
+RUN sudo chmod 755 ./setup/install.sh \
 && ./setup/install.sh
 
 RUN apt-get autoremove -y \
