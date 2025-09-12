@@ -4,6 +4,9 @@ ARG ARCH
 ARG PUID
 ARG PGID
 
+ENV USR=${USR}
+
+USER root
 RUN apt-get update && \
 apt-get install -y \
 kali-linux-core kali-system-cli \
@@ -24,5 +27,7 @@ sslyze statsprocessor stunnel4 swaks tcpick tcpreplay telnet testdisk tftp-hpa t
 thc-pptp-bruter traceroute udptunnel unix-privesc-check upx-ucl vboot-kernel-utils \
 vboot-utils neovim vlan voiphopper vpnc wce webshells wfuzz whatweb whois windows-binaries \
 wordlists wpscan
+
+USER $USR
 
 ENTRYPOINT ["/opt/entrypoint.sh"]
