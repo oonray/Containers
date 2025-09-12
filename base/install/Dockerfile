@@ -8,7 +8,6 @@ ARG B_VER=0.25.0
 ENV APPIMAGE_EXTRACT_AND_RUN=1 \
     ENTRY=${ENTRY} B_VER=${B_VER} ENTRY=${ENTRY}
 
-
 RUN apt-get update \
     && apt-get install -y dumb-init \
     openssh-client openssh-server \
