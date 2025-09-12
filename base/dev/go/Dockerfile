@@ -12,12 +12,12 @@ ARG GOROOT_TINY="/usr/local/tinygo"
 ENV GOROOT=${GOROOT}
 ENV GOROOT_TINY=${GOROOT_TINY}}
 
-ENV PATH="$PATH:$GOROOT/bin:$GOROOT_TINY/bin"
-
 USER root
 
 COPY --from=go ${GOROOT} ${GOROOT}
-COPY --from=tiny /tinygo ${GOROOT_TINY}
+COPY --from=tiny ${GOROOT_TINY} ${GOROOT_TINY}
+
+ENV PATH="$PATH:$GOROOT/bin:$GOROOT_TINY/bin"
 
 RUN apt-get install -y apt-utils make
 USER $USR
