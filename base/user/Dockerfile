@@ -23,7 +23,7 @@ COPY tmux.conf ${T_USR_CONF}
 COPY zshrc ${Z_USR_CONF}
 COPY dircolors ${C_USR_CONF}
 
-RUN git clone https://github.com/ohmyzsh/ohmyzsh.git $CONF_USR_DIR/.oh-my-zsh
+RUN git clone https://github.com/ohmyzsh/ohmyzsh.git .oh-my-zsh
 
 RUN ssh-import-id gh:$GH_USR
 
