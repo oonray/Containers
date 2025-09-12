@@ -54,7 +54,7 @@ jobs:
       - name: Build and push kali install arm64
         uses: docker/build-push-action@v6
         with:
-          platforms: linux/arm64
+          platform: linux/arm64
           build-args: |
             ARCH=arm64
           build-contexts: |
