@@ -26,6 +26,7 @@ ENV E_REDIRECTORS="$E_DIR/redirectors"
 ENV E_EILPUPPET="$E_DIR/evilpuppet"
 ENV E_STATIC="$E_DIR/evilpuppet"
 
+
 COPY --from=build /opt/bin/evilginx3 /opt/bin/evilginx
 
 COPY entrypoint.sh /opt/entrypoint.sh
