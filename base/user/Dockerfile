@@ -18,7 +18,7 @@ USER ${USR}
 ENV PGID=${PGID} PUID=${PUID}
 WORKDIR "/home/$USR/"
 
-RUN mkdir -p $CONF_USR_DIR/.config \
+RUN mkdir -p .config \
     && cp -r /opt/conf/zshrc ${Z_USR_CONF} \
     && cp -r /opt/conf/tmux.conf ${T_USR_CONF} \
     && cp -r /opt/conf/dircolors ${T_USR_CONF}
