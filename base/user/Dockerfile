@@ -4,6 +4,7 @@ ARG GH_USR=oonray
 ARG PUID=999
 ARG PGID=999
 
+
 ENV GH_USR=${GH_USR} USR=${USR}
 ENV  \
     GOPATH="/home/$USR/.go" \

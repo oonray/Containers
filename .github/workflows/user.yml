@@ -92,3 +92,33 @@ jobs:
     secrets:
       username: ${{ secrets.DOCKERHUB_USERNAME }}
       password: ${{ secrets.DOCKERHUB_TOKEN }}
+
+  build-user-c2-amd64:
+    uses: oonray/Containers/.github/workflows/container.yml@main
+    with:
+      arch: amd64
+      image: c2
+      tag: user
+      platform: linux/amd64
+      base: oonray/debian:install
+      context: base/user
+      args: |
+        USR=sliver
+    secrets:
+      username: ${{ secrets.DOCKERHUB_USERNAME }}
+      password: ${{ secrets.DOCKERHUB_TOKEN }}
+
+  build-user-c2-arm64:
+    uses: oonray/Containers/.github/workflows/container.yml@main
+    with:
+      arch: arm64
+      image: c2
+      tag: user
+      platform: linux/arm64
+      base: oonray/debian:install-arm64
+      context: base/user
+      args: |
+        USR=sliver
+    secrets:
+      username: ${{ secrets.DOCKERHUB_USERNAME }}
+      password: ${{ secrets.DOCKERHUB_TOKEN }}
