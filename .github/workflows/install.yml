@@ -3,6 +3,8 @@ name: Docker image Install
 on:
   push:
     paths:
+      - '.github/workflows/install.yml'
+      - '.github/workflows/container.yml'
       - 'base/install/*'
       - 'base/install/**'
 
