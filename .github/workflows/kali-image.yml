@@ -1,15 +1,13 @@
-name: Docker image kali
+name: Docker image debian
 
 on:
   push:
     paths:
-      - 'kali/*'
-      - 'kali/**'
       - 'base/*'
       - 'base/**'
 
 jobs:
-  build-kali-amd64:
+  build-debian-amd64:
     runs-on: ubuntu-latest
     steps:
       - name: Login to Docker Hub
@@ -24,19 +22,19 @@ jobs:
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
 
-      - name: Build and push kali install amd64
+      - name: Build and push debian install amd64
         uses: docker/build-push-action@v6
         with:
           platform: linux/amd64
           build-args: |
             ARCH=amd64
           build-contexts: |
-            base=docker-image://kalilinux/kali-rolling:amd64
+            base=docker-image://debian:trixie-slim
           context: base/install
           push: true
-          tags: oonray/kali:install
+          tags: oonray/debian:install
 
-  build-kali-arm64:
+  build-debian-arm64:
     runs-on: ubuntu-latest
     steps:
       - name: Login to Docker Hub
@@ -51,14 +49,14 @@ jobs:
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
 
-      - name: Build and push kali install arm64
+      - name: Build and push debian install arm64
         uses: docker/build-push-action@v6
         with:
           platform: linux/arm64
           build-args: |
             ARCH=arm64
           build-contexts: |
-            base=docker-image://kalilinux/kali-rolling:arm64
+            base=docker-image://debian:trixie-slim
           context: base/install
           push: true
-          tags: oonray/kali:install
+          tags: oonray/debian:install
