@@ -14,7 +14,6 @@ RUN mkdir $G_DIR \
 RUN go install -mod=vendor $E_DIR \
     && chmod 755 $E_BIN
 
-
 FROM base as evilginx
 ARG USR
 ENV USR=${USR}
