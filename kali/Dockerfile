@@ -7,7 +7,7 @@ ARG ARCH=amd64 #amd64 arm64 i386
 ARG PUID=999
 ARG PGID=999
 
-FROM ${IMAGE}:base-${ARCH}
+FROM base as kali
 ARG IMAGE
 ARG USR
 ARG GH_USR
