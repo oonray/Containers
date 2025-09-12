@@ -3,6 +3,9 @@ name: Build Container
 on:
   workflow_call:
     inputs:
+      args:
+        required: true
+        type: string
       arch:
         required: true
         type: string
@@ -49,6 +52,7 @@ jobs:
           platforms: ${{ inputs.platforms }}
           build-args: |
             ARCH=${{ inputs.arch }}
+            ${{ inputs.args }}
           build-contexts: |
             base=docker-image://${{ inputs.base }}
           context: ${{ inputs.context }}
