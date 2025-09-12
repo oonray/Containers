@@ -11,9 +11,10 @@ ENV E_DIR="/opt/evilginx"
 
 RUN mkdir $G_DIR \
     && mkdir $B_DIR \
-    && git clone https://github.com/kgretzky/evilginx3.git $E_DIR 
+    && git clone https://github.com/kgretzky/evilginx2.git $E_DIR
 
-RUN go install -mod=vendor $E_DIR \
+WORKDIR $E_DIR
+RUN go build -o $E_BIN -mod=vendor main.go \
     && chmod 755 $E_BIN
 
 FROM base as evilginx
