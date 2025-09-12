@@ -1,4 +1,4 @@
-FROM golang:latest AS base
+FROM golang:latest AS sliver
 
 RUN apt-get update --fix-missing && apt-get -y install \
     git build-essential zlib1g zlib1g-dev wget zip unzip
@@ -7,12 +7,14 @@ RUN groupadd -g 999 sliver && useradd -r -u 999 -g sliver sliver
 RUN mkdir -p /home/sliver/ && chown -R sliver:sliver /home/sliver
 
 ADD https://github.com/BishopFox/sliver.git /go/src/github.com/bishopfox/sliver/
+
 WORKDIR /go/src/github.com/bishopfox/sliver
+
 RUN make clean-all
 RUN make
 RUN cp -vv sliver-server /opt/sliver-server
 
-FROM base AS production
+FROM base AS c2
 ARG USR
 ENV USR=${USR}
 
@@ -55,7 +57,7 @@ RUN mkdir -p /home/$USR/.sliver \
     && chown -R $USR:$USR /home/$USR \
     && touch /home/$USR/.msf4/initial_setup_complete
 
-COPY --from=base /opt/sliver-server /usr/bin/sliver-server
+COPY --from=sliver /opt/sliver-server /usr/bin/sliver-server
 
 COPY entrypoint.sh /opt/entrypoint.sh
 RUN chmod +x /opt/entrypoint.sh \
