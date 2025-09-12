@@ -4,7 +4,6 @@ on:
   workflow_call:
     inputs:
       args:
-        required: true
         type: string
       arch:
         required: true
