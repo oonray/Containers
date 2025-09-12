@@ -12,7 +12,7 @@ jobs:
     with:
       arch: amd64
       image: kali
-      tag: install
+      tag: user
       platform: linux/amd64
       base: oonray/kali:install
       context: base/user
@@ -27,7 +27,7 @@ jobs:
     with:
       arch: arm64
       image: kali
-      tag: install
+      tag: user-arm64
       platform: linux/arm64
       base: oonray/kali:install-arm64
       context: base/user
@@ -42,7 +42,7 @@ jobs:
     with:
       arch: amd64
       image: debian
-      tag: install
+      tag: user
       platform: linux/amd64
       base: oonray/debian:install
       context: base/user
@@ -55,10 +55,40 @@ jobs:
     with:
       arch: arm64
       image: debian
-      tag: install
+      tag: user-arm64
       platform: linux/arm64
       base: oonray/debian:install-arm64
       context: base/user
+    secrets:
+      username: ${{ secrets.DOCKERHUB_USERNAME }}
+      password: ${{ secrets.DOCKERHUB_TOKEN }}
+
+  build-user-evilginx-amd64:
+    uses: oonray/Containers/.github/workflows/container.yml@main
+    with:
+      arch: amd64
+      image: evilginx
+      tag: user
+      platform: linux/amd64
+      base: oonray/debian:install
+      context: base/user
+      args: |
+        USR=evilginx
+    secrets:
+      username: ${{ secrets.DOCKERHUB_USERNAME }}
+      password: ${{ secrets.DOCKERHUB_TOKEN }}
+
+  build-user-evilginx-arm64:
+    uses: oonray/Containers/.github/workflows/container.yml@main
+    with:
+      arch: arm64
+      image: evilginx
+      tag: user
+      platform: linux/arm64
+      base: oonray/debian:install-arm64
+      context: base/user
+      args: |
+        USR=evilginx
     secrets:
       username: ${{ secrets.DOCKERHUB_USERNAME }}
       password: ${{ secrets.DOCKERHUB_TOKEN }}
