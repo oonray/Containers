@@ -1,12 +1,3 @@
-ARG IMAGE=oonray/kali
-ARG USR=sliver
-ARG GH_USR=oonray
-ARG ENTRY=/opt/entrypoint.sh
-ARG B_VER=0.25.0
-ARG ARCH=amd64 #amd64 arm64 i386
-ARG PUID=999
-ARG PGID=999
-
 FROM golang:latest AS base
 
 RUN apt-get update --fix-missing && apt-get -y install \
@@ -21,7 +12,9 @@ RUN make clean-all
 RUN make
 RUN cp -vv sliver-server /opt/sliver-server
 
-FROM debian:latest AS production
+FROM base AS production
+ARG USR
+ENV USR=${USR}
 
 RUN apt-get update --fix-missing \
     && apt-get -y upgrade \
@@ -39,8 +32,6 @@ RUN apt-get update --fix-missing \
 RUN curl https://raw.githubusercontent.com/rapid7/metasploit-omnibus/master/config/templates/metasploit-framework-wrappers/msfupdate.erb > msfinstall \
     && chmod 755 msfinstall \
     && ./msfinstall \
-    && mkdir -p ~/.msf4/ \
-    && touch ~/.msf4/initial_setup_complete  \
     && mkdir -p /opt/metasploit-framework/modules/post/multi/gather/ \
     && curl -Lo \
     /opt/metasploit-framework/modules/post/multi/gather/peass.rb \
@@ -53,32 +44,24 @@ WORKDIR /opt/Empire
 RUN chmod 755 ./setup/install.sh \
 && ./setup/install.sh
 
-RUN apt-get remove -y curl gnupg \
-    && apt-get autoremove -y \
+RUN apt-get autoremove -y \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
-RUN groupadd -g 999 $USR \
-    && useradd -r -u 999 -s /usr/bin/zsh -g $USR $USR \
-    && mkdir -p /home/$USR/ \
-    && chown -R $USR:$USR /home/$USR \
-    && su -l $USR -c 'mkdir -p ~/.msf4/ && touch ~/.msf4/initial_setup_complete'
-
-COPY --from=base /opt/sliver-server /opt/sliver-server
-
 USER $USR
-RUN /opt/sliver-server unpack --force
-WORKDIR /home/$USR
-RUN mkdir -p /home/$USR/.config
 
-COPY --from=tmux --chown=$USR:$USR ${T_CONF} /home/$USR/.tmux.conf
-COPY --from=tmux --chown=$USR:$USR ${Z_CONF} /home/$USR/.zshrc
-COPY --from=tmux --chown=$USR:$USR ${CONF_DIR}/zsh/.oh-my-zsh /home/$USR/.oh-my-zsh
-COPY --from=tmux --chown=$USR:$USR $C_CONF /home/$USR/.config/dircolors
+RUN mkdir -p /home/$USR/.sliver \
+    && mkdir -p /home/$USR/.msf4/ \
+    && chown -R $USR:$USR /home/$USR \
+    && touch /home/$USR/.msf4/initial_setup_complete
+
+COPY --from=base /opt/sliver-server /usr/bin/sliver-server
 
 COPY entrypoint.sh /opt/entrypoint.sh
-RUN chmod +x /opt/entrypoint.sh
+RUN chmod +x /opt/entrypoint.sh \
+    && chmod +x /usr/bin/sliver-server
 
 WORKDIR /home/$USR/
-VOLUME [ "/home/sliver/.sliver" ]
+RUN sliver-server unpack --force
+
 ENTRYPOINT [ "/opt/entrypoint.sh" ]

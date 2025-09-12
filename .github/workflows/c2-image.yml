@@ -7,23 +7,28 @@ on:
       - 'c2/**'
 
 jobs:
-  build:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Login to Docker Hub
-        uses: docker/login-action@v3
-        with:
-          username: ${{ secrets.DOCKERHUB_USERNAME }}
-          password: ${{ secrets.DOCKERHUB_TOKEN }}
-      - name: Checkout
-        uses: actions/checkout@v4
-      - name: Set up QEMU
-        uses: docker/setup-qemu-action@v3
-      - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v3
-      - name: Build and push c2
-        uses: docker/build-push-action@v6
-        with:
-          context: c2
-          push: true
-          tags: oonray/c2:latest
+  build-c2-amd64:
+    uses: oonray/Containers/.github/workflows/container.yml@main
+    with:
+      arch: amd64
+      image: c2
+      tag: latest
+      platform: linux/amd64
+      base: oonray/c2:user
+      context: c2
+    secrets:
+      username: ${{ secrets.DOCKERHUB_USERNAME }}
+      password: ${{ secrets.DOCKERHUB_TOKEN }}
+
+  build-c2-arm64:
+    uses: oonray/Containers/.github/workflows/container.yml@main
+    with:
+      arch: arm64
+      image: c2
+      tag: latest-arm64
+      platform: linux/arm64
+      base: oonray/c2:user-arm64
+      context: c2
+    secrets:
+      username: ${{ secrets.DOCKERHUB_USERNAME }}
+      password: ${{ secrets.DOCKERHUB_TOKEN }}
