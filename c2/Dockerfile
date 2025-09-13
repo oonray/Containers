@@ -49,14 +49,15 @@ WORKDIR /opt/Empire
 RUN sudo chmod 755 ./setup/install.sh \
 && ./setup/install.sh
 
+USER root
 RUN apt-get autoremove -y \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
 RUN mkdir -p /home/$USR/.sliver \
     && mkdir -p /home/$USR/.msf4/ \
-    && chown -R $USR:$USR /home/$USR \
-    && touch /home/$USR/.msf4/initial_setup_complete
+    && touch /home/$USR/.msf4/initial_setup_complete \
+    && chown -R $USR:$USR /home/$USR 
 
 COPY --from=sliver /opt/sliver-server /usr/bin/sliver-server
 
@@ -64,7 +65,7 @@ COPY entrypoint.sh /opt/entrypoint.sh
 RUN chmod +x /opt/entrypoint.sh \
     && chmod +x /usr/bin/sliver-server
 
-
+USER $USR
 WORKDIR /home/$USR/
 RUN sliver-server unpack --force
 
