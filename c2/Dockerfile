@@ -52,7 +52,7 @@ RUN sudo chmod 755 ./setup/install.sh \
 USER root
 RUN apt-get autoremove -y \
     && apt-get clean \
-    && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
+    && rm -rf /var/lib/apt/lists/* /tmp/*
 
 RUN mkdir -p /home/$USR/.sliver \
     && mkdir -p /home/$USR/.msf4/ \
