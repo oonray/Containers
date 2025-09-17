@@ -9,7 +9,7 @@ ENV VPN_F=${VPN_DIR}/vpn.ovpn
 ENV DANTE_CONF=/etc/danted.conf
 
 RUN apt-get update \
-    && apt-get install -y dumb-init \
+    && apt-get install -y dumb-init coreutils sipcalc jq \
                 dnsutils net-tools curl vim nmap \
                 proxychains socat netcat-traditional iproute2 \
                 dante-server raceroute tcpdump iputils-ping \
