@@ -11,7 +11,7 @@ RUN apt-get update \
     && apt-get install -y dumb-init \
                 openvpn dnsutils net-tools curl vim \
                 proxychains socat netcat-traditional iproute2 \
-                dante-server nmap
+                dante-server nmap traceroute tcpdump
 
 COPY entrypoint.sh /opt/entrypoint.sh
 RUN chmod +x /opt/entrypoint.sh
