@@ -1,3 +1,4 @@
+#vpn
 FROM ubuntu:latest
 
 ARG CONF_DIR=/opt/conf
@@ -11,7 +12,7 @@ RUN apt-get update \
     && apt-get install -y dumb-init \
                 dnsutils net-tools curl vim nmap \
                 proxychains socat netcat-traditional iproute2 \
-                dante-server raceroute tcpdump \
+                dante-server raceroute tcpdump iputils-ping \
                 network-manager-openvpn openvpn
 
 COPY entrypoint.sh /opt/entrypoint.sh

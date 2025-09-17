@@ -7,6 +7,12 @@ FROM oonray/tmux:latest AS tmux
 #
 #Set ENV
 #
+ARG L_HOST="127.0.0.1"
+ENV L_HOST=${L_HOST}
+
+ARG L_PORT="42069"
+ENV L_PORT=${L_PORT}
+
 ENV APPIMAGE_EXTRACT_AND_RUN=1
 
 ARG USR=dev
@@ -110,9 +116,10 @@ RUN curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.3/install.sh | b
 #
 #Configure NVIM
 #
-RUN mkdir -p ${GOPATH} && \
-mkdir -p /home/dev/.config && \
-mkdir -p /home/dev/.local/share/nvim/ws/worskpaces/
+RUN mkdir -p ${GOPATH} \
+&& mkdir -p /home/${USR}/.git \
+&& mkdir -p /home/${USR}/.config \
+&& mkdir -p /home/${USR}/.local/share/nvim/ws/worskpaces/
 
 COPY ./nvim-config/ /home/dev/.config/nvim/
 
@@ -138,4 +145,5 @@ RUN chown -R $USR /home/$USR \
 #
 #Entrypoint
 #
+VOLUME [ "/home/${USR}/.git" ]
 ENTRYPOINT ["/opt/entrypoint.sh"]
