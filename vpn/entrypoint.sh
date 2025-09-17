@@ -2,7 +2,7 @@
 set -x
 
 if [ -s $VPN_F ]; then
-    /usr/sbin/openvpn $VPN_F &
+    /usr/sbin/openvpn --config $VPN_F &
 else
     echo "no vpn.ovpn in ${VPN_DIR}"
 fi

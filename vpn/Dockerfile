@@ -9,9 +9,10 @@ ENV DANTE_CONF=/etc/danted.conf
 
 RUN apt-get update \
     && apt-get install -y dumb-init \
-                openvpn dnsutils net-tools curl vim \
+                dnsutils net-tools curl vim nmap \
                 proxychains socat netcat-traditional iproute2 \
-                dante-server nmap traceroute tcpdump
+                dante-server raceroute tcpdump \
+                network-manager-openvpn openvpn
 
 COPY entrypoint.sh /opt/entrypoint.sh
 RUN chmod +x /opt/entrypoint.sh
