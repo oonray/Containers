@@ -18,5 +18,4 @@ COPY entrypoint.sh /opt/entrypoint.sh
 RUN chmod +x /opt/entrypoint.sh
 
 RUN mkdir -p ${CONF_DIR}
-
 ENTRYPOINT ["/opt/entrypoint.sh"]
