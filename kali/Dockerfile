@@ -14,7 +14,7 @@ mitmproxy python3-impacket python3-scapy \
 proxychains socat nmap responder peass netexec gobuster  \
 arp-scan iputils-arping bind9-dnsutils \
 binwalk binwalk3 bulk-extractor cewl clang commix creddump7 \
-crunch cryptcat curlftpfs dirb dmitry dns2tcp dnschef dnsenum \
+crunch cryptcat curlftpfs dmitry dns2tcp dnschef dnsenum \
 dnsrecon dos2unix enum4linux evil-winrm exe2hexbat \
 exiv2 expect exploitdb ffuf gdisk gobuster gpp-decrypt \
 hash-identifier hashcat hashcat-utils hashdeep hashid hotpatch hydra \
@@ -26,7 +26,7 @@ samdump2 sbd smbmap snmp snmpcheck snmpd sqlmap ssldump sslh sslscan sslsplit \
 sslyze statsprocessor stunnel4 swaks tcpick tcpreplay telnet testdisk tftp-hpa thc-ipv6 \
 thc-pptp-bruter traceroute udptunnel unix-privesc-check upx-ucl vboot-kernel-utils \
 vboot-utils neovim vlan voiphopper vpnc wce webshells wfuzz whatweb whois windows-binaries \
-wordlists wpscan
+wpscan
 
 USER $USR
 
