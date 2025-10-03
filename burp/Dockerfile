@@ -3,10 +3,11 @@ FROM oonray/kali:user
 
 ARG VERSION="0.1.0"
 ENV VERSION="$VERSION"
+ENV NAME="Burp"
 
 LABEL version="${VERSION}"
 LABEL org.opencontainers.image.version="${VERSION}"
-LABEL org.opencontainers.image.title=vpn
+LABEL org.opencontainers.image.title=${NAME}
 
 RUN apt-get update \
     && apt-get install -y dumb-init \

@@ -1,0 +1,20 @@
+name: Docker image burp
+
+on:
+  push:
+    paths:
+      - 'burp/*'
+      - 'burp/**'
+jobs:
+  build-burp-amd64:
+    uses: oonray/Containers/.github/workflows/container.yml@main
+    with:
+      arch: amd64
+      image: burp
+      tag: latest
+      platform: linux/amd64
+      base: oonray/kali:user
+      context: burp
+    secrets:
+      username: ${{ secrets.DOCKERHUB_USERNAME }}
+      password: ${{ secrets.DOCKERHUB_TOKEN }}

@@ -12,10 +12,7 @@ function brief(){
 
 while getopts "vdph" opt; do
     case "$opt" in
-        v) vpn;;
-        d) dns;;
-        p) proxy;;
-        h) help;;
+        h) ;&
         *) brief;;
     esac
 done
