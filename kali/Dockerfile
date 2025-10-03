@@ -3,8 +3,15 @@ ARG USR
 ARG ARCH
 ARG PUID
 ARG PGID
+ARG VERSION="1.0.0"
+ENV VERSION="$VERSION"
+
+LABEL version="${VERSION}"
+LABEL org.opencontainers.image.version="${VERSION}"
+LABEL org.opencontainers.image.title=vpn
 
 ENV USR=${USR}
+VOLUME ["/home/kali/storage"]
 
 USER root
 RUN apt-get update && \

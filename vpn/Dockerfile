@@ -1,4 +1,4 @@
-#vpn
+#VPN
 FROM golang:latest as coredns
 ADD https://github.com/coredns/coredns /tmp/coredns
 WORKDIR /tmp/coredns
@@ -6,6 +6,13 @@ RUN go get \
     && go build
 
 FROM ubuntu:latest
+
+ARG VERSION="1.0.0"
+ENV VERSION="$VERSION"
+
+LABEL version="${VERSION}"
+LABEL org.opencontainers.image.version="${VERSION}"
+LABEL org.opencontainers.image.title=vpn
 
 ARG CONF_DIR=/opt/conf
 ENV CONF_DIR=${CONF_DIR}
@@ -30,4 +37,8 @@ COPY --from=coredns /tmp/coredns/coredns /usr/bin/coredns
 RUN chmod +x /opt/entrypoint.sh
 
 RUN mkdir -p ${CONF_DIR}
+
+EXPOSE 1080/tcp
+EXPOSE 53/udp
+
 ENTRYPOINT ["/opt/entrypoint.sh"]

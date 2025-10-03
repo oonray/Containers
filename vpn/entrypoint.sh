@@ -30,11 +30,9 @@ function vpn(){
 }
 
 function dns(){
-    echo "not implemented!" >&2
-    exit 1
     if [ ! -s $DNS_F ]; then
         echo "Using $DNS_F"
-        coredns &
+        coredns --conf $DNS_F
     else
         echo "${DNS_F} not found"
         exit 1
