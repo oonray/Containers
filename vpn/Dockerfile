@@ -1,5 +1,5 @@
 FROM golang:latest as coredns
-ADD https://github.com/coredns/coredns /tmp/coredns
+RUN git clone https://github.com/coredns/coredns /tmp/coredns
 WORKDIR /tmp/coredns
 RUN apt-get install make \
     && make
