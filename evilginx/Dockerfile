@@ -30,5 +30,9 @@ ENV E_STATIC="$E_DIR/evilpuppet"
 
 COPY --from=build /opt/bin/evilginx3 /usr/bin/evilginx
 
+EXPOSE 22/tcp
+EXPOSE 53/udp
+EXPOSE 80/tcp
+EXPOSE 443/tcp
 COPY entrypoint.sh /opt/entrypoint.sh
 ENTRYPOINT ["/opt/entrypoint.sh"]
