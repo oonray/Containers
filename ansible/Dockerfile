@@ -1,4 +1,5 @@
 FROM oonray/ssh:latest
+ENV DEBIAN_FRONTEND=noninteractive
 
 USER root
 

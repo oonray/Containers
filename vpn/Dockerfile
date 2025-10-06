@@ -6,6 +6,7 @@ RUN go get \
     && go build
 
 FROM ubuntu:latest
+ENV DEBIAN_FRONTEND=noninteractive
 
 ARG VERSION="1.0.0"
 ENV VERSION="$VERSION"
@@ -28,7 +29,7 @@ RUN apt-get update \
     && apt-get install -y dumb-init coreutils sipcalc jq \
                 dnsutils net-tools curl vim nmap \
                 proxychains socat netcat-traditional iproute2 \
-                dante-server raceroute tcpdump iputils-ping \
+                dante-server traceroute tcpdump iputils-ping \
                 network-manager-openvpn openvpn
 
 COPY entrypoint.sh /opt/entrypoint.sh

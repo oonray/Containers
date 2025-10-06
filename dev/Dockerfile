@@ -3,6 +3,7 @@
 #SSH + TMUX
 #
 FROM oonray/tmux:latest AS tmux
+ENV DEBIAN_FRONTEND=noninteractive
 
 #
 #Set ENV

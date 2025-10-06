@@ -15,6 +15,7 @@ RUN make
 RUN cp -vv sliver-server /opt/sliver-server
 
 FROM base AS c2
+ENV DEBIAN_FRONTEND=noninteractive
 ARG USR
 ENV USR=${USR}
 

@@ -1,6 +1,7 @@
 FROM base AS mimtproxy
 ARG USR
 ENV USR=${USR}
+ENV DEBIAN_FRONTEND=noninteractive
 
 USER root
 RUN apt-get update \
