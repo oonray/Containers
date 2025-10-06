@@ -1,9 +1,8 @@
-#VPN
 FROM golang:latest as coredns
 ADD https://github.com/coredns/coredns /tmp/coredns
 WORKDIR /tmp/coredns
-RUN go get \
-    && go build
+RUN apt-get install make \
+    && make
 
 FROM ubuntu:latest
 ENV DEBIAN_FRONTEND=noninteractive
@@ -20,7 +19,9 @@ ENV CONF_DIR=${CONF_DIR}
 
 ENV VPN_DIR=${CONF_DIR}/vpn
 ENV VPN_F=${VPN_DIR}/vpn.ovpn
-ENV DANTE_CONF=/etc/danted.conf
+
+ENV DANTE_DIR=${CONF_DIR}/dante
+ENV DANTE_F=${DANTE_DIR}/danted.conf
 
 ENV DNS_DIR=${CONF_DIR}/dns
 ENV DNS_F=${DNS_DIR}/Corefile
@@ -32,14 +33,19 @@ RUN apt-get update \
                 dante-server traceroute tcpdump iputils-ping \
                 network-manager-openvpn openvpn
 
+COPY supervisord.conf /etc/supervisor.d/apps.conf
 COPY entrypoint.sh /opt/entrypoint.sh
 COPY --from=coredns /tmp/coredns/coredns /usr/bin/coredns
 
 RUN chmod +x /opt/entrypoint.sh
 
-RUN mkdir -p ${CONF_DIR}
+RUN mkdir -p ${CONF_DIR} \
+&& mkdir -p ${VPN_DIR} \
+&& mkdir -p ${DANTE_DIR} \
+&& mkdir -p ${DNS_DIR}
 
 EXPOSE 1080/tcp
+EXPOSE 9001/tcp
 EXPOSE 53/udp
 
 ENTRYPOINT ["/opt/entrypoint.sh"]

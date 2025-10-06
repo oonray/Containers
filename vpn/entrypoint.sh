@@ -16,7 +16,7 @@ declare -A proxy
 proxy["cflag"]="p"
 proxy["sflag"]="[-p]proxy"
 proxy["func"]="proxy_func"
-proxy["needs"]="$DANTE_CONF"
+proxy["needs"]="$DANTE_F"
 
 declare -A dns
 dns["cflag"]="d"
@@ -49,9 +49,7 @@ function vpn_func(){
         echo "${vpn["needs"]} not found" >&2
         exit 1
     fi
-
-    echo "Using ${vpn["needs"]}"
-    /usr/sbin/openvpn --config $VPN_F --daemon &
+    supervisorctl start vpn
 }
 
 function dns_func(){
@@ -64,8 +62,7 @@ function dns_func(){
         exit 1
     fi
 
-    echo "Using ${dns["needs"]}"
-    coredns --conf $DNS_F
+    supervisorctl start dns
 }
 
 function proxy_func(){
@@ -78,16 +75,16 @@ function proxy_func(){
         exit 1
     fi
 
-    echo "Using ${proxy["needs"]}"
-    service danted start
+    supervisorctl start proxy
 }
 
-flag_s="${help[cflag]}${vpn[cflag]}${proxy[cflag]}${dns[cflag]}"
+flag_s="${help[cflag]}${vpn[cflag]}${proxy[cflag]}${dns[cflag]}a"
 while getopts $flag_s opt; do
     case "$opt" in
         v) eval ${vpn[func]} ;;
         p) eval ${proxy[func]} ;;
         d) eval ${dns[func]} ;;
+        d) supervisorctl start all ;;
         h) ;&
         *) eval ${help[func]};;
     esac

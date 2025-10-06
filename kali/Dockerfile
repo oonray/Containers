@@ -3,13 +3,14 @@ ARG USR
 ARG ARCH
 ARG PUID
 ARG PGID
+
 ARG VERSION="1.0.0"
 ENV VERSION="$VERSION"
 ENV DEBIAN_FRONTEND=noninteractive
 
 LABEL version="${VERSION}"
 LABEL org.opencontainers.image.version="${VERSION}"
-LABEL org.opencontainers.image.title=vpn
+LABEL org.opencontainers.image.title=kali
 
 ENV USR=${USR}
 VOLUME ["/home/kali/storage"]

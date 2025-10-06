@@ -4,6 +4,13 @@ ARG GH_USR=oonray
 ARG PUID=999
 ARG PGID=999
 
+ARG VERSION="1.0.0"
+ENV VERSION="$VERSION"
+
+LABEL version="${VERSION}"
+LABEL org.opencontainers.image.version="${VERSION}"
+LABEL org.opencontainers.image.title=$ARCH-user
+
 ENV GH_USR=${GH_USR} USR=${USR}
 ENV  \
     GOPATH="/home/$USR/.go" \

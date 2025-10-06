@@ -7,14 +7,14 @@ ENV SCREEN=0
 ENV DISPLAY_WIDTH=1024
 ENV DISPLAY_HEIGHT=768
 
+ENV STORAGE="/home/${USR}/storage"
+
 ARG VERSION="0.1.0"
 ENV VERSION="$VERSION"
-ENV NAME="Burp"
-ENV STORAGE="/home/${USR}/storage"
 
 LABEL version="${VERSION}"
 LABEL org.opencontainers.image.version="${VERSION}"
-LABEL org.opencontainers.image.title=${NAME}
+LABEL org.opencontainers.image.title=burp
 
 USER root
 RUN apt-get update \

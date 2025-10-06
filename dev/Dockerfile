@@ -42,6 +42,13 @@ ENV C_CONF="$C_DIR/dircolors"
 ENV PUID=1000
 ENV PGID=1000
 
+ARG VERSION="1.0.0"
+ENV VERSION="$VERSION"
+ENV DEBIAN_FRONTEND=noninteractive
+
+LABEL version="${VERSION}"
+LABEL org.opencontainers.image.version="${VERSION}"
+LABEL org.opencontainers.image.title=dev
 
 #
 #Install deps
