@@ -4,7 +4,7 @@ WORKDIR /tmp/coredns
 RUN apt-get install make \
     && make
 
-FROM ubuntu:latest
+FROM debian:latest
 ENV DEBIAN_FRONTEND=noninteractive
 
 ARG VERSION="1.0.0"
@@ -33,7 +33,7 @@ RUN apt-get update \
                 dante-server traceroute tcpdump iputils-ping \
                 network-manager-openvpn openvpn
 
-COPY supervisord.conf /etc/supervisor.d/apps.conf
+COPY supervisord.conf /etc/supervisord.conf
 COPY entrypoint.sh /opt/entrypoint.sh
 COPY --from=coredns /tmp/coredns/coredns /usr/bin/coredns
 
