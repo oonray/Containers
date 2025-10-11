@@ -1,10 +1,11 @@
-FROM golang:latest as coredns
+FROM golang:latest AS coredns
 RUN git clone https://github.com/coredns/coredns /tmp/coredns
 WORKDIR /tmp/coredns
-RUN apt-get install make \
+RUN apt-get update \
+    && apt-get install make \
     && make
 
-FROM debian:latest
+FROM debian:trixie-slim
 ENV DEBIAN_FRONTEND=noninteractive
 
 ARG VERSION="1.0.0"
@@ -27,11 +28,15 @@ ENV DNS_DIR=${CONF_DIR}/dns
 ENV DNS_F=${DNS_DIR}/Corefile
 
 RUN apt-get update \
-    && apt-get install -y dumb-init coreutils sipcalc jq \
-                dnsutils net-tools curl vim nmap \
-                proxychains socat netcat-traditional iproute2 \
-                dante-server traceroute tcpdump iputils-ping \
-                network-manager-openvpn openvpn
+    && apt-get -y upgrade \
+    && apt-get -y install \
+        dumb-init coreutils sipcalc jq \
+        dnsutils net-tools curl vim nmap \
+        proxychains socat netcat-traditional iproute2 \
+        traceroute tcpdump iputils-ping \
+        network-manager-openvpn openvpn
+
+RUN apt-get install -y dante-server
 
 COPY supervisord.conf /etc/supervisord.conf
 COPY entrypoint.sh /opt/entrypoint.sh
