@@ -1,11 +1,12 @@
+#VPN
 FROM golang:latest AS coredns
 RUN git clone https://github.com/coredns/coredns /tmp/coredns
 WORKDIR /tmp/coredns
-RUN apt-get update \
-    && apt-get install make \
+RUN apk add --no-cache update \
+    && apk add --no-cache install make \
     && make
 
-FROM debian:trixie-slim
+FROM alpine:latest
 ENV DEBIAN_FRONTEND=noninteractive
 
 ARG VERSION="1.0.0"
@@ -27,16 +28,12 @@ ENV DANTE_F=${DANTE_DIR}/danted.conf
 ENV DNS_DIR=${CONF_DIR}/dns
 ENV DNS_F=${DNS_DIR}/Corefile
 
-RUN apt-get update \
-    && apt-get -y upgrade \
-    && apt-get -y install \
+RUN apk add --no-cache -y install \
         dumb-init coreutils sipcalc jq \
-        dnsutils net-tools curl vim nmap \
-        proxychains socat netcat-traditional iproute2 \
+        dnsutils curl vim nmap \
+        socat netcat-traditional iproute2 \
         traceroute tcpdump iputils-ping \
-        network-manager-openvpn openvpn
-
-RUN apt-get install -y dante-server
+        openvpn dante-server supervisor
 
 COPY supervisord.conf /etc/supervisord.conf
 COPY entrypoint.sh /opt/entrypoint.sh
