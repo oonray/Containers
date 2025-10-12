@@ -2,8 +2,7 @@
 FROM golang:latest AS coredns
 RUN git clone https://github.com/coredns/coredns /tmp/coredns
 WORKDIR /tmp/coredns
-RUN apk add --no-cache update \
-    && apk add --no-cache install make \
+RUN apk add make \
     && make
 
 FROM alpine:latest
@@ -28,7 +27,7 @@ ENV DANTE_F=${DANTE_DIR}/danted.conf
 ENV DNS_DIR=${CONF_DIR}/dns
 ENV DNS_F=${DNS_DIR}/Corefile
 
-RUN apk add --no-cache -y install \
+RUN apk add --no-cache \
         dumb-init coreutils sipcalc jq \
         dnsutils curl vim nmap \
         socat netcat-traditional iproute2 \
