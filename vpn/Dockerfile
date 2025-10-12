@@ -28,11 +28,11 @@ ENV DNS_DIR=${CONF_DIR}/dns
 ENV DNS_F=${DNS_DIR}/Corefile
 
 RUN apk add --no-cache \
-        dumb-init supervisord \
+        dumb-init supervisor \
         sipcalc jq yq curl vim nmap socat \
         netcat-openbsd iproute2 traceroute tcpdump \
         iputils-ping bind-tools \
-        openvpn dante-server supervisor
+        openvpn dante-server
 
 COPY supervisord.conf /etc/supervisord.conf
 COPY entrypoint.sh /opt/entrypoint.sh
