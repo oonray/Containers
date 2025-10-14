@@ -2,7 +2,7 @@
 FROM golang:latest AS coredns
 RUN git clone https://github.com/coredns/coredns /tmp/coredns
 WORKDIR /tmp/coredns
-RUN apk add make \
+RUN apt-get install -y make \
     && make
 
 FROM alpine:latest
