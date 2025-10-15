@@ -9,11 +9,9 @@ jobs:
   build-kali-amd64:
     uses: oonray/Containers/.github/workflows/container.yml@main
     with:
-      arch: amd64
       image: mitmproxy
-      tag: latest
-      platform: linux/amd64
-      base: oonray/kali:user
+      tag: v1.0.0
+      base: oonray/user-kali:latest
       context: mitmproxy
     secrets:
       username: ${{ secrets.DOCKERHUB_USERNAME }}

@@ -7,52 +7,23 @@ on:
       - 'base/install/**'
 
 jobs:
-  build-install-kali-amd64:
+  build-install-kali:
     uses: oonray/Containers/.github/workflows/container.yml@main
     with:
-      arch: amd64
-      image: kali
-      tag: install
-      platform: linux/amd64
+      image: base-kali
+      tag: v1.1.0
       base: kalilinux/kali-rolling:amd64
       context: base/install
     secrets:
       username: ${{ secrets.DOCKERHUB_USERNAME }}
       password: ${{ secrets.DOCKERHUB_TOKEN }}
 
-  build-install-kali-arm64:
-    uses: oonray/Containers/.github/workflows/container.yml@main
-    with:
-      arch: arm64
-      image: kali
-      tag: install-arm64
-      platform: linux/arm64
-      base: kalilinux/kali-rolling:arm64
-      context: base/install
-    secrets:
-      username: ${{ secrets.DOCKERHUB_USERNAME }}
-      password: ${{ secrets.DOCKERHUB_TOKEN }}
 
-  build-install-debian-amd64:
+  build-install-debian:
     uses: oonray/Containers/.github/workflows/container.yml@main
     with:
-      arch: amd64
-      image: debian
-      tag: install
-      platform: linux/amd64
-      base: debian:latest
-      context: base/install
-    secrets:
-      username: ${{ secrets.DOCKERHUB_USERNAME }}
-      password: ${{ secrets.DOCKERHUB_TOKEN }}
-
-  build-install-debian-arm64:
-    uses: oonray/Containers/.github/workflows/container.yml@main
-    with:
-      arch: arm64
-      image: debian
-      tag: install-arm64
-      platform: linux/arm64
+      image: base-debian
+      tag: v1.1.0
       base: debian:latest
       context: base/install
     secrets:

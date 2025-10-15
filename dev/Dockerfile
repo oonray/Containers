@@ -1,13 +1,6 @@
-#dev
-#
-#SSH + TMUX
-#
-FROM oonray/tmux:latest AS tmux
+FROM base AS dev
 ENV DEBIAN_FRONTEND=noninteractive
 
-#
-#Set ENV
-#
 ARG L_HOST="127.0.0.1"
 ENV L_HOST=${L_HOST}
 

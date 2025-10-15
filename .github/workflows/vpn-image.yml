@@ -26,4 +26,6 @@ jobs:
         with:
           context: vpn
           push: true
-          tags: oonray/vpn:latest
+          tags: |
+            oonray/vpn:latest
+            oonray/vpn:v1.0.0

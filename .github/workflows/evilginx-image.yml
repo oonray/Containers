@@ -10,80 +10,37 @@ on:
       - 'base/dev/node/*'
       - 'base/dev/node/**'
 jobs:
-  build-evilginx-go-amd64:
+  build-evilginx-go:
     uses: oonray/Containers/.github/workflows/container.yml@main
     with:
-      arch: amd64
       image: evilginx
       tag: golang
-      platform: linux/amd64
-      base: oonray/evilginx:user
+      base: oonray/user-evilginx:latest
       context: base/dev/go
     secrets:
       username: ${{ secrets.DOCKERHUB_USERNAME }}
       password: ${{ secrets.DOCKERHUB_TOKEN }}
-  build-evilginx-go-arm64:
+
+
+  build-evilginx-node:
     uses: oonray/Containers/.github/workflows/container.yml@main
+    needs: build-evilginx-go
     with:
-      arch: arm64
-      image: evilginx
-      tag: golang-arm64
-      platform: linux/arm64
-      base: oonray/evilginx:user-arm64
-      context: base/dev/go
-    secrets:
-      username: ${{ secrets.DOCKERHUB_USERNAME }}
-      password: ${{ secrets.DOCKERHUB_TOKEN }}
-  build-evilginx-node-amd64:
-    uses: oonray/Containers/.github/workflows/container.yml@main
-    needs: build-evilginx-go-amd64
-    with:
-      arch: amd64
       image: evilginx
       tag: node
-      platform: linux/amd64
       base: oonray/evilginx:golang
       context: base/dev/node
     secrets:
       username: ${{ secrets.DOCKERHUB_USERNAME }}
       password: ${{ secrets.DOCKERHUB_TOKEN }}
-  build-evilginx-node-arm64:
-    uses: oonray/Containers/.github/workflows/container.yml@main
-    needs: build-evilginx-go-arm64
-    with:
-      arch: arm64
-      image: evilginx
-      tag: node-arm64
-      platform: linux/arm64
-      base: oonray/evilginx:golang-arm64
-      context: base/dev/node
-    secrets:
-      username: ${{ secrets.DOCKERHUB_USERNAME }}
-      password: ${{ secrets.DOCKERHUB_TOKEN }}
 
-  build-evilginx-amd64:
+  build-evilginx:
     uses: oonray/Containers/.github/workflows/container.yml@main
-    needs: build-evilginx-node-amd64
+    needs: build-evilginx-node
     with:
-      arch: amd64
       image: evilginx
-      tag: latest
-      platform: linux/amd64
+      tag: v1.0.0
       base: oonray/evilginx:node
-      context: evilginx
-    secrets:
-      username: ${{ secrets.DOCKERHUB_USERNAME }}
-      password: ${{ secrets.DOCKERHUB_TOKEN }}
-
-  build-evilginx-arm64:
-    uses: oonray/Containers/.github/workflows/container.yml@main
-    needs: build-evilginx-node-arm64
-    with:
-      arch: arm64
-      image: evilginx
-      tag: arm64
-      platform: linux/arm64
-      base: oonray/evilginx:node-arm64
       context: evilginx
     secrets:
       username: ${{ secrets.DOCKERHUB_USERNAME }}
