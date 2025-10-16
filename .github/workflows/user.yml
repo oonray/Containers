@@ -25,7 +25,6 @@ jobs:
     with:
       image: user-debian
       tag: v1.0.0
-      platform: linux/amd64
       base: oonray/base-debian:latest
       context: base/user
     secrets:
