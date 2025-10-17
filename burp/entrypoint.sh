@@ -1,41 +1,29 @@
 #!/usr/bin/dumb-init /bin/bash
 
-declare -A help
-help["cflag"]="h"
-help["sflag"]="[-h]help"
-help["func"]="help_func"
-help["needs"]=""
-
-declare -A mitm
-help["cflag"]="m"
-help["sflag"]="[-m]mimtpwoxy"
-help["func"]="mitm_func"
-help["needs"]=""
-
-function help_func()
+function help()
 {
     echo "USAGE: $(basename $0)"
-    echo ${help[sflag]}
+    echo "  [-m]mitmproxy"
     exit 2
 }
 
-
-if (( $# < 1 ))
+if [ $# -le 0 ]
 then
-    eval "${help[func]}"
+    help
 fi
 
-flag_s="${help[cflag]}"
+PROXY=false
 
-function mitm_func(){
-mitmweb --no-web-open-browser  \
---web-host 0.0.0.0  \
---web-port 8080
-}
-
-while getopts $flag_s opt; do
+while getopts "hs" opt; do
     case "$opt" in
+        s) PROXY=true ;;
         h) ;&
         *) eval ${help[func]};;
     esac
 done
+
+if $PROXY; then
+    mitmweb --no-web-open-browser  \
+    --web-host 0.0.0.0  \
+    --web-port $PORT
+fi

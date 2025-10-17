@@ -2,6 +2,7 @@ local lazy = {
     path = vim.fn.stdpath('data') .. '/lazy/lazy.nvim',
     opts = {},
     libs = {
+        { "zenbones-theme/zenbones.nvim",dependencies = "rktjmp/lush.nvim"},
 "nvim-lua/plenary.nvim","echasnovski/mini.nvim","sheerun/vim-polyglot","tpope/vim-fugitive","tpope/vim-surround",
 "nvim-treesitter/nvim-treesitter","nvim-treesitter/playground","preservim/nerdtree","ryanoasis/vim-devicons",
 "natecraddock/workspaces.nvim","natecraddock/sessions.nvim","preservim/tagbar","nvim-telescope/telescope.nvim",

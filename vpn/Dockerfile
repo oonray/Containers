@@ -28,7 +28,7 @@ ENV DNS_DIR=${CONF_DIR}/dns
 ENV DNS_F=${DNS_DIR}/Corefile
 
 RUN apk add --no-cache \
-        dumb-init supervisor \
+        dumb-init supervisor bash \
         sipcalc jq yq curl vim nmap socat \
         netcat-openbsd iproute2 traceroute tcpdump \
         iputils-ping bind-tools \

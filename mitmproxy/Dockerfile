@@ -6,6 +6,9 @@ ENV DEBIAN_FRONTEND=noninteractive
 ARG VERSION="0.1.0"
 ENV VERSION="$VERSION"
 
+ARG PORT=8080
+ENV PORT=${PORT}
+
 LABEL version="${VERSION}"
 LABEL org.opencontainers.image.version="${VERSION}"
 LABEL org.opencontainers.image.title=mitmproxy
