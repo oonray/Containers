@@ -1,91 +1,61 @@
 #!/usr/bin/dumb-init /bin/bash
 
-declare -A help
-help["cflag"]="h"
-help["sflag"]="[-h]help"
-help["func"]="help_func"
-help["needs"]=""
+HELP=false
+VPN=false
+PROXY=false
+DNS=false
 
-declare -A vpn
-vpn["cflag"]="v"
-vpn["sflag"]="[-v]vpn"
-vpn["func"]="vpn_func"
-vpn["needs"]="$VPN_F"
-
-declare -A proxy
-proxy["cflag"]="p"
-proxy["sflag"]="[-p]proxy"
-proxy["func"]="proxy_func"
-proxy["needs"]="$DANTE_F"
-
-declare -A dns
-dns["cflag"]="d"
-dns["sflag"]="[-d]dns"
-dns["func"]="dns_func"
-dns["needs"]="$DNS_F"
-
-function help_func()
-{
-    echo "USAGE: $(basename $0)"
-    echo ${help[sflag]}
-    echo ${vpn[sflag]}
-    echo ${proxy[sflag]}
-    echo ${dns[sflag]}
+function help(){
+    printf "$(basename $0):\n\t[-h]help\n\t[-v]vpn\n\t[-p]proxy\n\t[-d]dns \n"
     exit 2
 }
 
-if (( $# < 1 ))
-then
-    eval "${help[func]}"
-fi
+if [ $# -le 1 ];then help; fi
 
+while getopts "hvpd" opt; do
+    case "$opt" in
+        v) VPN=true ;;
+        p) PROXY=true ;;
+        d) DNS=true ;;
+        h) ;&
+        *) help ;;
+    esac
+done
 
-function vpn_func(){
-    if [ -z ${vpn["needs"]} ]; then
+if $VPN; then
+    if [ -z $VPN_F ]; then
         echo 'VPN file not set' >&2
         exit 1
     fi
-    if [ ! -s ${vpn["needs"]} ]; then
-        echo "${vpn["needs"]} not found" >&2
+    if [ ! -s $VPN_F ]; then
+        echo "$VPN_F not found" >&2
         exit 1
     fi
     supervisorctl start vpn
-}
+fi
 
-function dns_func(){
-    if [ -z ${dns["needs"]} ]; then
-        echo 'dns file not set' >&2
-        exit 1
-    fi
-    if [ ! -s ${dns["needs"]} ]; then
-        echo "${dns["needs"]} not found" >&2
-        exit 1
-    fi
-
-    supervisorctl start dns
-}
-
-function proxy_func(){
-    if [ -z ${proxy["needs"]} ]; then
+if $PROXY; then
+    if [ -z $DANTE_F ]; then
         echo 'proxy file not set' >&2
         exit 1
     fi
-    if [ ! -s ${proxy["needs"]} ]; then
-        echo "${proxy["needs"]} not found" >&2
+    if [ ! -s $DANTE_F ]; then
+        echo "$DANTE_F not found" >&2
         exit 1
     fi
 
     supervisorctl start proxy
-}
+fi
 
-flag_s="${help[cflag]}${vpn[cflag]}${proxy[cflag]}${dns[cflag]}a"
-while getopts $flag_s opt; do
-    case "$opt" in
-        v) eval ${vpn[func]} ;;
-        p) eval ${proxy[func]} ;;
-        d) eval ${dns[func]} ;;
-        d) supervisorctl start all ;;
-        h) ;&
-        *) eval ${help[func]};;
-    esac
-done
+if $DNS; then
+    if [ -z $DNS_F ]; then
+        echo 'dns file not set' >&2
+        exit 1
+    fi
+    if [ ! -s $DNS_F ]; then
+        echo "$DNS_F not found" >&2
+        exit 1
+    fi
+
+    supervisorctl start dns
+fi

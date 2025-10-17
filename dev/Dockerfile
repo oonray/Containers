@@ -1,3 +1,4 @@
+#DEV
 FROM base AS dev
 ENV DEBIAN_FRONTEND=noninteractive
 
