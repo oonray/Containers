@@ -138,13 +138,6 @@ vim.diagnostic.config({
 
 --CAPABILLITIES
 local capabilities = req.cmp.lsp.default_capabilities()
-local lspconfig_defaults = req.lsp.conf.util.default_config
-
-lspconfig_defaults.capabilities = vim.tbl_deep_extend(
-  'force',
-  lspconfig_defaults.capabilities,
-  capabilities
-)
 
 req.lsp.zero.setup{}
 req.cmp.cmp.setup({
@@ -171,22 +164,22 @@ req.lsp.mason.lsp.setup({
   },
 })
 
-for _,lsp in pairs(vars.plugins.lsp) do
-req.lsp.conf[lsp].setup{
+for _,lsp in pairs(v.plugins.lsp) do
+req.lsp.conf(lsp,{
   capabilities = capabilities
-}
+})
 end
 
-req.lsp.conf.ansiblels.setup{
+req.lsp.conf('ansiblels',{
     capabilities = capabilities,
     validation = {
       lint = {
         enabled = false,
       },
     },
-}
+})
 
-req.lsp.conf.lua_ls.setup{
+req.lsp.conf('lua_ls',{
   capabilities = capabilities,
   on_init = function(client)
     if client.workspace_folders then
@@ -203,7 +196,7 @@ req.lsp.conf.lua_ls.setup{
       workspace = {
         checkThirdParty = false,
         library = {
-          vim.envars.VIMRUNTIME
+          vim.env.VIMRUNTIME
         }
       }
     })
@@ -211,7 +204,15 @@ req.lsp.conf.lua_ls.setup{
   settings = {
     Lua = {}
   }
+})
+-- dap
+req.dap.mason.setup{
+  ensure_installed = v.plugins.dap,
+  handlers = {},
 }
+
+vim.g.ft_ignore_pat = ignore_patterns.regex
+require("config.autocmd")
 -- dap
 req.dap.mason.setup{
   ensure_installed = vars.plugins.dap,
