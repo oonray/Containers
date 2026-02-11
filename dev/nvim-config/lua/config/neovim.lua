@@ -53,9 +53,14 @@ vim.opt.fileformat = 'unix'
 ---theme
 --
 vim.opt.background = 'dark'
-vim.cmd 'set termguicolors'
-vim.cmd 'colorscheme kanagawabones'
+
 --vim.cmd 'colorscheme zenwritten'
+--vim.cmd 'colorscheme kanagawabones'
+--vim.cmd 'colorscheme rosebones'
+vim.cmd 'colorscheme forestbones'
 --vim.cmd 'colorscheme zenbones'
 --vim.cmd 'colorscheme rose-pine'
+
+vim.cmd 'set termguicolors'
+vim.cmd 'highlight Normal guifg=#e7dcc4 guibg=#1F1F28'
 
