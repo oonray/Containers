@@ -91,10 +91,10 @@ COPY --from=golang:latest ${GOROOT} ${GOROOT}
 #apt-get update && \
 #apt-get install -y aspnetcore-runtime-9.0 dotnet-sdk-9.0
 
-RUN cp ${T_CONF} /home/$USR/.tmux.conf \
-    && cp ${Z_CONF} /home/$USR/.zshrc \
-    && cp ${CONF_DIR}/zsh/.oh-my-zsh /home/$USR/.oh-my-zsh \
-    && cp $C_CONF /home/$USR/.config/dircolors
+#RUN cp ${T_CONF} /home/$USR/.tmux.conf \
+#    && cp ${Z_CONF} /home/$USR/.zshrc \
+#    && cp ${CONF_DIR}/zsh/.oh-my-zsh /home/$USR/.oh-my-zsh \
+#    && cp $C_CONF /home/$USR/.config/dircolors
 
 #
 #Configure User
@@ -109,7 +109,6 @@ RUN curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.3/install.sh | b
     && [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh" \
     && nvm install 23 \
     && npm install yarn
-
 
 #
 #Configure NVIM
@@ -136,7 +135,7 @@ RUN zsh -c "$(curl -fsSL https://gef.blah.cat/sh)"
 #Cleanup
 #
 USER root
-RUN chown -R $USR /home/$USR \
+RUN chown -R ${USR} /home/${USR} \
     && apt-get autoremove \
     && apt-get clean \
     && rm -rf /opt/* /var/lib/apt/lists/* /tmp/* /var/tmp/*
