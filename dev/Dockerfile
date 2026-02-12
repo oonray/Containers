@@ -51,7 +51,7 @@ RUN apt-get update && \
 apt-get install -y \
 python3 python3-pip python3-venv \
 xxd ncurses-hexedit \
-fuse3 fd-find ripgrep sudo && \
+fuse3 fd-find ripgrep \
 gcc g++ make bear cmake llvm \
 mingw-w64 mingw-w64-tools build-essential \
 exuberant-ctags lua-check \
