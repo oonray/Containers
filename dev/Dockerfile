@@ -124,6 +124,7 @@ RUN mkdir -p ${GOPATH} \
 && mkdir -p /home/${USR}/.local/share/nvim/ws/worskpaces/
 
 COPY ./nvim-config/ /home/dev/.config/nvim/
+COPY ./entrypoint.sh /opt/entrypoint.sh
 
 #
 #NVIM INIT
@@ -149,3 +150,4 @@ RUN chown -R $USR /home/$USR \
 #
 VOLUME [ "/home/${USR}/.git" ]
 ENTRYPOINT ["/opt/entrypoint.sh"]
+
