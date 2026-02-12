@@ -91,10 +91,6 @@ COPY --from=golang:latest ${GOROOT} ${GOROOT}
 #apt-get update && \
 #apt-get install -y aspnetcore-runtime-9.0 dotnet-sdk-9.0
 
-RUN mkdir -p /home/$USR/.ssh && \
-cp /root/.ssh/authorized_keys /home/$USR/.ssh/authorized_keys && \
-chown -R dev:dev /home/dev/.ssh
-
 RUN cp ${T_CONF} /home/$USR/.tmux.conf \
     && cp ${Z_CONF} /home/$USR/.zshrc \
     && cp ${CONF_DIR}/zsh/.oh-my-zsh /home/$USR/.oh-my-zsh \
@@ -103,8 +99,8 @@ RUN cp ${T_CONF} /home/$USR/.tmux.conf \
 #
 #Configure User
 #
-USER dev
-WORKDIR /home/dev
+USER ${USR}
+WORKDIR /home/${USR}
 
 #
 #Install NODE
@@ -144,6 +140,8 @@ RUN chown -R $USR /home/$USR \
     && apt-get autoremove \
     && apt-get clean \
     && rm -rf /opt/* /var/lib/apt/lists/* /tmp/* /var/tmp/*
+
+RUN ssh-import-id gh:oonray
 
 #
 #Entrypoint
