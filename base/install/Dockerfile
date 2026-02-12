@@ -7,7 +7,7 @@ ARG B_VER=0.25.0
 ARG G_URL=https://github.com
 ARG B_URL=${G_URL}/sharkdp/bat/releases/download/v${B_VER}/bat_${B_VER}_${ARCH}.deb
 
-ARG VERSION="1.0.0"
+ARG VERSION="1.0.1"
 ENV VERSION="$VERSION"
 
 LABEL version="${VERSION}"
