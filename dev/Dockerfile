@@ -10,8 +10,8 @@ ENV L_PORT=${L_PORT}
 
 ENV APPIMAGE_EXTRACT_AND_RUN=1
 
-ARG USR=dev
-ENV USR=$USR
+#ARG USR=dev
+#ENV USR=$USR
 
 ENV G_DIR="/opt/git"
 ENV D_DIR="/opt/deb"
@@ -57,14 +57,14 @@ mingw-w64 mingw-w64-tools build-essential \
 exuberant-ctags lua-check \
 gdb swig
 
-RUN mkdir -p /opt/dev \
-    && curl -Lo /opt/dev/radare2.deb https://github.com/radareorg/radare2/releases/download/6.0.2/radare2_6.0.2_amd64.deb \
-    && apt install /opt/dev/radare2.deb
+RUN mkdir -p /opt/$USR \
+    && curl -Lo /opt/$USR/radare2.deb https://github.com/radareorg/radare2/releases/download/6.0.2/radare2_6.0.2_amd64.deb \
+    && apt install /opt/$USR/radare2.deb
 
 #
 #Create user
 #
-RUN useradd -u 1000 -s /usr/bin/zsh -m $USR
+#RUN useradd -u 1000 -s /usr/bin/zsh -m $USR
 RUN echo "$USR ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers.d/$USR
 
 #
@@ -91,8 +91,8 @@ COPY --from=golang:latest ${GOROOT} ${GOROOT}
 #apt-get update && \
 #apt-get install -y aspnetcore-runtime-9.0 dotnet-sdk-9.0
 
-RUN mkdir -p /home/dev/.ssh && \
-cp /root/.ssh/authorized_keys /home/dev/.ssh/authorized_keys && \
+RUN mkdir -p /home/$USR/.ssh && \
+cp /root/.ssh/authorized_keys /home/$USR/.ssh/authorized_keys && \
 chown -R dev:dev /home/dev/.ssh
 
 RUN cp ${T_CONF} /home/$USR/.tmux.conf \
