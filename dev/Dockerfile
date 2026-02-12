@@ -64,8 +64,8 @@ RUN mkdir -p /opt/$USR \
 #
 #Create user
 #
-#RUN useradd -u 1000 -s /usr/bin/zsh -m $USR
-RUN echo "$USR ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers.d/$USR
+#RUN useradd -u 1000 -s /usr/bin/zsh -m ${USR}
+#RUN echo "${USR} ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers.d/${USR}
 
 #
 #Install NVIM
