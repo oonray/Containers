@@ -86,11 +86,10 @@ COPY --from=golang:latest ${GOROOT} ${GOROOT}
 # 
 #Install DOTNET
 #
-RUN curl -Lo /tmp/dotnet.deb https://packages.microsoft.com/config/debian/12/packages-microsoft-prod.deb && \
-apt install -y /tmp/dotnet.deb && \
-apt-get update && \
-apt-get install -y aspnetcore-runtime-9.0 dotnet-sdk-9.0
-
+#RUN curl -Lo /tmp/dotnet.deb https://packages.microsoft.com/config/debian/12/packages-microsoft-prod.deb && \
+#apt install -y /tmp/dotnet.deb && \
+#apt-get update && \
+#apt-get install -y aspnetcore-runtime-9.0 dotnet-sdk-9.0
 
 RUN mkdir -p /home/dev/.ssh && \
 cp /root/.ssh/authorized_keys /home/dev/.ssh/authorized_keys && \
