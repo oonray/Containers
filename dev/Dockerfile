@@ -10,8 +10,8 @@ ENV L_PORT=${L_PORT}
 
 ENV APPIMAGE_EXTRACT_AND_RUN=1
 
-#ARG USR=dev
-#ENV USR=$USR
+ARG USR=oonray
+ENV USR=$USR
 
 ENV G_DIR="/opt/git"
 ENV D_DIR="/opt/deb"
