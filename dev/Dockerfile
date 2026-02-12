@@ -55,7 +55,7 @@ fuse3 fd-find ripgrep \
 gcc g++ make bear cmake llvm \
 mingw-w64 mingw-w64-tools build-essential \
 exuberant-ctags lua-check \
-gdb swig mitmproxy
+gdb swig
 
 RUN curl -Lo /opt/dev/radare2.deb https://github.com/radareorg/radare2/releases/download/6.0.2/radare2_6.0.2_amd64.deb \
     && apt install /opt/dev/radare2.deb
