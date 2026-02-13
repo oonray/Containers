@@ -123,11 +123,12 @@ RUN mkdir -p ${GOPATH} \
 
 COPY ./nvim-config/ /home/$USR/.config/nvim/
 COPY ./entrypoint.sh /opt/entrypoint.sh
+
 #
 #NVIM INIT
 #
-RUN zsh -c "nvim --headless -c':Lazy install | sleep 10 | qa'"
-RUN zsh -c "nvim --headless -c':sleep 20 | qa'"
+#RUN zsh -c "nvim --headless -c':Lazy install | sleep 10 | qa'"
+#RUN zsh -c "nvim --headless -c':sleep 20 | qa'"
 #
 #Install debuggers gdb gef + radare
 #
