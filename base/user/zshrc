@@ -4,7 +4,7 @@ export PATH=$PATH:$HOME/.local/bin/:$HOME/bin
 #zsh
 export DISABLE_MAGIC_FUNCTIONS=true #remove auto complete
 plugins=(git docker docker-compose python man nmap golang kubectl sudo vi-mode)
-source /home/dev/.oh-my-zsh/oh-my-zsh.sh
+source /home/$USR/.oh-my-zsh/oh-my-zsh.sh
 
 #golang
 export GOPATH=$HOME/.go
