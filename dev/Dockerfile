@@ -122,8 +122,7 @@ RUN mkdir -p ${GOPATH} \
 && mkdir -p /home/${USR}/.local/share/nvim/ws/worskpaces/
 
 COPY ./nvim-config/ /home/dev/.config/nvim/
-COPY ./entrypoint.sh /opt/entrypoint.sh
-
+#COPY ./entrypoint.sh /opt/entrypoint.sh
 #
 #NVIM INIT
 #
@@ -139,6 +138,7 @@ RUN zsh -c "$(curl -fsSL https://gef.blah.cat/sh)"
 #
 USER root
 RUN chown -R ${USR} /home/${USR} \
+    && chmod +x /opt/entrypoint.sh \
     && apt-get autoremove \
     && apt-get clean \
     && rm -rf /opt/* /var/lib/apt/lists/* /tmp/*
@@ -147,5 +147,5 @@ RUN chown -R ${USR} /home/${USR} \
 #Entrypoint
 #
 VOLUME [ "/home/${USR}/.git" ]
-ENTRYPOINT ["/opt/entrypoint.sh"]
+#ENTRYPOINT ["/opt/entrypoint.sh"]
 
