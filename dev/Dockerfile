@@ -25,7 +25,7 @@ ENV GOPATH="/home/$USR/.go"
 ENV GOROOT="/usr/local/go"
 
 ENV NVM_DIR="/home/$USR/.nvm"
-ENV PATH="$PATH:/home/dev/.nvm:$GOROOT/bin:$GOPATH/bin"
+ENV PATH="$PATH:/home/$USR/.nvm:$GOROOT/bin:$GOPATH/bin"
 
 ENV CONF_DIR="/opt/conf"
 ENV T_DIR="$CONF_DIR/tmux"
@@ -102,8 +102,8 @@ COPY --from=golang:latest ${GOROOT} ${GOROOT}
 #
 #Configure User
 #
-USER ${USR}
-WORKDIR /home/${USR}
+USER $USR
+WORKDIR /home/$USR
 
 #
 #Install NODE
@@ -121,7 +121,7 @@ RUN mkdir -p ${GOPATH} \
 && mkdir -p /home/${USR}/.config \
 && mkdir -p /home/${USR}/.local/share/nvim/ws/worskpaces/
 
-COPY ./nvim-config/ /home/dev/.config/nvim/
+COPY -r ./nvim-config/ /home/$USR/.config/nvim/
 #COPY ./entrypoint.sh /opt/entrypoint.sh
 #
 #NVIM INIT
@@ -143,6 +143,8 @@ RUN chown -R ${USR} /home/${USR} \
     && apt-get clean \
     && rm -rf /opt/* /var/lib/apt/lists/* /tmp/*
 
+USER $USR
+WORKDIR /home/$USR
 #
 #Entrypoint
 #
