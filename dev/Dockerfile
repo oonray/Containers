@@ -121,13 +121,13 @@ RUN mkdir -p ${GOPATH} \
 && mkdir -p /home/${USR}/.config \
 && mkdir -p /home/${USR}/.local/share/nvim/ws/worskpaces/
 
-COPY -r ./nvim-config/ /home/$USR/.config/nvim/
-#COPY ./entrypoint.sh /opt/entrypoint.sh
+COPY ./nvim-config/ /home/$USR/.config/nvim/
+COPY ./entrypoint.sh /opt/entrypoint.sh
 #
 #NVIM INIT
 #
-#RUN zsh -c "nvim --headless -c':Lazy install | sleep 10 | qa'"
-#RUN zsh -c "nvim --headless -c':sleep 20 | qa'"
+RUN zsh -c "nvim --headless -c':Lazy install | sleep 10 | qa'"
+RUN zsh -c "nvim --headless -c':sleep 20 | qa'"
 #
 #Install debuggers gdb gef + radare
 #
