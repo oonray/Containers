@@ -11,9 +11,13 @@ ENV L_PORT=${L_PORT}
 ENV APPIMAGE_EXTRACT_AND_RUN=1
 
 ARG USR
+ENV USR=${USR}
 ARG ARCH
+ENV ARCH=${ARCH}
 ARG PUID
+ENV PUID=${PUID}
 ARG PGID
+ENV PGID=${PGID}
 
 ENV G_DIR="/opt/git"
 ENV D_DIR="/opt/deb"
@@ -141,8 +145,6 @@ RUN chown -R ${USR} /home/${USR} \
     && apt-get autoremove \
     && apt-get clean \
     && rm -rf /opt/* /var/lib/apt/lists/* /tmp/* /var/tmp/*
-
-RUN ssh-import-id gh:oonray
 
 #
 #Entrypoint
