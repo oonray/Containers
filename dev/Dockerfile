@@ -141,7 +141,7 @@ USER root
 RUN chown -R ${USR} /home/${USR} \
     && apt-get autoremove \
     && apt-get clean \
-    && rm -rf /opt/* /var/lib/apt/lists/* /tmp/* /var/tmp/*
+    && rm -rf /opt/* /var/lib/apt/lists/* /tmp/*
 
 #
 #Entrypoint
