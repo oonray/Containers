@@ -76,10 +76,6 @@ RUN mkdir -p /opt/$USR \
 RUN curl -Lo /bin/nvim "https://github.com/neovim/neovim/releases/download/`curl https://api.github.com/repos/neovim/neovim/releases/latest | jq -r .tag_name`/nvim-linux-x86_64.appimage"
 RUN chmod +x /bin/nvim
 
-#
-#Install RUST
-#
-RUN curl -sSf https://sh.rustup.rs | sh -s -- -y
 
 # 
 #Install GO
@@ -104,6 +100,10 @@ COPY --from=golang:latest ${GOROOT} ${GOROOT}
 #
 USER $USR
 WORKDIR /home/$USR
+#
+#Install RUST
+#
+RUN curl -sSf https://sh.rustup.rs | sh -s -- -y
 
 #
 #Install NODE
@@ -151,4 +151,6 @@ WORKDIR /home/$USR
 #
 VOLUME [ "/home/${USR}/.git" ]
 #ENTRYPOINT ["/opt/entrypoint.sh"]
+ENTRYPOINT ["/usr/bin/dumb-init", "--"]
+CMD ["tmux","new","-t","dev"]
 
