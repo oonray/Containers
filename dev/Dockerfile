@@ -50,6 +50,8 @@ LABEL version="${VERSION}"
 LABEL org.opencontainers.image.version="${VERSION}"
 LABEL org.opencontainers.image.title=dev
 
+USER root
+
 #
 #Install deps
 #
