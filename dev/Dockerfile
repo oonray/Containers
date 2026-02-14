@@ -49,7 +49,6 @@ USER $USR
 WORKDIR /home/$USR
 
 COPY ./nvim-config/ /home/$USR/.config/nvim/
-COPY ./entrypoint.sh /opt/entrypoint.sh
 
 WORKDIR /home/$USR/git
 #

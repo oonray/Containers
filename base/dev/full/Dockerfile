@@ -121,7 +121,7 @@ RUN mkdir -p ${GOPATH} \
 && mkdir -p /home/${USR}/.config \
 && mkdir -p /home/${USR}/.local/share/nvim/ws/worskpaces/
 
-COPY ./nvim-config/ /home/$USR/.config/nvim/
+COPY ../../dev/nvim-config/ /home/$USR/.config/nvim/
 COPY ./entrypoint.sh /opt/entrypoint.sh
 
 #
@@ -150,7 +150,6 @@ WORKDIR /home/$USR/git
 #Entrypoint
 #
 VOLUME [ "/home/${USR}/git" ]
-#ENTRYPOINT ["/opt/entrypoint.sh"]
 ENTRYPOINT ["/usr/bin/dumb-init", "--"]
 CMD ["tmux","new","-t","dev"]
 
