@@ -165,7 +165,7 @@ req.lsp.mason.lsp.setup({
   },
 })
 
-for _,lsp in pairs(v.plugins.lsp) do
+for _,lsp in pairs(vars.plugins.lsp) do
 req.lsp.conf(lsp,{
   capabilities = capabilities
 })
