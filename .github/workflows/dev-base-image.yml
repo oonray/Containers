@@ -3,8 +3,8 @@ name: Docker image Dev
 on:
   push:
     paths:
-      - 'base/dev/all/*'
-      - 'base/dev/all/**'
+      - 'base/dev/full/*'
+      - 'base/dev/full/**'
 
 jobs:
   build-base-dev:
