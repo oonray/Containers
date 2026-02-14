@@ -47,7 +47,7 @@ end
 -- mini allign
 require('mini.align').setup { mappings = { start = '', start_with_preview = '<leader>g=' }}
 
----TreeSitter
+--[[ TreeSitter
 require('nvim-treesitter')
 require('nvim-treesitter.configs').setup {
     ensure_installed = vars.plugins.tree,
@@ -57,6 +57,7 @@ require('nvim-treesitter.configs').setup {
     },
     indent = { enable = true }
 }
+--]]
 
 -- <Esc>  to exit
 --DAP
