@@ -58,7 +58,7 @@ fuse3 fd-find ripgrep \
 gcc g++ make bear cmake llvm \
 mingw-w64 mingw-w64-tools build-essential \
 exuberant-ctags lua-check \
-gdb swig
+gdb swig lua5.1
 
 RUN mkdir -p /opt/$USR \
     && curl -Lo /opt/$USR/radare2.deb https://github.com/radareorg/radare2/releases/download/6.0.2/radare2_6.0.2_amd64.deb \
@@ -128,7 +128,7 @@ COPY ./entrypoint.sh /opt/entrypoint.sh
 #NVIM INIT
 #
 #RUN zsh -c "nvim --headless -c':Lazy install | sleep 10 | qa'"
-#RUN zsh -c "nvim --headless -c':sleep 20 | qa'"
+RUN zsh -c "nvim --headless -c':sleep 20 | qa'"
 #
 #Install debuggers gdb gef + radare
 #
@@ -138,18 +138,18 @@ RUN zsh -c "$(curl -fsSL https://gef.blah.cat/sh)"
 #Cleanup
 #
 USER root
-RUN chown -R ${USR} /home/${USR} \
+RUN chown -R ${USR}:${USR} /home/${USR} \
     && chmod +x /opt/entrypoint.sh \
     && apt-get autoremove \
     && apt-get clean \
     && rm -rf /opt/* /var/lib/apt/lists/* /tmp/*
 
 USER $USR
-WORKDIR /home/$USR
+WORKDIR /home/$USR/git
 #
 #Entrypoint
 #
-VOLUME [ "/home/${USR}/.git" ]
+VOLUME [ "/home/${USR}/git" ]
 #ENTRYPOINT ["/opt/entrypoint.sh"]
 ENTRYPOINT ["/usr/bin/dumb-init", "--"]
 CMD ["tmux","new","-t","dev"]
