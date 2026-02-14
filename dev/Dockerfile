@@ -49,7 +49,7 @@ USER $USR
 WORKDIR /home/$USR
 
 COPY ./nvim-config/ /home/$USR/.config/nvim/
-COPY ./dev/tmux-config/tmux.conf /home/$USR/.tmux.conf
+COPY ./tmux-config/tmux.conf /home/$USR/.tmux.conf
 
 WORKDIR /home/$USR/git
 #
