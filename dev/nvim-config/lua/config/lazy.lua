@@ -1,3 +1,4 @@
+local system = require("config.system")
 local lazy = {
     path = vim.fn.stdpath('data') .. '/lazy/lazy.nvim',
     opts = {},
@@ -8,7 +9,7 @@ local lazy = {
         "sheerun/vim-polyglot",
         "tpope/vim-fugitive",
         "tpope/vim-surround",
-        --"nvim-treesitter/nvim-treesitter",
+        "nvim-treesitter/nvim-treesitter",
         --"nvim-treesitter/playground",
         "preservim/nerdtree",
         "ryanoasis/vim-devicons",
@@ -73,4 +74,8 @@ function lazy:setup()
       vim.g.plugins_ready = true
 end
 
-return lazy
+system:checkOS()
+system:setVars()
+lazy:setup()
+
+require('mini.align').setup { mappings = { start = '', start_with_preview = '<leader>g=' }}

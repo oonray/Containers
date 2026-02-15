@@ -1,5 +1,7 @@
-return {
-    path =  vim.fn.stdpath("data") .. "/ws/workspaces",
+require("telescope").load_extension("workspaces")
+
+local config = {
+    path = os.getenv("HOME") .. "/workspaces",
     mru_sort = true,
     auto_open = true,
     auto_dir = true,
@@ -9,7 +11,10 @@ return {
           "silent %bd!",
         },
         open = function()
-          req.sess.load(nil,{silent=true})
+          require("sessions").load(nil, {silent=true})
         end,
     }
 }
+
+require("workspaces").setup(config)
+return config

@@ -1,3 +1,4 @@
+local vars = require("config.vars")
 -- font
 vim.opt.guifont        = "{{ font }}\\ NFM:h10"
 -- numbered lines
@@ -64,3 +65,30 @@ vim.cmd 'colorscheme forestbones'
 vim.cmd 'set termguicolors'
 vim.cmd 'highlight Normal guifg=#e7dcc4 guibg=#1F1F28'
 
+-- Secrets
+require("nvim-dap-virtual-text").setup {
+        display_callback = function(variable)
+          local name = string.lower(variable.name)
+          local value = string.lower(variable.value)
+          if name:match "secret" or name:match "api" or value:match "secret" or value:match "api" then
+            return "*****"
+          end
+
+          if #variable.value > 15 then
+            return " " .. string.sub(variable.value, 1, 15) .. "... "
+          end
+
+          return " " .. variable.value
+        end,
+}
+
+vim.opt.wildignore = vars.ignore_patterns.wildignore
+vim.g.mapleader        = " " --','
+for i,key in pairs(vars.plugins.key_map.map)
+do
+    vim.keymap.set(key.mode,key.key,key.trigger, { nowait= true })
+end
+vim.g.ft_ignore_pat = vars.ignore_patterns.regex
+-- dap
+
+vim.g.ft_ignore_pat = vars.ignore_patterns.regex

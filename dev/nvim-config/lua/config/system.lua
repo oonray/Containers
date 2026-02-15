@@ -36,5 +36,10 @@ function system:winTerm()
   vim.o.shellxquote= ""
 end
 
+if system:isWindows()
+then
+  system:winTerm()
+end
+
 return system
 

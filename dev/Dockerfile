@@ -56,6 +56,7 @@ WORKDIR /home/$USR/git
 #Entrypoint
 #
 VOLUME [ "/home/${USR}/git" ]
+VOLUME [ "/home/${USR}/workspaces" ]
 #ENTRYPOINT ["/opt/entrypoint.sh"]
 ENTRYPOINT ["/usr/bin/dumb-init", "--"]
 CMD ["tmux","new","-t","dev"]

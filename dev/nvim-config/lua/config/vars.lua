@@ -24,14 +24,6 @@ local vars = {
 	,"pylsp"
 	,"sqlls"
     },
-    dap = {
-	"bash-debug-adapter"
-	,"debugpy"
-	,"js-debug-adapter"
-	,"go-debug-adapter"
-	,"stylua"
-	,"netcoredbg"
-    },
     tree = {
 	"c"
 	,"c_sharp"
@@ -165,7 +157,7 @@ local vars = {
     },
     events = {
         buffers = {'BufRead','BufNewFile'},
-        sesstions = { "WinEnter","WinResized","WinLeave","WinClosed","WinNew"},
+        sessions = { "WinEnter","WinResized","WinLeave","WinClosed","WinNew"},
     },
     ignore_patterns = {
         wildignore = {'*.o', '*.a', '__pycache__',"node_modules","node%_modules/.*",".git","*cache*","build*/"},
