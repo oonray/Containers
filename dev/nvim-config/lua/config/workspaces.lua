@@ -1,7 +1,7 @@
 require("telescope").load_extension("workspaces")
 
 local config = {
-    path = os.getenv("HOME") .. "/workspaces",
+    path = os.getenv("HOME") .. "/workspaces/ws",
     mru_sort = true,
     auto_open = true,
     auto_dir = true,
