@@ -121,7 +121,6 @@ RUN mkdir -p ${GOPATH} \
 && mkdir -p /home/${USR}/.config \
 && mkdir -p /home/${USR}/.local/share/nvim/ws/worskpaces/
 
-COPY ../../dev/nvim-config/ /home/$USR/.config/nvim/
 COPY ./entrypoint.sh /opt/entrypoint.sh
 
 #
