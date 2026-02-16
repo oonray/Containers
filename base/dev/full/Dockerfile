@@ -127,11 +127,6 @@ COPY ./entrypoint.sh /opt/entrypoint.sh
 #
 #NVIM INIT
 #
-#RUN zsh -c "nvim --headless -c':Lazy install | sleep 10 | qa'"
-RUN zsh -c "nvim --headless -c':sleep 20 | qa'"
-#
-#Install debuggers gdb gef + radare
-#
 RUN zsh -c "$(curl -fsSL https://gef.blah.cat/sh)"
 
 #
