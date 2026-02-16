@@ -47,8 +47,6 @@ function lazy:install()
       print('Installing lazy.nvim....')
       if self.is.inst then return self.is.inst end
 
-      vim.opt.rtp:prepend(self.path)
-      vim.opt.runtimepath:append(self.path)
       vim.fn.system({
           'git',
           'clone',
@@ -57,6 +55,8 @@ function lazy:install()
           '--branch=stable', -- latest stable release
           self.path,
       })
+
+
       self.is.inst = true
       return self.is.inst
 end
@@ -66,7 +66,11 @@ function lazy:load()
     self:check()
     if self:install()
     then
-        require("lazy").setup(lazy.libs, {})
+        vim.opt.rtp:prepend(self.path)
+        vim.opt.runtimepath:append(os.getenv("HOME") .. 'git')
+        vim.opt.runtimepath:append(self.path)
+
+        require("lazy").setup(self.libs, {})
         vim.g.plugins_ready = true
         self.is.load = true
     end
