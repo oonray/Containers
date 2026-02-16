@@ -32,6 +32,7 @@ function system:load()
     self:linux()
     self:windows()
     self.loaded = true
+    return self.loaded
 end
 
 function system:winTerm()

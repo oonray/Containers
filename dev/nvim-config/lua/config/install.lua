@@ -1,7 +1,5 @@
 local system = require("config.system")
 
-system:load()
-
 local lazy = {
     base = os.getenv("HOME") .. 'git/.lazy',
     path = os.getenv("HOME") .. 'git/.lazy/lazy.nvim',
@@ -51,7 +49,7 @@ function lazy:check()
 end
 
 function lazy:mkdir()
-    if self.is.base then return end
+    if self.is.base then return true end
     print('lazy.nvim Making base path.... '..self.path)
     vim.fn.system({
         'mkdir','-p',
@@ -74,26 +72,30 @@ function lazy:install()
           self.path,
       })
       self.is.inst = true
+      return self.is.inst
 end
 
 function lazy:load()
+    print("Importing lazy...")
+    self:check()
     self:mkdir()
-    self:install()
-    require("lazy").setup(lazy.libs, {})
-    vim.g.plugins_ready = true
-    self.is.load = true
+    if self:install()
+    then
+        require("lazy").setup(lazy.libs, {})
+        vim.g.plugins_ready = true
+        self.is.load = true
+    end
+
+    self.try = self.try + 1
+    return self.is.load
 end
 
 function lazy:setup()
-   system:setVars()
-   self:check()
-   self:mkdir()
-   self:install()
-   self:load()
-
-   lazy.try = lazy.try + 1
-
-   if lazy.try < 3 then lazy:setup() end
+   if not system:load() then return false end
+   if not self.is.load or self.try < 3
+   then
+        self:load()
+   end
    return self
 end
 
