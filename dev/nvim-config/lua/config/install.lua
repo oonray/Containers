@@ -1,13 +1,11 @@
 local system = require("config.system")
 
 local lazy = {
-    base = os.getenv("HOME") .. 'git/.lazy',
-    path = os.getenv("HOME") .. 'git/.lazy/lazy.nvim',
+    path = os.getenv("HOME") .. 'git/.lazy.nvim',
     repo = 'https://github.com/folke/lazy.nvim.git',
     try  = 0,
     is   = {
         inst = false,
-        base = false,
         load = false},
     libs = {
             { "zenbones-theme/zenbones.nvim", dependencies="rktjmp/lush.nvim"},
@@ -37,32 +35,20 @@ local lazy = {
 
 function lazy:check()
   print("Checking vars... ")
-  if vim.loop.fs_stat(self.base) then
-    self.is.base = true;
-    if vim.loop.fs_stat(self.path) then
-       self.is.inst = true
-    end
+  if vim.loop.fs_stat(self.path) then
+    self.is.inst = true
   end
   if vim.g.plugins_ready then
     self.is.load = true
   end
 end
 
-function lazy:mkdir()
-    if self.is.base then return true end
-    print('lazy.nvim Making base path.... '..self.path)
-    vim.fn.system({
-        'mkdir','-p',
-        self.base,
-    })
-    self.is.base = true
-end
-
 function lazy:install()
       print('Installing lazy.nvim....')
-    if self.is.inst then return end
-      self:mkdir()
-      vim.opt.rtp:prepend(lazy.path)
+      if self.is.inst then return self.is.inst end
+
+      vim.opt.rtp:prepend(self.path)
+      vim.opt.runtimepath:append(self.path)
       vim.fn.system({
           'git',
           'clone',
@@ -76,9 +62,8 @@ function lazy:install()
 end
 
 function lazy:load()
-    print("Importing lazy...")
+    print("Loading lazy...")
     self:check()
-    self:mkdir()
     if self:install()
     then
         require("lazy").setup(lazy.libs, {})
@@ -91,7 +76,7 @@ function lazy:load()
 end
 
 function lazy:setup()
-   if not system:load() then return false end
+   if not system:load() then return self end
    if not self.is.load or self.try < 3
    then
         self:load()
