@@ -37,7 +37,7 @@ ENV Z_CONF="$Z_DIR/zshrc"
 ENV C_DIR="$CONF_DIR/colors"
 ENV C_CONF="$C_DIR/dircolors"
 
-ARG VERSION="1.0.2"
+ARG VERSION="1.0.3"
 ENV VERSION="$VERSION"
 ENV DEBIAN_FRONTEND=noninteractive
 
