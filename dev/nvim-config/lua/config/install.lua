@@ -13,7 +13,8 @@ local lazy = {
         load = false},
     libs = {
             { "zenbones-theme/zenbones.nvim", dependencies="rktjmp/lush.nvim"},
-            "nvim-lua/plenary.nvim","echasnovski/mini.nvim",
+            "nvim-lua/plenary.nvim",
+            { 'nvim-mini/mini.nvim', version = '*' },
             "sheerun/vim-polyglot","tpope/vim-fugitive",
             "tpope/vim-surround","nvim-treesitter/nvim-treesitter",
             "nvim-treesitter/playground","preservim/nerdtree",
@@ -81,7 +82,9 @@ function lazy:setup()
    if not lazy.base then lazy:mkdir() end
    if not lazy.inst then lazy:install() end
    if not lazy.load then lazy:load() end
+
    lazy.try = lazy.try + 1
+
    if lazy.try < 3 then lazy:setup() end
 end
 
@@ -89,8 +92,3 @@ system:setVars()
 lazy:setup()
 
 
-require('mini.align').setup {
-    mappings = {
-        start = '',
-        start_with_preview = '<leader>g=' }
-}

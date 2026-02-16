@@ -93,3 +93,8 @@ vim.lsp.config('lua_ls',{
   }
 })
 
+require('mini.align').setup {
+    mappings = {
+        start = '<leader>gA',
+        start_with_preview = '<leader>ga' }
+}
