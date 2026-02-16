@@ -2,11 +2,15 @@ local system = require("config.system")
 
 system:checkOS()
 
-
 local lazy = {
     base = os.getenv("HOME") .. 'git/.lazy',
     path = os.getenv("HOME") .. 'git/.lazy/lazy.nvim',
     repo = 'https://github.com/folke/lazy.nvim.git',
+    try  = 0,
+    is   = {
+        inst = false,
+        base = false,
+        load = false},
     libs = {
             { "zenbones-theme/zenbones.nvim", dependencies="rktjmp/lush.nvim"},
             "nvim-lua/plenary.nvim","echasnovski/mini.nvim",
@@ -29,23 +33,34 @@ local lazy = {
             "hrsh7th/cmp-nvim-lsp","hrsh7th/cmp-buffer",
             "hrsh7th/cmp-path","hrsh7th/cmp-cmdline","hrsh7th/nvim-cmp",
             "glench/vim-jinja2-syntax","universal-ctags/ctags",
-            "stevearc/vim-arduino","rhysd/vim-clang-format"
-         }
+            "stevearc/vim-arduino","rhysd/vim-clang-format"},
 }
 
+function lazy:check()
+  if vim.loop.fs_stat(lazy.base) then
+    lazy.is.base = true;
+    if vim.loop.fs_stat(lazy.path) then
+       lazy.is.inst = true
+    end
+  end
+  if vim.g.plugins_ready then
+    lazy.is.load = true
+  end
+end
+
+function lazy:mkdir()
+    print('lazy.nvim Making base path.... '..lazy.path)
+    vim.fn.system({
+        'mkdir','-p',
+        lazy.base,
+    })
+end
 
 function lazy:install()
-      if vim.loop.fs_stat(lazy.path) then
-        return
-      end
-      if not vim.loop.fs_stat(lazy.base) then
-        vim.fn.system({
-            'mkdir','-p',
-            lazy.base,
-        })
-      end
+      if not lazy.base then lazy:mkdir() end
       print('Installing lazy.nvim....')
-        vim.fn.system({
+      vim.opt.rtp:prepend(lazy.path)
+      vim.fn.system({
           'git',
           'clone',
           '--filter=blob:none',
@@ -55,14 +70,19 @@ function lazy:install()
       })
 end
 
+function lazy:load()
+    if not lazy.inst then lazy:install() end
+    lazy.loadrequire("lazy").setup(lazy.libs, {})
+    vim.g.plugins_ready = true
+end
+
 function lazy:setup()
-        vim.opt.rtp:prepend(lazy.path)
-        if vim.g.plugins_ready then
-            return
-        end
-      lazy:install()
-      require("lazy").setup(lazy.libs, {})
-      vim.g.plugins_ready = true
+   lazy:check()
+   if not lazy.base then lazy:mkdir() end
+   if not lazy.inst then lazy:install() end
+   if not lazy.load then lazy:load() end
+   lazy.try = lazy.try + 1
+   if lazy.try < 3 then lazy:setup() end
 end
 
 system:setVars()
