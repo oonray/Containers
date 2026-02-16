@@ -38,55 +38,63 @@ local lazy = {
 }
 
 function lazy:check()
-  if vim.loop.fs_stat(lazy.base) then
-    lazy.is.base = true;
-    if vim.loop.fs_stat(lazy.path) then
-       lazy.is.inst = true
+  print("Checking vars... ")
+  if vim.loop.fs_stat(self.base) then
+    self.is.base = true;
+    if vim.loop.fs_stat(self.path) then
+       self.is.inst = true
     end
   end
   if vim.g.plugins_ready then
-    lazy.is.load = true
+    self.is.load = true
   end
 end
 
 function lazy:mkdir()
-    print('lazy.nvim Making base path.... '..lazy.path)
+    if self.is.base then return end
+    print('lazy.nvim Making base path.... '..self.path)
     vim.fn.system({
         'mkdir','-p',
-        lazy.base,
+        self.base,
     })
+    self.is.base = true
 end
 
 function lazy:install()
-      if not lazy.base then lazy:mkdir() end
       print('Installing lazy.nvim....')
+    if self.is.inst then return end
+      self:mkdir()
       vim.opt.rtp:prepend(lazy.path)
       vim.fn.system({
           'git',
           'clone',
           '--filter=blob:none',
-          lazy.repo,
+          self.repo,
           '--branch=stable', -- latest stable release
-          lazy.path,
+          self.path,
       })
+      self.is.inst = true
 end
 
 function lazy:load()
-    if not lazy.inst then lazy:install() end
-    lazy.loadrequire("lazy").setup(lazy.libs, {})
+    self:mkdir()
+    self:install()
+    require("lazy").setup(lazy.libs, {})
     vim.g.plugins_ready = true
+    self.is.load = true
 end
 
 function lazy:setup()
    system:setVars()
-   lazy:check()
-   if not lazy.is.base then lazy:mkdir() end
-   if not lazy.is.inst then lazy:install() end
-   if not lazy.is.load then lazy:load() end
+   self:check()
+   self:mkdir()
+   self:install()
+   self:load()
 
    lazy.try = lazy.try + 1
 
    if lazy.try < 3 then lazy:setup() end
+   return self
 end
 
-return lazy
+return lazy:setup()

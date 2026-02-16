@@ -1,5 +1,4 @@
 require("config.install")
-lazy:setup()
 require("config.works")
 require("config.sess")
 require("config.treesitter")

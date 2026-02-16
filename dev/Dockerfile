@@ -47,17 +47,15 @@ LABEL org.opencontainers.image.title=dev
 
 USER $USR
 WORKDIR /home/$USR
-
-COPY ./nvim-config/ /home/$USR/.config/nvim/
-COPY ./tmux-config/tmux.conf /home/$USR/.tmux.conf
+COPY ./nvim-config/ .config/nvim/
+COPY ./tmux-config/tmux.conf .tmux.conf
 
 WORKDIR /home/$USR/git
 #
 #Entrypoint
 #
-VOLUME [ "/home/${USR}/git" ]
-VOLUME [ "/home/${USR}/workspaces" ]
 #ENTRYPOINT ["/opt/entrypoint.sh"]
+VOLUME [ "/home/${USR}/git" ]
 ENTRYPOINT ["/usr/bin/dumb-init", "--"]
 CMD ["tmux","new","-t","dev"]
 
