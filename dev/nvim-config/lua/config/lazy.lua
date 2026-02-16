@@ -25,7 +25,7 @@ local libs = {
         "glench/vim-jinja2-syntax","universal-ctags/ctags",
         "stevearc/vim-arduino","rhysd/vim-clang-format"}
 
-local path = vim.fn.stdpath('data') .. '/lazy/lazy.nvim'
+local path = os.getenv("HOME") .. 'git/.lazy/lazy.nvim'
 local Lazy = {}
 
 function Lazy:install()
