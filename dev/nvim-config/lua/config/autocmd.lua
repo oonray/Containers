@@ -1,37 +1,35 @@
 local v = require("config.vars")
 
-vim.api.nvim_create_autocmd(v.events.buffers, {
-    pattern = ".*Ansible.*",
+local ev_buf = {'BufRead','BufNewFile'}
+local files  = {
+    {'.*Ansible.*','yaml.ansible','unix'},
+    {[[.*\.sh]],'bash','unix'},
+    {'.*[Mm]akefile.*','make','unix'},
+    {[[.*\.make]],'make','unix'},
+}
+
+local libs = {
+        [[c]],[[c_sharp]],[[lua]],[[vim]],
+        [[vimdoc]],[[query]],[[markdown]],
+        [[markdown_inline]],[[arduino]],[[asm]],
+        [[bash]],[[make]],[[cpp]],[[php]],
+        [[go]],[[http]],[[jinja]],[[javascript]],[[jq]],
+        [[llvm]],[[python]],
+        [[ssh_config]],[[tmux]],[[typescript]],[[yaml]]}
+
+for i,val in pairs(files)
+do
+vim.api.nvim_create_autocmd(ev_buff, {
+    pattern = val[0],
     callback = function()
-        vim.api.nvim_set_option_value('filetype', "yaml.ansible", { buf = buf })
-        vim.api.nvim_set_option_value('fileformat', 'unix', { buf = buf })
+        vim.api.nvim_set_option_value(
+                'filetype',
+                val[1],
+                { buf = ev_buf })
+        vim.api.nvim_set_option_value(
+                'fileformat',
+                val[2],
+                { buf = ev_buf })
     end,
 })
-
-vim.api.nvim_create_autocmd(v.events.buffers, {
-    pattern = ".*sh",
-    callback = function()
-        vim.api.nvim_set_option_value('filetype', "bash", { buf = buf })
-        vim.api.nvim_set_option_value('fileformat', 'unix', { buf = buf })
-    end,
-})
-
-vim.api.nvim_create_autocmd(v.events.buffers, {
-    pattern = ".*makefile.*",
-    callback = function()
-        vim.api.nvim_set_option_value('filetype', "make", { buf = buf })
-        vim.api.nvim_set_option_value('fileformat', 'unix', { buf = buf })
-    end,
-})
-
-vim.api.nvim_create_autocmd(v.events.buffers, {
-    pattern = "*.lua.j2",
-    callback = function()
-        local parser = vim.treesitter.get_parser(bufnr,"jinja",{})
-        local tree = parser:parse()[1]:root()
-        local query = vim.treesitter.parse_query("jinja","(words) @words")
-
-        vim.api.set_options_value('filetype',"jinja")
-        vim.api.nvim_set_hl(0, "@words", { link = "lua" })
-    end,
-})
+end
