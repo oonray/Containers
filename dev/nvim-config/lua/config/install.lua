@@ -1,6 +1,6 @@
 local system = require("config.system")
 
-system:checkOS()
+system:load()
 
 local lazy = {
     base = os.getenv("HOME") .. 'git/.lazy',
@@ -78,17 +78,15 @@ function lazy:load()
 end
 
 function lazy:setup()
+   system:setVars()
    lazy:check()
-   if not lazy.base then lazy:mkdir() end
-   if not lazy.inst then lazy:install() end
-   if not lazy.load then lazy:load() end
+   if not lazy.is.base then lazy:mkdir() end
+   if not lazy.is.inst then lazy:install() end
+   if not lazy.is.load then lazy:load() end
 
    lazy.try = lazy.try + 1
 
    if lazy.try < 3 then lazy:setup() end
 end
 
-system:setVars()
-lazy:setup()
-
-
+return lazy

@@ -1,30 +1,37 @@
 local system = {
     linux = true,
+    loaded = false,
 }
 
 function system:checkOS()
+    if self.loaded then return end
     if vim.fn.has("win64") == 1 or vim.fn.has("win32") == 1
-    then 
+    then
         self.linux = false
-    end
-end
-
-function system:isLinux()
-    return self.linux
-end
-
-function system:isWindows()
-    return self.linux ~= true
-end
-
-function system:setVars()
-    if self.linux then
-        vim.g.os = string.gsub(vim.fn.system('uname'), '\n', '')
-        vim.opt.runtimepath:append(',~/.config/nvim/')
     else
-        vim.g.os = "Windows"
-        vim.opt.runtimepath:append(',~/AppData/local/nvim/')
+        self.linux = true
     end
+end
+
+function system:linux()
+    self:checkOS()
+    if not self.linux then return end
+    vim.g.os = string.gsub(vim.fn.system('uname'), '\n', '')
+    vim.opt.runtimepath:append(',~/.config/nvim/')
+end
+
+function system:windows()
+    self:checkOS()
+    if self.linux then return end
+    vim.g.os = "Windows"
+    vim.opt.runtimepath:append(',~/AppData/local/nvim/')
+    self:winTerm()
+end
+
+function system:load()
+    self:linux()
+    self:windows()
+    self.loaded = true
 end
 
 function system:winTerm()
@@ -34,11 +41,6 @@ function system:winTerm()
   vim.o.shellpipe  = '2>&1 | %%{ "$_" } | tee %s; exit $LastExitCode'
   vim.o.shellquote= ""
   vim.o.shellxquote= ""
-end
-
-if system:isWindows()
-then
-  system:winTerm()
 end
 
 return system
