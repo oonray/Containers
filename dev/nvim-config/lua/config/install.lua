@@ -33,7 +33,6 @@ local lazy = {
          }
 }
 
-vim.opt.rtp:prepend(path)
 
 function lazy:install()
       if vim.loop.fs_stat(lazy.path) then
@@ -57,6 +56,7 @@ function lazy:install()
 end
 
 function lazy:setup()
+        vim.opt.rtp:prepend(lazy.path)
         if vim.g.plugins_ready then
             return
         end
