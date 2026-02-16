@@ -1,5 +1,5 @@
-require("config.lazy")
-require("config.workspaces")
+require("config.install")
+require("config.works")
 require("config.sess")
 require("config.treesitter")
 require("config.tele")
