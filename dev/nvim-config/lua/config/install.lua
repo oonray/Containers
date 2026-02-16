@@ -1,7 +1,8 @@
 local system = require("config.system")
 
 local lazy = {
-    path = os.getenv("HOME") .. 'git/.lazy.nvim',
+    base = os.getenv("HOME") .. 'git/.mod',
+    path = os.getenv("HOME") .. 'git/.mod/lazy/lazy.nvim',
     repo = 'https://github.com/folke/lazy.nvim.git',
     try  = 0,
     is   = {
@@ -46,7 +47,12 @@ end
 function lazy:install()
       print('Installing lazy.nvim....')
       if self.is.inst then return self.is.inst end
-
+      vim.fn.system({
+        'mkdir','-p',
+        self.base,
+        self.base .. '/lazy',
+        self.path
+      })
       vim.fn.system({
           'git',
           'clone',
@@ -63,13 +69,12 @@ end
 
 function lazy:load()
     print("Loading lazy...")
+    vim.opt.rtp:prepend(self.path)
+    vim.opt.rtp:prepend(self.base)
+    print(vim.opt.rtp)
     self:check()
     if self:install()
     then
-        vim.opt.rtp:prepend(self.path)
-        vim.opt.runtimepath:append(os.getenv("HOME") .. 'git')
-        vim.opt.runtimepath:append(self.path)
-
         require("lazy").setup(self.libs, {})
         vim.g.plugins_ready = true
         self.is.load = true
