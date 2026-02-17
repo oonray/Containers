@@ -45,6 +45,8 @@ LABEL version="${VERSION}"
 LABEL org.opencontainers.image.version="${VERSION}"
 LABEL org.opencontainers.image.title=dev
 
+RUN chmod -R ${USR}:${USR} /home/${USR}/
+
 USER $USR
 WORKDIR /home/$USR
 COPY ./nvim-config/ .config/nvim/
