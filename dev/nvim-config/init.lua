@@ -3,7 +3,7 @@ System:checkOS()
 
 if System.linux
 then
-Basepath = os.getenv("HOME")
+Basepath = os.getenv("HOME") .. "/git"
 else
 Basepath = os.getenv("USERPROFILE")
 end
