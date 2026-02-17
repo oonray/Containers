@@ -1,5 +1,5 @@
-return {
-    path =  vim.fn.stdpath("data") .. "/workspaces",
+local works = {
+    path =  Basepath .. "/workspaces",
     mru_sort = true,
     auto_open = true,
     auto_dir = true,
@@ -9,7 +9,21 @@ return {
           "silent %bd!",
         },
         open = function()
-          req.sess.load(nil,{silent=true})
+            require("sessions").load(nil, {silent=true})
         end,
     }
 }
+
+function works:dir()
+    vim.fn.system({
+       "powershell","-c",
+        [["mkdir]] .. self.path .. [["]]})
+end
+
+function works:load()
+    self:dir()
+    require("telescope").load_extension("workspaces")
+    require("workspaces").setup(self)
+end
+
+return works

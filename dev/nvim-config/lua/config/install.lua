@@ -1,5 +1,5 @@
 local lazy = {
-    path = Basepath .. '\\.lazy.nvim',
+    path = Basepath .. '/.lazy.nvim',
     try  = 0,
     is   = {
       inst = false,

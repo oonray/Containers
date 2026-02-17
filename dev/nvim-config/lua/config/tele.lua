@@ -1,28 +1,28 @@
-local tls = require("telescope")
-local builtin = require("telescope.builtin")
-local lspz = require('lsp-zero')
-local cmp = require('cmp')
-local mason = require("mason")
-local vars = require("config.vars")
+local cmp     = require('cmp')
+local tls     = require("telescope")
+local lspz    = require('lsp-zero')
+local mason   = require("mason")
+local vars    = require("config.vars")
+require("telescope.builtin")
+
+local capabilities = require('cmp_nvim_lsp').default_capabilities()
 
 tls.load_extension("dap")
 tls.load_extension('telescope-tabs')
-
-tls.setup{
-    file_ignore_patterns = vars.ignore_patterns.lua,
-}
+tls.setup{file_ignore_patterns = vars.ignore_patterns.lua,}
 
 --- LSP
 vim.diagnostic.config({
   signs = {
     text = {
-      [vim.diagnostic.severity.ERROR] = '✘',
       [vim.diagnostic.severity.WARN] = '▲',
       [vim.diagnostic.severity.HINT] = '⚑',
       [vim.diagnostic.severity.INFO] = '»',
+      [vim.diagnostic.severity.ERROR] = '✘',
     },
   },
 })
+
 
 lspz.setup{}
 cmp.setup({
@@ -48,8 +48,6 @@ require("mason-lspconfig").setup({
     lspz.default_setup,
   },
 })
-
-local capabilities = require('cmp_nvim_lsp').default_capabilities()
 
 for _,lsp in pairs(vars.plugins.lsp) do
 vim.lsp.config(lsp,{

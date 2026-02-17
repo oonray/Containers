@@ -1,4 +1,5 @@
 local vars = require("config.vars")
+
 -- font
 vim.opt.guifont        = "{{ font }}\\ NFM:h10"
 -- numbered lines
