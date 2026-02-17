@@ -16,8 +16,9 @@ local works = {
 
 function works:dir()
     vim.fn.system({
-       "powershell","-c",
-        [["mkdir]] .. self.path .. [["]]})
+        [[mkdir]],
+        [[-p]],
+        self.path})
 end
 
 function works:load()
