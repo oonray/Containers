@@ -45,12 +45,14 @@ LABEL version="${VERSION}"
 LABEL org.opencontainers.image.version="${VERSION}"
 LABEL org.opencontainers.image.title=dev
 
-RUN chown -R ${USR}:${USR} /home/${USR}/
-
 USER $USR
 WORKDIR /home/$USR
 COPY ./nvim-config/ .config/nvim/
 COPY ./tmux-config/tmux.conf .tmux.conf
+
+USER root
+RUN chown -R $USR:$USR /home/$USR/
+USER $USR
 
 WORKDIR /home/$USR/git
 #
