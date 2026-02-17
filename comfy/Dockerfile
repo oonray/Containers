@@ -1,6 +1,6 @@
 FROM base AS nvidia
 
-ARG VERSION="1.0.3"
+ARG VERSION="1.0.4"
 ENV VERSION="$VERSION"
 
 ENV APPIMAGE_EXTRACT_AND_RUN=1
@@ -27,8 +27,7 @@ RUN apt-get update  \
     && apt-get clean
 
 RUN curl -Lo /tmp/cuda-keyring.deb \
-            https://developer.download.nvidia.com/compute/cuda/repos/\
-            ubuntu2404/${ARCH}/cuda-keyring_1.1-1_all.deb \
+            https://developer.download.nvidia.com/compute/cuda/repos/ubuntu2404/${ARCH}/cuda-keyring_1.1-1_all.deb \
     && dpkg -i /tmp/cuda-keyring.deb \
     && rm -f /tmp/cuda-keyring.deb \
     && rm -f /etc/apt/sources.list.d/cuda*.list \
@@ -36,9 +35,7 @@ RUN curl -Lo /tmp/cuda-keyring.deb \
     && rm -f /etc/apt/sources.list.d/nvidia*.list \
             /etc/apt/sources.list.d/nvidia*.sources \
     && echo \
-    "deb [signed-by=/usr/share/keyrings/cuda-archive-keyring.gpg]\
-    https://developer.download.nvidia.com\
-    /compute/cuda/repos/ubuntu2404/${ARCH}/ /" \
+    "deb [signed-by=/usr/share/keyrings/cuda-archive-keyring.gpg] https://developer.download.nvidia.com/compute/cuda/repos/ubuntu2404/${ARCH}/ /" \
          > /etc/apt/sources.list.d/cuda-ubuntu2404.list \
     && apt-get update \
     && apt-get clean
@@ -61,13 +58,11 @@ RUN apt-get install -y --no-install-recommends libglvnd0 libglvnd-dev libegl1-me
   && rm -rf /var/lib/apt/lists/* \
   && mkdir -p /usr/share/glvnd/egl_vendor.d \
   && echo \
-    '{"file_format_version":"1.0.0",\
-    "ICD":{"library_path":"libEGL_nvidia.so.0"}}' \
+    '{"file_format_version":"1.0.0","ICD":{"library_path":"libEGL_nvidia.so.0"}}' \
         > /usr/share/glvnd/egl_vendor.d/10_nvidia.json \
   && mkdir -p /usr/share/vulkan/icd.d \
   && echo \
-    '{"file_format_version":"1.0.0",\
-    "ICD":{"library_path":"libGLX_nvidia.so.0","api_version":"1.3"}}' \
+    '{"file_format_version":"1.0.0","ICD":{"library_path":"libGLX_nvidia.so.0","api_version":"1.3"}}' \
         > /usr/share/vulkan/icd.d/nvidia_icd.json
 
 ENV  \
