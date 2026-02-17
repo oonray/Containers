@@ -75,7 +75,7 @@ RUN useradd -r -m -u ${PUID} -s /usr/bin/zsh ${USR} \
 
 USER $USR
 WORKDIR "/home/$USR/"
-RUN venv create comfy
+RUN python3 -m venv create comfy
 WORKDIR "/home/$USR/comfy"
 RUN scripts/activate
 
@@ -94,10 +94,13 @@ RUN git clone https://github.com/ohmyzsh/ohmyzsh.git .oh-my-zsh
 
 RUN git clone https://github.com/Comfy-Org/ComfyUI.git
 EXPOSE 8080
+
 WORKDIR "/home/$USR/ComfyUI"
+RUN pip install -r requirements.txt
+
 ENTRYPOINT ["/usr/bin/dumb-init", "--"]
 
-CMD ["python3","main.py"\
+CMD ["python3","main.py",\
     "--use-sage-attention",\
     "--listen":"0.0.0.0","--port 8080",\
     "--disable-auto-launch","--force-fp16",\
