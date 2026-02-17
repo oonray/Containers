@@ -12,7 +12,7 @@ local lazy = {
             { 'nvim-mini/mini.nvim', version = '*' },
             "sheerun/vim-polyglot","tpope/vim-fugitive",
             "tpope/vim-surround","nvim-treesitter/nvim-treesitter",
-            "nvim-treesitter/playground","preservim/nerdtree",
+            "preservim/nerdtree",
             "ryanoasis/vim-devicons","natecraddock/workspaces.nvim",
             "natecraddock/sessions.nvim","preservim/tagbar",
             "nvim-telescope/telescope.nvim",
