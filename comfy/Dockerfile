@@ -79,10 +79,10 @@ COPY --from=oonray/user-debian:latest ${T_USR_CONF} ${T_USR_CONF}
 COPY --from=oonray/user-debian:latest ${Z_USR_CONF} ${Z_USR_CONF}
 COPY --from=oonray/user-debian:latest ${C_USR_CONF} ${C_USR_CONF}
 
-RUN pip install -y --pre \
+RUN pip install --pre \
         torch torchvision torchaudio nvidia-ml-py \
         --index-url https://download.pytorch.org/whl/nightly/cu130 \
-    && pip install -y \
+    && pip install \
         onnyxruntime-gpu \
         sageattention
 
