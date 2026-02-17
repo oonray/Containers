@@ -74,16 +74,16 @@ RUN useradd -r -m -u ${PUID} -s /usr/bin/zsh ${USR} \
     && echo "${USR} ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers.d/${USR}
 
 USER $USR
-WORKDIR "/home/$USR/"
-RUN python3 -m venv create comfy
-WORKDIR "/home/$USR/comfy"
-RUN scripts/activate
 
 COPY --from=oonray/user-debian:latest ${T_USR_CONF} ${T_USR_CONF}
 COPY --from=oonray/user-debian:latest ${Z_USR_CONF} ${Z_USR_CONF}
 COPY --from=oonray/user-debian:latest ${C_USR_CONF} ${C_USR_CONF}
 
-RUN pip install --pre \
+WORKDIR "/home/$USR/"
+RUN python3 -m venv comfy
+
+RUN comfy/bin/activate \
+    && pip install --pre \
         torch torchvision torchaudio nvidia-ml-py \
         --index-url https://download.pytorch.org/whl/nightly/cu130 \
     && pip install \
@@ -91,16 +91,18 @@ RUN pip install --pre \
         sageattention
 
 RUN git clone https://github.com/ohmyzsh/ohmyzsh.git .oh-my-zsh
-
 RUN git clone https://github.com/Comfy-Org/ComfyUI.git
-EXPOSE 8080
 
 WORKDIR "/home/$USR/ComfyUI"
-RUN pip install -r requirements.txt
 
-ENTRYPOINT ["/usr/bin/dumb-init", "--"]
+RUN /home/$USR/comfy/bin/activate \
+    && pip install -r requirements.txt
 
-CMD ["python3","main.py",\
+ENTRYPOINT ["/usr/bin/dumb-init", "--", ]
+EXPOSE 8080
+
+CMD ["/home/$USR/comfy/bin/activate" \
+    "&&","python3","main.py",\
     "--use-sage-attention",\
     "--listen":"0.0.0.0","--port 8080",\
     "--disable-auto-launch","--force-fp16",\
