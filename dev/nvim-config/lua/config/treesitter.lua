@@ -11,5 +11,5 @@ require('nvim-treesitter').setup {
     highlight = { enable = true },
     indent = { enable = true },
     fold = { enable = true },
-    install_dir = os.getenv("HOME") .. "git/.treesitter/",
+    install_dir = Basepath .. "git/.treesitter/",
 }

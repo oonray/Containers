@@ -1,5 +1,5 @@
 require("sessions").setup({
     events = { "WinEnter","WinResized","WinLeave","WinClosed","WinNew"},
-    session_filepath = os.getenv("HOME") .. "git/.sessions/",
+    session_filepath = Basepath .. "git/.sessions/",
     absolute = true,
 })

@@ -1,14 +1,13 @@
-local system = require("config.system")
-
 local lazy = {
-    path = os.getenv("HOME") .. 'lazy.nvim',
-    repo = 'https://github.com/folke/lazy.nvim.git',
+    path = Basepath .. '\\.lazy.nvim',
     try  = 0,
     is   = {
-        inst = false,
-        load = false},
+      inst = false,
+      load = false,
+    },
     libs = {
-            { "zenbones-theme/zenbones.nvim", dependencies="rktjmp/lush.nvim"},
+            { "zenbones-theme/zenbones.nvim",
+              dependencies="rktjmp/lush.nvim"},
             "nvim-lua/plenary.nvim",
             { 'nvim-mini/mini.nvim', version = '*' },
             "sheerun/vim-polyglot","tpope/vim-fugitive",
@@ -22,7 +21,8 @@ local lazy = {
             "LukasPietzschmann/telescope-tabs","rose-pine/neovim",
             "vim-airline/vim-airline","pacha/vem-tabline",
             "neovim/nvim-lspconfig","VonHeikemen/lsp-zero.nvim",
-            "williamboman/mason.nvim","williamboman/mason-lspconfig.nvim",
+            "williamboman/mason.nvim",
+            "williamboman/mason-lspconfig.nvim",
             "mfussenegger/nvim-dap","leoluz/nvim-dap-go",
             "rcarriga/nvim-dap-ui","theHamsta/nvim-dap-virtual-text",
             "nvim-neotest/nvim-nio","jay-babu/mason-nvim-dap.nvim",
@@ -30,60 +30,73 @@ local lazy = {
             "hrsh7th/cmp-nvim-lsp","hrsh7th/cmp-buffer",
             "hrsh7th/cmp-path","hrsh7th/cmp-cmdline","hrsh7th/nvim-cmp",
             "glench/vim-jinja2-syntax","universal-ctags/ctags",
-            "stevearc/vim-arduino","rhysd/vim-clang-format"},
+            "stevearc/vim-arduino","rhysd/vim-clang-format"
+    },
 }
+
+function lazy:mkdir(path)
+    vim.fn.system({
+       "powershell","-c",
+        [["mkdir]] .. path .. [["]]})
+end
 
 function lazy:check()
   print("Checking vars... ")
   if vim.loop.fs_stat(self.path) then
     self.is.inst = true
+  else
+    self.is.inst = false
   end
   if vim.g.plugins_ready then
     self.is.load = true
+  else
+    self.is.load = false
   end
 end
 
 function lazy:install()
-      print('Installing lazy.nvim....')
-      if self.is.inst then return self.is.inst end
+      print('Installing lazy.nvim....' .. self.path)
       vim.fn.system({
           'git',
           'clone',
           '--filter=blob:none',
-          self.repo,
+          'https://github.com/folke/lazy.nvim.git',
           '--branch=stable', -- latest stable release
           self.path,
       })
 
-
-      self.is.inst = true
-      return self.is.inst
+      self.is.inst=true
 end
 
 function lazy:load()
     print("Loading lazy...")
-    vim.opt.rtp:prepend(self.path)
-    vim.opt.runtimepath:prepend(self.path)
-    print(vim.opt.rtp)
-    self:check()
-    if self:install()
+
+    if self.is.inst
     then
         require("lazy").setup(self.libs, {})
         vim.g.plugins_ready = true
         self.is.load = true
+    else
+	self:install()
     end
 
     self.try = self.try + 1
-    return self.is.load
 end
 
 function lazy:setup()
-   if not system:load() then return self end
+   vim.opt.rtp:append("," .. lazy.path)
+   vim.opt.runtimepath:append("," .. lazy.path)
+
+   self:check()
+   if not self.is.inst
+   then
+   	self:install()
+   end
+
    if not self.is.load or self.try < 3
    then
         self:load()
    end
-   return self
 end
 
-return lazy:setup()
+return lazy

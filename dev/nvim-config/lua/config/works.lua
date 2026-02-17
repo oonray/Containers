@@ -1,5 +1,5 @@
-local config = {
-    path = os.getenv("HOME") .. "git/.workspaces/",
+local works = {
+    path = Basepath .. "git/.workspaces/",
     mru_sort = true,
     auto_open = true,
     auto_dir = true,
@@ -14,5 +14,17 @@ local config = {
     }
 }
 
-require("telescope").load_extension("workspaces")
-require("workspaces").setup(config)
+function works:dir()
+    vim.fn.system({
+       "powershell","-c",
+        [["mkdir]] .. self.path .. [["]]})
+end
+
+function works:load()
+    self:dir()
+    require("telescope").load_extension("workspaces")
+    require("workspaces").setup(config)
+end
+
+return works
+

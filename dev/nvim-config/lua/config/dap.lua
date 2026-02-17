@@ -1,4 +1,3 @@
-local system = require("config.system")
 local dap = require("dap")
 local ui = require("dapui")
 local go = require("dap-go")
@@ -33,7 +32,7 @@ mason.setup{
   handlers = {},
 }
 
-if system:isLinux()
+if System.linux
 then
     dap.adapters.ansible = {
           type = "executable",
