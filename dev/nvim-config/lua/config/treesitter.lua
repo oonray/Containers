@@ -19,7 +19,7 @@ function libs:setup()
         indent = { enable = true },
         install_dir = self.path
     }
-    vim.api.nvim_create_autocmd('FileType', {
+    vim.api.nvim_create_autocmd({'FileType','BuffEnter'}, {
       callback = function() vim.treesitter.start() end,
     })
 end
