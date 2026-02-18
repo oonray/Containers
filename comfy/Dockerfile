@@ -82,7 +82,7 @@ COPY --from=oonray/user-debian:latest ${C_USR_CONF} ${C_USR_CONF}
 WORKDIR "/home/$USR/"
 RUN python3 -m venv comfy
 
-RUN comfy/bin/activate \
+RUN source /home/$USR/comfy/bin/activate \
     && pip install --pre \
         torch torchvision torchaudio nvidia-ml-py \
         --index-url https://download.pytorch.org/whl/nightly/cu130 \
@@ -95,13 +95,13 @@ RUN git clone https://github.com/Comfy-Org/ComfyUI.git
 
 WORKDIR "/home/$USR/ComfyUI"
 
-RUN /home/$USR/comfy/bin/activate \
+RUN source /home/$USR/comfy/bin/activate \
     && pip install -r requirements.txt
 
 ENTRYPOINT ["/usr/bin/dumb-init", "--", ]
 EXPOSE 8080
 
-CMD ["/home/$USR/comfy/bin/activate" \
+CMD ["source /home/$USR/comfy/bin/activate" \
     "&&","python3","main.py",\
     "--use-sage-attention",\
     "--listen":"0.0.0.0","--port 8080",\
