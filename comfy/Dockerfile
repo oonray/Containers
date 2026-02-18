@@ -74,6 +74,7 @@ RUN useradd -r -m -u ${PUID} -s /usr/bin/zsh ${USR} \
     && echo "${USR} ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers.d/${USR}
 
 USER $USR
+SHELL ["/usr/bin/zsh","-c"]
 
 COPY --from=oonray/user-debian:latest ${T_USR_CONF} ${T_USR_CONF}
 COPY --from=oonray/user-debian:latest ${Z_USR_CONF} ${Z_USR_CONF}
@@ -83,12 +84,9 @@ WORKDIR "/home/$USR/"
 RUN python3 -m venv comfy
 
 RUN source /home/$USR/comfy/bin/activate \
-    && pip install --pre \
-        torch torchvision torchaudio nvidia-ml-py \
-        --index-url https://download.pytorch.org/whl/nightly/cu130 \
-    && pip install \
-        onnyxruntime-gpu \
-        sageattention
+    && pip install --pre torch torchvision torchaudio nvidia-ml-py \
+--index-url https://download.pytorch.org/whl/nightly/cu130 \
+    && pip install onnyxruntime-gpu sageattention
 
 RUN git clone https://github.com/ohmyzsh/ohmyzsh.git .oh-my-zsh
 RUN git clone https://github.com/Comfy-Org/ComfyUI.git
