@@ -19,6 +19,9 @@ function libs:setup()
         indent = { enable = true },
         install_dir = self.path
     }
+    vim.api.nvim_create_autocmd('FileType', {
+      callback = function() vim.treesitter.start() end,
+    })
 end
 
 libs:setup()
