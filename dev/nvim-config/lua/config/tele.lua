@@ -3,13 +3,36 @@ local tls     = require("telescope")
 local lspz    = require('lsp-zero')
 local mason   = require("mason")
 local vars    = require("config.vars")
-require("telescope.builtin")
 
 local capabilities = require('cmp_nvim_lsp').default_capabilities()
+local lsp = {
+      "ansiblels"
+      ,"bashls"
+      ,"biome"
+      ,"dockerls"
+      ,"html"
+      ,"jqls"
+      ,"jsonls"
+      ,"lua_ls"
+      ,"ts_ls"
+      ,"yamlls"
+      ,"arduino_language_server"
+      ,"asm_lsp"
+      ,"clangd"
+      ,"cmake"
+      ,"csharp_ls"
+      ,"helm_ls"
+      ,"cypher_ls"
+      ,"gopls"
+      ,"markdown_oxide"
+      ,"powershell_es"
+      ,"pylsp"
+      ,"sqlls"
+}
 
 tls.load_extension("dap")
 tls.load_extension('telescope-tabs')
-tls.setup{file_ignore_patterns = vars.ignore_patterns.lua,}
+tls.setup{file_ignore_patterns = vars.ignore_patterns.lua}
 
 --- LSP
 vim.diagnostic.config({
@@ -43,7 +66,7 @@ end)
 -- MASON
 mason.setup()
 require("mason-lspconfig").setup({
-  ensure_installed = vars.plugins.lsp,
+  ensure_installed = lsp,
   handlers = {
     lspz.default_setup,
   },

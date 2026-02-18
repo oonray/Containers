@@ -54,25 +54,22 @@ vim.opt.fileformat = 'unix'
 
 ---theme
 --
+vim.cmd 'set termguicolors'
 vim.opt.background = 'dark'
+vim.cmd.colorscheme('forestbones')
+vim.cmd.highlight('Normal guifg=#e7dcc4 guibg=#1F1F28')
 
 --vim.cmd 'colorscheme zenwritten'
 --vim.cmd 'colorscheme kanagawabones'
 --vim.cmd 'colorscheme rosebones'
-vim.cmd 'colorscheme forestbones'
 --vim.cmd 'colorscheme zenbones'
 --vim.cmd 'colorscheme rose-pine'
 
-vim.cmd 'set termguicolors'
-vim.cmd 'highlight Normal guifg=#e7dcc4 guibg=#1F1F28'
-
 vim.opt.wildignore = vars.ignore_patterns.wildignore
+vim.g.ft_ignore_pat = vars.ignore_patterns.regex
+
 vim.g.mapleader        = " " --','
 for i,key in pairs(vars.plugins.key_map.map)
 do
     vim.keymap.set(key.mode,key.key,key.trigger, { nowait= true })
 end
-vim.g.ft_ignore_pat = vars.ignore_patterns.regex
--- dap
-
-vim.g.ft_ignore_pat = vars.ignore_patterns.regex
