@@ -1,5 +1,4 @@
 local libs = {
-        path = Basepath .. '/.treesitter',
         names = {
         "c","c_sharp","lua","vim","vimdoc","query","markdown",
         "markdown_inline","arduino","asm","bash","make","cpp","php",
@@ -9,24 +8,26 @@ local libs = {
 }
 
 function libs:setup()
-   vim.opt.rtp:append("," .. self.path)
-   vim.opt.runtimepath:append("," .. self.path)
+    local ts = require ('nvim-treesitter')
 
-    require('nvim-treesitter').setup {
+    ts.setup {
         ensure_installed = self.names,
         auto_install = true,
+        sync_install = false,
+        additional_vim_regex_highlighting = false,
+        parser_install_dir = nil,
         highlight = { enable = true },
         indent = { enable = true },
-        install_dir = self.path
     }
-
     vim.api.nvim_create_autocmd(
-      {'FileType','BufRead','BufNewFile','BufEnter'}, {
-      pattern=[[*.*]],
-      callback = function() vim.treesitter.start() end,
-    })
+       {'FileType'}, {
+           callback = function(ev)
+                if(vim.filetype.match({buf = ev.buf})) then
+                    vim.treesitter.start(ev.buf)
+                end
+           end
+       }
+    )
 end
-
-libs:setup()
 
 return libs
