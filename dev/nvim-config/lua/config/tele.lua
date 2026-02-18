@@ -2,37 +2,20 @@ local cmp     = require('cmp')
 local tls     = require("telescope")
 local lspz    = require('lsp-zero')
 local mason   = require("mason")
-local vars    = require("config.vars")
 
 local capabilities = require('cmp_nvim_lsp').default_capabilities()
 local lsp = {
-      "ansiblels"
-      ,"bashls"
-      ,"biome"
-      ,"dockerls"
-      ,"html"
-      ,"jqls"
-      ,"jsonls"
-      ,"lua_ls"
-      ,"ts_ls"
-      ,"yamlls"
-      ,"arduino_language_server"
-      ,"asm_lsp"
-      ,"clangd"
-      ,"cmake"
-      ,"csharp_ls"
-      ,"helm_ls"
-      ,"cypher_ls"
-      ,"gopls"
-      ,"markdown_oxide"
-      ,"powershell_es"
-      ,"pylsp"
-      ,"sqlls"
-}
+    "ansiblels"
+    ,"bashls" ,"biome" ,"dockerls"
+    ,"html" ,"jqls" ,"jsonls" ,"lua_ls"
+    ,"ts_ls" ,"yamlls" ,"arduino_language_server"
+    ,"asm_lsp" ,"clangd" ,"cmake" ,"csharp_ls" ,"helm_ls"
+    ,"cypher_ls" ,"gopls" ,"markdown_oxide" ,"powershell_es"
+    ,"pylsp" ,"sqlls"}
 
 tls.load_extension("dap")
 tls.load_extension('telescope-tabs')
-tls.setup{file_ignore_patterns = vars.ignore_patterns.lua}
+tls.setup{file_ignore_patterns = {[[.git/]],[[build/]]}}
 
 --- LSP
 vim.diagnostic.config({
@@ -59,7 +42,7 @@ cmp.setup({
   },
 })
 
-lspz.on_attach(function(client, bufnr)
+lspz.on_attach(function(_, bufnr)
     lspz.default_keymaps({buffer = bufnr})
 end)
 
@@ -72,8 +55,8 @@ require("mason-lspconfig").setup({
   },
 })
 
-for _,lsp in pairs(vars.plugins.lsp) do
-vim.lsp.config(lsp,{
+for _,ls in pairs(lsp) do
+vim.lsp.config(ls,{
   capabilities = capabilities
 })
 end
@@ -115,7 +98,24 @@ vim.lsp.config('lua_ls',{
 })
 
 require('mini.align').setup {
-    mappings = {
-        start = '<leader>gA',
-        start_with_preview = '<leader>ga' }
+   mappings = {
+    start = 'ga',
+    start_with_preview = 'gA',
+    },
+
+  options = {
+    split_pattern = '',
+    justify_side = 'left',
+    merge_delimiter = '',
+  },
+
+  steps = {
+    pre_split = {},
+    split = nil,
+    pre_justify = {},
+    justify = nil,
+    pre_merge = {},
+    merge = nil,
+  },
+  silent = false,
 }

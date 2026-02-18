@@ -1,5 +1,5 @@
 local libs = {
-        path = Basepath .. '/.lazy.nvim',
+        path = Basepath .. '/.treesitter',
         names = {
         "c","c_sharp","lua","vim","vimdoc","query","markdown",
         "markdown_inline","arduino","asm","bash","make","cpp","php",
@@ -19,7 +19,10 @@ function libs:setup()
         indent = { enable = true },
         install_dir = self.path
     }
-    vim.api.nvim_create_autocmd({'FileType','BuffEnter'}, {
+
+    vim.api.nvim_create_autocmd(
+      {'FileType','BufRead','BufNewFile','BufEnter'}, {
+      pattern=[[*.*]],
       callback = function() vim.treesitter.start() end,
     })
 end
