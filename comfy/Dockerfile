@@ -75,15 +75,14 @@ RUN useradd -r -m -u ${PUID} -s /usr/bin/zsh ${USR} \
 
 USER $USR
 SHELL ["/usr/bin/zsh","-c"]
+WORKDIR "/home/$USR/"
 
 COPY --from=oonray/user-debian:latest ${T_USR_CONF} ${T_USR_CONF}
 COPY --from=oonray/user-debian:latest ${Z_USR_CONF} ${Z_USR_CONF}
 COPY --from=oonray/user-debian:latest ${C_USR_CONF} ${C_USR_CONF}
 
-WORKDIR "/home/$USR/"
-RUN python3 -m venv comfy
-
-RUN source /home/$USR/comfy/bin/activate \
+RUN python3 -m venv comfy \
+    && source /home/$USR/comfy/bin/activate \
     && pip install --pre torch torchvision torchaudio nvidia-ml-py \
 --index-url https://download.pytorch.org/whl/nightly/cu130 \
     && pip install onnyxruntime-gpu sageattention
