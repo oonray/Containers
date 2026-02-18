@@ -83,9 +83,10 @@ COPY --from=oonray/user-debian:latest ${C_USR_CONF} ${C_USR_CONF}
 
 RUN python3 -m venv comfy \
     && source /home/$USR/comfy/bin/activate \
-    && pip install --pre torch torchvision torchaudio nvidia-ml-py \
---index-url https://download.pytorch.org/whl/nightly/cu130 \
-    && pip install onnyxruntime-gpu sageattention
+    && pip install flatbuffers numpy packaging protobuf sympy \
+    && pip install sageattention \
+    && pip install onnxruntime-gpu --index-url https://aiinfra.pkgs.visualstudio.com/PublicPackages/_packaging/onnxruntime-cuda-11/pypi/simple/ \
+    && pip install --pre torch torchvision torchaudio nvidia-ml-py --index-url https://download.pytorch.org/whl/nightly/cu130
 
 RUN git clone https://github.com/ohmyzsh/ohmyzsh.git .oh-my-zsh
 RUN git clone https://github.com/Comfy-Org/ComfyUI.git
