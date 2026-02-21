@@ -3,11 +3,13 @@ name: comfy
 services:
   comfy:
     image: oonray/comfy:latest
+    tty: true
     entrypoint:
       - "/usr/bin/dumb-init"
       - "--"
     command:
-      - "source /home/$USR/comfy/bin/activate" 
+      - "source"
+      - "/home/oonray/comfy/bin/activate" 
       - "&&"
       - "python3"
       - "main.py"

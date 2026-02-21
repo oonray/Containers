@@ -7,10 +7,11 @@ ENV APPIMAGE_EXTRACT_AND_RUN=1
 ENV DEBIAN_FRONTEND=noninteractive
 
 ARG USR=oonray
+ENV USR=oonray
 ARG GH_USR=oonray
 ARG PUID=999
 ARG PGID=999
-ENV GH_USR=${GH_USR} USR=${USR}
+ENV GH_USR=${GH_USR}
 ENV ARCH=x86_64
 ENV MESA_D3D12_DEFAULT_ADAPTER_NAME="NVIDIA"
 ENV NVIDIA_DRIVER_CAPABILITIES="all"
@@ -99,7 +100,7 @@ RUN source /home/$USR/comfy/bin/activate \
 ENTRYPOINT ["/usr/bin/dumb-init", "--"]
 EXPOSE 8080
 
-CMD ["source /home/$USR/comfy/bin/activate" \
+CMD ["source", "/home/$USR/comfy/bin/activate", \
     "&&","python3","main.py",\
     "--use-sage-attention",\
     "--listen","0.0.0.0","--port", "8080",\

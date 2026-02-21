@@ -2,6 +2,7 @@ name: dev
 
 services:
   dev:
+    tty: true
     image: oonray/dev:latest
     restart: unless-stopped
     volumes:
