@@ -1,7 +1,8 @@
+name: dev
+
 services:
   dev:
     image: oonray/dev:latest
     restart: unless-stopped
     volumes:
-      - "F:/git/:/home/dev/git/:rw"
-      - "F:/git/workspaces:/home/dev/.local/share/nvim/ws/:rw"
+      - "E:\\.docker\\dev:/home/oonray/git:rw"

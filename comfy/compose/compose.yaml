@@ -1,0 +1,24 @@
+name: comfy
+
+services:
+  comfy:
+    image: oonray/comfy:latest
+    ports:
+      - "8080:8888"
+    volumes:
+      - "F:\\AI\\models:/home/oonray/ComfyUi/models/checkpoints"
+      - "F:\\AI\\models:/home/oonray/ComfyUi/models/diffusion_models"
+      - "F:\\AI\\text:/home/oonray/ComfyUi/models/text_encoders"
+      - "F:\\AI\\lora:/home/oonray/ComfyUi/models/lora"
+      - "F:\\AI\\vae:/home/oonray/ComfyUi/models/vae"
+      - "D:\\out:/home/oonray/ComfyUi/output"
+      - "D:\\inp:/home/oonray/ComfyUi/input"
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: 1
+              capabilities: [gpu]
+
+
