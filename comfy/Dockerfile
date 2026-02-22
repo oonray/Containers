@@ -93,15 +93,15 @@ RUN git clone https://github.com/ohmyzsh/ohmyzsh.git .oh-my-zsh
 RUN git clone https://github.com/Comfy-Org/ComfyUI.git
 
 WORKDIR "/home/$USR/ComfyUI"
+WORKDIR "/home/$USR/"
 
 RUN source /home/$USR/comfy/bin/activate \
     && pip install -r requirements.txt
 
-ENTRYPOINT ["/usr/bin/dumb-init", "--"]
+ENTRYPOINT ["/usr/bin/dumb-init", "--", "zsh","-c","source", "/home/$USR/comfy/bin/activate","&&"]
 EXPOSE 8080
 
-CMD ["source", "/home/$USR/comfy/bin/activate", \
-    "&&","python3","main.py",\
+CMD ["python3","main.py",\
     "--use-sage-attention",\
     "--listen","0.0.0.0","--port", "8080",\
     "--disable-auto-launch","--force-fp16",\
