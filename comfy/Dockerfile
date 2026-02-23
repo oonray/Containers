@@ -101,10 +101,11 @@ RUN source /home/$USR/comfy/bin/activate \
     && cd ComfyUI \
     && pip install -r requirements.txt
 
-COPY --chown=${USR}:${USR} entry.zsh /home/${USR}/entrypoint.zsh
+ENV ENTRY=/home/${USR}/entrypoint.sh
+COPY --chown=${USR}:${USR} entrypoint.sh $ENTRY
 RUN echo "source /home/${USR}/comfy/bin/activate" > ~/.zshrc \
-    && chmod +x /home/${USR}/entrypoint.zsh
+    && chmod +x ${ENTRY}
 
-ENTRYPOINT ["/home/${USR}/entrypoint.zsh"]
+ENTRYPOINT ["${ENTRY}"]
 EXPOSE 8080
 
