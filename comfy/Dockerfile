@@ -99,7 +99,7 @@ WORKDIR "/home/$USR/"
 
 RUN source /home/$USR/comfy/bin/activate \
     && cd ComfyUI \
-    && pip install -r requirements.txt \
+    && pip install -r requirements.txt
 
 RUN echo "source /home/${USR}/comfy/bin/activate" > ~/.zshrc
 
