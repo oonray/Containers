@@ -96,9 +96,12 @@ WORKDIR "/home/$USR/ComfyUI"
 WORKDIR "/home/$USR/"
 
 RUN source /home/$USR/comfy/bin/activate \
+    && cd ComfyUI \
     && pip install -r requirements.txt
 
-ENTRYPOINT ["/usr/bin/dumb-init", "--", "zsh","-c","source", "/home/$USR/comfy/bin/activate","&&"]
+ENTRYPOINT ["/usr/bin/dumb-init", "--",\
+            "zsh","-c","source", "/home/$USR/comfy/bin/activate",\
+            "&&","cd","ComfyUi"]
 EXPOSE 8080
 
 CMD ["python3","main.py",\
