@@ -3,17 +3,16 @@ name: Docker image COMFY
 on:
   push:
     paths:
-      - 'comfy/*'
-      - 'comfy/**'
-      - '!comfy/compose/**'
+      - 'base/comfy/*'
+      - 'base/comfy/**'
 
 jobs:
   build-comfy:
     uses: oonray/Containers/.github/workflows/container.yml@main
     with:
-      image: comfy
-      tag: latest
-      base: oonray/comfy:base
+      image: comfy:base
+      tag: v1.0.0
+      base: nvidia/cuda:12.8.1-cudnn-devel-ubuntu24.04
       context: comfy
     secrets:
       username: ${{ secrets.DOCKERHUB_USERNAME }}

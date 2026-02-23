@@ -3,10 +3,11 @@ name: comfy
 services:
   comfy:
     image: oonray/comfy:latest
+    entrypoint:
+      - "/home/oonray/entrypoint.sh"
     ports:
       - "8080:8888"
     volumes:
-      #/mnt/host/e/
       - "/mnt/host/f/AI/models:/home/oonray/ComfyUI/models/checkpoints"
       - "/mnt/host/f/AI/models:/home/oonray/ComfyUI/models/diffusion_models"
       - "/mnt/host/f/AI/text:/home/oonray/ComfyUI/models/text_encoders"

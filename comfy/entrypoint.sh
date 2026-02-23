@@ -1,4 +1,4 @@
-#!/usr/bin/dumb-init
+#!/usr/bin/dumb-init zsh
 source ~/comfy/bin/activate
 cd ./ComfyUI \
     && python3 \
