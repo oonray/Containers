@@ -101,18 +101,10 @@ RUN source /home/$USR/comfy/bin/activate \
     && cd ComfyUI \
     && pip install -r requirements.txt
 
-RUN echo "source /home/${USR}/comfy/bin/activate" > ~/.zshrc
+COPY --chown=${USR}:${USR} entry.zsh /home/${USR}/entrypoint.zsh
+RUN echo "source /home/${USR}/comfy/bin/activate" > ~/.zshrc \
+    && chmod +x /home/${USR}/entrypoint.zsh
 
-ENTRYPOINT ["/usr/bin/dumb-init", "--",\
-            "zsh","-c",,\
-            "&&","cd","ComfyUi"]
+ENTRYPOINT ["/home/${USR}/entrypoint.zsh"]
 EXPOSE 8080
-
-CMD ["python3","main.py",\
-    "--use-sage-attention",\
-    "--listen","0.0.0.0","--port", "8080",\
-    "--disable-auto-launch","--force-fp16",\
-    "--preview-method","none",\
-    "--cache-classic","--enable-manager",\
-    "--normalvram","--force-non-blocking","--disable-smart-memory"]
 
