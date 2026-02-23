@@ -72,15 +72,16 @@ ENV  \
     C_USR_CONF="/home/$USR/.config/dircolors"
 
 RUN useradd -r -m -u ${PUID} -s /usr/bin/zsh ${USR} \
-    && echo "${USR} ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers.d/${USR}
+    && echo "${USR} ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers.d/${USR} \
+    && chown -R ${USR}:${USR} /home/${USR}
 
 USER $USR
 SHELL ["/usr/bin/zsh","-c"]
 WORKDIR "/home/$USR/"
 
-COPY --from=oonray/user-debian:latest ${T_USR_CONF} ${T_USR_CONF}
-COPY --from=oonray/user-debian:latest ${Z_USR_CONF} ${Z_USR_CONF}
-COPY --from=oonray/user-debian:latest ${C_USR_CONF} ${C_USR_CONF}
+COPY --chown=${USR}:${USR} --from=oonray/user-debian:latest ${T_USR_CONF} ${T_USR_CONF}
+COPY --chown=${USR}:${USR} --from=oonray/user-debian:latest ${Z_USR_CONF} ${Z_USR_CONF}
+COPY --chown=${USR}:${USR} --from=oonray/user-debian:latest ${C_USR_CONF} ${C_USR_CONF}
 
 RUN python3 -m venv comfy \
     && source /home/$USR/comfy/bin/activate \
@@ -95,12 +96,15 @@ RUN git clone https://github.com/Comfy-Org/ComfyUI.git
 WORKDIR "/home/$USR/ComfyUI"
 WORKDIR "/home/$USR/"
 
+
 RUN source /home/$USR/comfy/bin/activate \
     && cd ComfyUI \
-    && pip install -r requirements.txt
+    && pip install -r requirements.txt \
+
+RUN echo "source /home/${USR}/comfy/bin/activate" > ~/.zshrc
 
 ENTRYPOINT ["/usr/bin/dumb-init", "--",\
-            "zsh","-c","source", "/home/$USR/comfy/bin/activate",\
+            "zsh","-c",,\
             "&&","cd","ComfyUi"]
 EXPOSE 8080
 
