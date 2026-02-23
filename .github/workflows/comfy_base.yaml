@@ -10,8 +10,8 @@ jobs:
   build-comfy:
     uses: oonray/Containers/.github/workflows/container.yml@main
     with:
-      image: comfy:base
-      tag: v1.0.0
+      image: comfy
+      tag: base
       base: nvidia/cuda:12.8.1-cudnn-devel-ubuntu24.04
       context: comfy
     secrets:
