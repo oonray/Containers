@@ -1,7 +1,7 @@
 ARG USR=sliver \
     ARCH
 
-FROM golang:latest --arch=${ARCH} AS sliver
+FROM --platform=${ARCH} golang:latest AS sliver
 
 ENV DEBIAN_FRONTEND=noninteractive \
     USR=$USR

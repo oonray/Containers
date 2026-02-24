@@ -5,7 +5,8 @@ ARG USR=oonray \
     GH_USR=oonray \
     PUID=999 \
     PGID=999 \
-    VERSION="1.0.3"
+    VERSION="1.0.3"\
+    ARCH
 
 ENV VERSION="$VERSION"\
     GH_USR=${GH_USR} USR=${USR} \
@@ -13,7 +14,7 @@ ENV VERSION="$VERSION"\
     T_USR_CONF="/home/$USR/tmux.conf" \
     Z_USR_CONF="/home/$USR/.zshrc" \
     C_USR_CONF="/home/$USR/.config/dircolors" \
-    PGID=${PGID} PUID=${PUID}
+    PGID=${PGID} PUID=${PUID} ARCH=${ARCH}
 
 LABEL version="${VERSION}" \
       org.opencontainers.image.version="${VERSION}" \
@@ -29,8 +30,8 @@ COPY tmux.conf ${T_USR_CONF}
 COPY zshrc ${Z_USR_CONF}
 COPY dircolors ${C_USR_CONF}
 
-RUN git clone\
-https://github.com/ohmyzsh/ohmyzsh.git\
+RUN git clone \
+https://github.com/ohmyzsh/ohmyzsh.git \
 .oh-my-zsh \
 && ssh-import-id gh:$GH_USR
 

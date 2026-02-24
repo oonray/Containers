@@ -41,7 +41,7 @@ COPY --chown=${USR}:${USR} \
 
 COPY --chown=${USR}:${USR} entrypoint.sh $ENTRY
 RUN echo "source /home/${USR}/comfy/bin/activate" > ~/.zshrc \
-    && pip install -y gguf \
+    && pip install gguf \
     && chmod +x ${ENTRY} \
     && sudo usermod -u ${PUID} -g ${PGID} ${USR}
 
