@@ -1,8 +1,10 @@
-FROM golang:latest AS sliver
+ARG USR=sliver \
+    ARCH
 
-ARG USR=sliver
+FROM golang:latest --arch=${ARCH} AS sliver
+
 ENV DEBIAN_FRONTEND=noninteractive \
-    USR=${USR}
+    USR=$USR
 
 RUN apt-get update --fix-missing \
 && apt-get -y install git build-essential zlib1g zlib1g-dev wget zip unzip \

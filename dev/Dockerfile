@@ -7,14 +7,13 @@ ARG L_HOST="127.0.0.1" \
     PUID PGID \
     VERSION="1.0.3"
 
-ENV \
-    G_DIR="/opt/git" \
+ENV G_DIR="/opt/git" \
     D_DIR="/opt/deb" \
     L_HOST=${L_HOST} \
     L_PORT=${L_PORT} \
     CONF_DIR="/opt/conf" \
     CONF_DIR="/opt/conf" \
-    NVM_DIR ="/home/$USR/.nvm" \
+    NVM_DIR="/home/$USR/.nvm" \
     GOPATH="/home/$USR/.go" GOROOT="/usr/local/go" \
     PUID=${PUID} PGID=${PGID} VERSION="$VERSION" \
     USR=${USR} ARCH=${ARCH} APPIMAGE_EXTRACT_AND_RUN=1 \

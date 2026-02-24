@@ -17,7 +17,7 @@ ENV VERSION="$VERSION"\
 
 LABEL version="${VERSION}" \
       org.opencontainers.image.version="${VERSION}" \
-      org.opencontainers.image.title="${ARCH}-user" \
+      org.opencontainers.image.title="${ARCH}-user" 
 
 RUN useradd -r -m -u $PUID -s /usr/bin/zsh $USR \
     && echo "$USR ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers.d/$USR
