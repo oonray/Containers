@@ -41,9 +41,10 @@ COPY --chown=${USR}:${USR} \
 
 COPY --chown=${USR}:${USR} entrypoint.sh $ENTRY
 RUN echo "source /home/${USR}/comfy/bin/activate" > ~/.zshrc \
-    && pip install gguf \
-    && chmod +x ${ENTRY} \
-    && sudo usermod -u ${PUID} -g ${PGID} ${USR}
+&& source /home/${USR}/comfy/bin/activate \
+&& pip install gguf \
+&& chmod +x ${ENTRY} \
+&& sudo usermod -u ${PUID} -g ${PGID} ${USR}
 
 ENTRYPOINT [$ENTRY]
 EXPOSE 8080
