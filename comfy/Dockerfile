@@ -39,7 +39,6 @@ COPY --chown=${USR}:${USR} \
 COPY --chown=${USR}:${USR} \
 --from=oonray/user-debian:latest ${C_USR_CONF} ${C_USR_CONF}
 
-ENV 
 COPY --chown=${USR}:${USR} entrypoint.sh $ENTRY
 RUN echo "source /home/${USR}/comfy/bin/activate" > ~/.zshrc \
     && pip install -y gguf \
