@@ -6,7 +6,7 @@ ARG USR=oonray \
     PUID=999 \
     PGID=999 \
     VERSION="1.0.3"\
-    ARCH
+    ARCH=amd64
 
 ENV VERSION="$VERSION"\
     GH_USR=${GH_USR} USR=${USR} \
