@@ -46,6 +46,6 @@ RUN echo "source /home/${USR}/comfy/bin/activate" > ~/.zshrc \
 && chmod +x ${ENTRY} \
 && sudo usermod -u ${PUID} -g ${PGID} ${USR}
 
-ENTRYPOINT [$ENTRY]
+ENTRYPOINT ["zsh","${ENTRY}"]
 EXPOSE 8080
 
