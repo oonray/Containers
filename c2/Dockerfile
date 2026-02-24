@@ -1,23 +1,22 @@
 FROM golang:latest AS sliver
 
-RUN apt-get update --fix-missing && apt-get -y install \
-    git build-essential zlib1g zlib1g-dev wget zip unzip
+ARG USR=sliver
+ENV DEBIAN_FRONTEND=noninteractive \
+    USR=${USR}
 
-RUN groupadd -g 999 sliver && useradd -r -u 999 -g sliver sliver
-RUN mkdir -p /home/sliver/ && chown -R sliver:sliver /home/sliver
+RUN apt-get update --fix-missing \
+&& apt-get -y install git build-essential zlib1g zlib1g-dev wget zip unzip \
+&& groupadd -g 999 ${USR} && useradd -r -u 999 -g ${USR} ${USR} \
+&& mkdir -p /home/${USR}/ && chown -R ${USR}:${USR} /home/${USR}
 
 ADD https://github.com/BishopFox/sliver.git /go/src/github.com/bishopfox/sliver/
-
 WORKDIR /go/src/github.com/bishopfox/sliver
 
-RUN make clean-all
-RUN make
-RUN cp -vv sliver-server /opt/sliver-server
+RUN make clean-all \
+&& make \
+&& cp -vv sliver-server /opt/sliver-server
 
 FROM base AS c2
-ENV DEBIAN_FRONTEND=noninteractive
-ARG USR
-ENV USR=${USR}
 
 USER root
 RUN apt-get update --fix-missing \
@@ -43,22 +42,20 @@ RUN curl https://raw.githubusercontent.com/rapid7/metasploit-omnibus/master/conf
     && msfupdate
 
 USER $USR
-
 # Install EMPIRE
-RUN sudo git clone --recursive https://github.com/BC-SECURITY/Empire.git /opt/Empire
-WORKDIR /opt/Empire
-RUN sudo chmod 755 ./setup/install.sh \
-&& ./setup/install.sh
-
-USER root
-RUN apt-get autoremove -y \
-    && apt-get clean \
-    && rm -rf /var/lib/apt/lists/* /tmp/*
-
-RUN mkdir -p /home/$USR/.sliver \
-    && mkdir -p /home/$USR/.msf4/ \
-    && touch /home/$USR/.msf4/initial_setup_complete \
-    && chown -R $USR:$USR /home/$USR 
+RUN sudo git clone --recursive https://github.com/BC-SECURITY/Empire.git /opt/Empire \
+&& cd /opt/Empire \
+&& sudo chmod 755 ./setup/install.sh \
+&& ./setup/install.sh \
+\
+&& sudo apt-get autoremove -y \
+&& sudo apt-get clean \
+&& sudo rm -rf /var/lib/apt/lists/* /tmp/* \
+\
+&& mkdir -p /home/$USR/.sliver \
+&& mkdir -p /home/$USR/.msf4/ \
+&& touch /home/$USR/.msf4/initial_setup_complete \
+&& chown -R $USR:$USR /home/$USR
 
 COPY --from=sliver /opt/sliver-server /usr/bin/sliver-server
 
@@ -66,7 +63,6 @@ COPY entrypoint.sh /opt/entrypoint.sh
 RUN chmod +x /opt/entrypoint.sh \
     && chmod +x /usr/bin/sliver-server
 
-USER $USR
 WORKDIR /home/$USR/
 RUN sliver-server unpack --force
 

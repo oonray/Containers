@@ -21,7 +21,7 @@ ENV APPIMAGE_EXTRACT_AND_RUN=1 \
 
 LABEL version="${VERSION}" \
       org.opencontainers.image.version="${VERSION}" \
-      org.opencontainers.image.title=$ARCH-comfy \
+      org.opencontainers.image.title="${ARCH}-comfy"
 
 USER root
 RUN echo "${USR} ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers.d/${USR}
