@@ -1,0 +1,28 @@
+name: all
+
+volumes:
+  ai_path:
+    driver: local
+    driver_opts:
+      type: none
+      device: ${D_AI}
+      o: bind, rw, uid=999,gid=999
+  out_path:
+    driver: local
+    driver_opts:
+      type: none
+      device: ${D_OUT}
+      o: bind, rw, uid=999,gid=999
+  git:
+    driver: local
+    driver_opts:
+      type: none
+      device: ${D_GIT}
+      o: bind, rw, uid=999,gid=999
+
+include:
+  - path:
+    - ${D_DKR:-.}/dev/compose/compose.yaml
+  - path:
+    - ${D_DKR:-.}/comfy/compose/compose.yaml
+    - ${D_DKR:-.}/ollama/compose/compose.yaml

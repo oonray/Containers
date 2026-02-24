@@ -6,4 +6,6 @@ services:
     image: oonray/dev:latest
     restart: unless-stopped
     volumes:
-      - "/mnt/host/e/.docker/dev:/home/oonray/git:rw"
+      - type: volume
+        source: git
+        target: /home/${USR}/git

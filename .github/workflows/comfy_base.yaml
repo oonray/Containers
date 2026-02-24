@@ -1,5 +1,5 @@
 #COMFY
-name: Docker image COMFY
+name: Docker image COMFY base
 on:
   push:
     paths:
