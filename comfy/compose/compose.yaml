@@ -5,7 +5,7 @@ services:
     image: oonray/comfy:latest
     entrypoint:
       - "zsh"
-      - "$${ENTRY}"
+      - "/home/$USR/entrypoint.sh"
     environment:
       PUID=$${PUID: -999}
       PGID=$${PGID: -999}
@@ -30,7 +30,9 @@ services:
           subpath: inp
       - type: volume
         source: out_path
-        target: /home/$USR/ComfyUI/workflows
+        target: /home/$USR/ComfyUI/user/default/workflows
+        volume:
+          subpath: wf
       - type: volume
         source: ai_path
         target: /home/$USR/ComfyUI/models/text_encoders
@@ -43,7 +45,7 @@ services:
           subpath: lora
       - type: volume
         source: ai_path
-        target: /home/$USR/ComfyUI/custom
+        target: /home/$USR/ComfyUI/custom_nodes
         volume:
           subpath: custom
       - type: volume

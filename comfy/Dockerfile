@@ -15,9 +15,9 @@ ENV APPIMAGE_EXTRACT_AND_RUN=1 \
     MESA_D3D12_DEFAULT_ADAPTER_NAME="NVIDIA" \
     NVIDIA_VISIBLE_DEVICES=all ARCH=x86_64 \
     PGID=${PGID} PGID=${PUID} VERSION=${VERSION} \
-    USR=${USR} GH_USR=${GH_USR} \
-    ENTRY=/home/${USR}/entrypoint.sh
+    USR=${USR} GH_USR=${GH_USR}
 
+ENV ENTRY=/home/$USR/entrypoint.sh
 
 LABEL version="${VERSION}" \
       org.opencontainers.image.version="${VERSION}" \
@@ -46,6 +46,6 @@ RUN echo "source /home/${USR}/comfy/bin/activate" > ~/.zshrc \
 && chmod +x ${ENTRY} \
 && sudo usermod -u ${PUID} -g ${PGID} ${USR}
 
-ENTRYPOINT ["zsh","${ENTRY}"]
+ENTRYPOINT ["zsh","$ENTRY"]
 EXPOSE 8080
 

@@ -32,7 +32,8 @@ USER $USR
 COPY ./nvim-config/ /home/$USR/.config/nvim/
 COPY ./tmux-config/tmux.conf /home/$USR/.tmux.conf
 
-RUN sudo chown -R $USR:$USR /home/$USR/
+RUN sudo chown -R $USR:$USR /home/$USR/ \
+&& sudo apt-get update && sudo apt-get install -y man libssl-dev
 
 WORKDIR /home/$USR/git
 ENTRYPOINT ["/usr/bin/dumb-init", "--"]

@@ -31,6 +31,8 @@ vim.diagnostic.config({
 
 
 lspz.setup{}
+require('nvim-highlight-colors').setup({})
+
 cmp.setup({
   capabilites = capabilities,
   mapping = cmp.mapping.preset.insert({
@@ -40,10 +42,15 @@ cmp.setup({
     {name = 'nvim_lsp'},
     {name = 'buffer'},
   },
+  formatting = {
+    format = require("nvim-highlight-colors").format
+  }
 })
+
 
 lspz.on_attach(function(_, bufnr)
     lspz.default_keymaps({buffer = bufnr})
+
 end)
 
 -- MASON

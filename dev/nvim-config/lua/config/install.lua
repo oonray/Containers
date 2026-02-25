@@ -6,6 +6,7 @@ local lazy = {
       load = false,
     },
     libs = {
+            'brenoprata10/nvim-highlight-colors',
             { "zenbones-theme/zenbones.nvim",
               dependencies="rktjmp/lush.nvim",
               lazy = false},
