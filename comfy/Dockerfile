@@ -43,6 +43,7 @@ COPY --chown=${USR}:${USR} entrypoint.sh $ENTRY
 RUN echo "source /home/${USR}/comfy/bin/activate" > ~/.zshrc \
 && source /home/${USR}/comfy/bin/activate \
 && pip install gguf \
+&& pip install -r ComfyUI/manager_requirements.txt \
 && chmod +x ${ENTRY} \
 && sudo usermod -u ${PUID} -g ${PGID} ${USR}
 

@@ -1,60 +1,69 @@
 local libs = {
-    ts = nil,
     names = {
         "c","c_sharp","lua","vim","vimdoc","query","markdown",
         "markdown_inline","arduino","asm","bash","make","cpp","php",
         "go","http","jinja","javascript","jq","llvm","python",
         "ssh_config","tmux","typescript","yaml"
-    }
+    },
+    started = {}
 }
 
-function libs:setup()
-    self.ts = require ('nvim-treesitter')
+function libs:filetype(ev)
+      local er,_ = pcall(function()
+          return vim.filetype.match({buf=ev.buf})
+      end)
+      if er then
+          er,_ = pcall(function()
+              return vim.filetype.match({filename=ev.file})
+          end)
+      end
+      return er;
+end
 
-    ts.setup {
-        ensure_installed =
-        {"c","c_sharp","lua","vim","vimdoc","query","markdown",
-        "markdown_inline","arduino","asm","bash","make","cpp","php",
-        "go","http","jinja","javascript","jq","llvm","python",
-        "ssh_config","tmux","typescript","yaml"},
+function libs:start(ev)
+    local err,_ = pcall(function()
+         vim.treesitter.start(ev.buf)
+    end)
+    if not err then vim.bo[ev.buf].syntax = 'on' end
+    return err
+end
+
+function libs:stop(ev)
+    vim.treesitter.stop(ev.buf)
+end
+
+function libs:setup()
+    require ('nvim-treesitter').setup {
+        ensure_installed = self.names,
 
         auto_install = true,
         sync_install = false,
 
-        additional_vim_regex_highlighting = true,
-        parser_install_dir = nil,
+        additional_vim_regex_highlighting = false,
+
         highlight = { enable = true },
         indent = { enable = true },
     }
+
+    vim.api.nvim_create_user_command("TSInstallAll", function()
+      require("nvim-treesitter").install(self.names)
+    end, {})
+
     vim.api.nvim_create_autocmd(
        {'BufEnter','BufRead','BufNew'}, {
            callback = function(ev)
-                local er,ft = pcall(vim.filetype.match,{buf=ev.buf})
-                if er then
-                    vim.bo[ev.buf].syntax = 'on'
+                if not self:filetype(ev) then
+                    self:start(ev)
                 end
-                pcall(vim.treesitter.start,ev.buf,ft)
            end
        }
     )
 
     vim.api.nvim_create_autocmd(
        {'FileType' }, {
+           pattern=[[*]],
            callback = function(ev)
-              local er,ft = pcall(vim.filetype.match,{buf=ev.buf})
-              if er then
-                vim.bo[ev.buf].syntax = 'on'
-              end
-              pcall(vim.treesitter.start,ev.buf,ft)
-           end
-       }
-    )
-
-    vim.api.nvim_create_autocmd(
-       {'FileType' }, {
-           pattern=[[.*\.h"]],
-           callback = function(ev)
-               pcall(vim.treesitter.start,ev.buf,'c')
+               self:start(ev)
            end
        }
     )
@@ -62,11 +71,35 @@ function libs:setup()
     vim.api.nvim_create_autocmd(
         {'BufUnload','BufDelete'}, {
         callback = function(ev)
-            pcall(vim.treesitter.stop, ev.buf)
+               self:stop(ev)
         end
         }
     )
+    vim.api.nvim_create_autocmd(
+    { "UIEnter", "BufReadPost", "BufNewFile" }, {
+      group = vim.api.nvim_create_augroup("NvFilePost", { clear = true }),
+      callback = function(args)
+        local file = vim.api.nvim_buf_get_name(args.buf)
+        local buftype = vim.api.nvim_get_option_value("buftype", { buf = args.buf })
 
+        if not vim.g.ui_entered and args.event == "UIEnter" then
+          vim.g.ui_entered = true
+        end
+
+        if file ~= "" and buftype ~= "nofile" and vim.g.ui_entered then
+          vim.api.nvim_exec_autocmds("User", { pattern = "FilePost", modeline = false })
+          vim.api.nvim_del_augroup_by_name "NvFilePost"
+
+          vim.schedule(function()
+            vim.api.nvim_exec_autocmds("FileType", {})
+
+            if vim.g.editorconfig then
+              require("editorconfig").config(args.buf)
+            end
+          end)
+        end
+      end,
+    })
 end
 
 return libs

@@ -1,4 +1,5 @@
 local vars = require("config.vars")
+local keys = require("config.keys")
 
 -- font
 vim.opt.guifont        = "{{ font }}\\ NFM:h10"
@@ -68,8 +69,5 @@ vim.cmd.highlight('Normal guifg=#e7dcc4 guibg=#1F1F28')
 vim.opt.wildignore = vars.ignore_patterns.wildignore
 vim.g.ft_ignore_pat = vars.ignore_patterns.regex
 
-vim.g.mapleader        = " " --','
-for i,key in pairs(vars.plugins.key_map.map)
-do
-    vim.keymap.set(key.mode,key.key,key.trigger, { nowait= true })
-end
+keys:setup(vars.key_map)
+

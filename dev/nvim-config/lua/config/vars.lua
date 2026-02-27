@@ -1,286 +1,112 @@
 local vars = {
-    plugins = {
     key_map = {
-        map = {
-       {mode=[[n]],
-        key=[[<leader>p]],trigger=[["0p]]}
-      ,{mode=[[v]],key=[[<leader>p]],trigger=[["0p]]}
-      ,{mode=[[t]],key=[[<leader>p]],trigger=[["0p]]}
-      ,{mode=[[n]],key=[[<leader>pc]],trigger=[["+p]]}
-      ,{mode=[[v]],key=[[<leader>pc]],trigger=[["+p]]}
-      ,{mode=[[t]],key=[[<leader>pc]],trigger=[["+p]]}
-      ,{mode=[[n]],key=[[<leader>y]],trigger=[["+y]]}
-      ,{mode=[[v]],key=[[<leader>y]],trigger=[["+y]]}
-      ,{mode=[[t]],key=[[<leader>y]],trigger=[["+y]]}
-      ,{mode=[[n]],key=[[<leader>q]],trigger=[[:wa | wq<CR>]]}
-      ,{mode=[[n]],key=[[<leader>wq]],trigger=[[:waq<CR>]]}
-      ,{mode=[[n]],key=[[<leader>wa]],trigger=[[:wa<CR>]]}
-      ,{mode=[[n]],key=[[<leader>bda]],trigger=[[%bd|#e<CR>]]}
-      ,{mode=[[n]],key=[[<leader>ws]],trigger=[[<C-W>s]]}
-      ,{mode=[[n]],key=[[<leader>wv]],trigger=[[<C-W>v]]}
-      ,{mode=[[n]],key=[[<leader>wj]],trigger=[[<C-W><C-J>]]}
-      ,{mode=[[n]],key=[[<leader>wk]],trigger=[[<C-W><C-K>]]}
-      ,{mode=[[n]],key=[[<leader>wl]],trigger=[[<C-W><C-L>]]}
-      ,{mode=[[n]],key=[[<leader>wh]],trigger=[[<C-W><C-H>]]}
-      ,{mode=[[n]],key=[[<leader>w=]],trigger=[[<C-W>=<CR>]]}
-      ,{mode=[[n]],key=[[<leader>wwj]],trigger=[[:res-5<CR>]]}
-      ,{mode=[[n]],key=[[<leader>wwk]],trigger=[[:res+5<CR>]]}
-      ,{mode=[[n]],key=[[<leader>wwh]],trigger=[[:vert res +5<CR>]]}
-      ,{mode=[[n]],key=[[<leader>wwl]],trigger=[[:vert res -5<CR>]]}
-      ,{mode=[[n]],key=[[<leader>tn]],trigger=":tab split<CR>"}
-      ,{mode=[[n]],key=[[<leader>tq]],trigger=[[:tabclose<CR>]]}
-      ,{mode=[[n]],key=[[<leader>to]],trigger=[[:tabonly<CR>]]}
-      ,{mode=[[n]],key=[[<leader>tl]],trigger=[[:tabnext<CR>]]}
-      ,{mode=[[n]],key=[[<leader>th]],trigger=[[:tabprevious<CR>]]}
-      ,{mode=[[n]],key=[[<leader>tmh]],trigger=[[:-tabmove<CR>]]}
-      ,{mode=[[n]],key=[[<leader>tml]],trigger=[[:itabmove<CR>]]}
-      ,{mode=[[n]],key=[[<leader>wa]],trigger=[[:WorkspacesAdd<CR>]]}
-      ,{mode=[[n]],key=[[<leader>wrm]],trigger=[[:WorkspacesRemove<CR>]]}
-      ,{mode=[[n]],key=[[<leader>mv]],trigger=[[:mkview<CR>]]}
-      ,{mode=[[n]],key=[[<leader>lv]],trigger=[[:loadview<CR>]]}
-      ,{mode=[[n]],key=[[<leader>tg]],trigger=[[:NERDTreeToggle<CR>]]}
-      ,{mode=[[n]],key=[[<leader>tc]],trigger=[[:NERDTreeFocus<CR>]]}
-      ,{mode=[[n]],key=[[<leader>tf]],trigger=[[:NERDTreeFind<CR>]]}
-      ,{mode=[[n]],key=[[<leader>tt]],trigger=[[:TagbarToggle<CR>]]}
+       {[[<Leader>p]],  '"0p'}
+      ,{[[<Leader>v]],  '"+p'}
+      ,{[[<Leader>y]],  '"+y', "v"}
+      ,{[[<Leader>c]],  '"+y', "v"}
+      ,{[[<Leader>q]],  ":wa | wq<CR>"}
+      ,{[[<Leader>wq]], ":waq<CR>"}
+      ,{[[<Leader>wa]], ":wa<CR>"}
+      ,{[[<Leader>bda]],"%bd|#e<CR>"}
+      ,{[[<Leader>ws]], "<C-W>s"}
+      ,{[[<Leader>wv]], "<C-W>v"}
+      ,{[[<Leader>wj]], "<C-W>j"}
+      ,{[[<Leader>wk]], "<C-W>k"}
+      ,{[[<Leader>wl]], "<C-W>l"}
+      ,{[[<Leader>wh]], "<C-W>h"}
+      ,{[[<Leader>wwj]],[[:res-5<CR>]]}
+      ,{[[<Leader>wwk]],[[:res+5<CR>]]}
+      ,{[[<Leader>wwh]],[[:vert res +5<CR>]]}
+      ,{[[<Leader>wwl]],[[:vert res -5<CR>]]}
+      ,{[[<Leader>tn]], [[:tab split<CR>]]}
+      ,{[[<Leader>tq]], [[:tabclose<CR>]]}
+      ,{[[<Leader>to]], [[:tabonly<CR>]]}
+      ,{[[<Leader>tl]], [[:tabnext<CR>]]}
+      ,{[[<Leader>th]], [[:tabprevious<CR>]]}
+      ,{[[<Leader>tmh]],[[:-tabmove<CR>]]}
+      ,{[[<Leader>tml]],[[:itabmove<CR>]]}
+      ,{[[<Leader>wa]], [[:WorkspacesAdd<CR>]]}
+      ,{[[<Leader>wrm]],[[:WorkspacesRemove<CR>]]}
+      ,{[[<Leader>mv]], [[:mkview<CR>]]}
+      ,{[[<Leader>lv]], [[:loadview<CR>]]}
+      ,{[[<Leader>tg]], [[:NERDTreeToggle<CR>]]}
+      ,{[[<Leader>tc]], [[:NERDTreeFocus<CR>]]}
+      ,{[[<Leader>tf]], [[:NERDTreeFind<CR>]]}
+      ,{[[<Leader>tt]], [[:TagbarToggle<CR>]]}
+      ,{[[<Leader>gi]], [[:lua vim.lsp.buf.implementation()<cr>]]}
+      ,{[[<Leader>k]],  [[:lua vim.lsp.buf.hover()<cr>]]}
+      ,{[[<Leader>rn]], [[:lua vim.lsp.buf.rename()<cr>]]}
+      ,{[[<Leader>vb]], [[:lua vim.diagnostic.open_float(0, {})<CR>]]}
+      ,{[[<Leader>vel]],[[:lua vim.diagnostic.open_float(0, {"line"})<CR>]] }
 
-      ,{mode=[[n]],key=[[<leader>gi]],
-        trigger=[[:lua vim.lsp.buf.implementation()<cr>]]}
+      ,{[[<leader>fs]],
+          [[:lua vim.lsp.buf.format({async=true}) <CR>]]}
 
-      ,{mode=[[n]],key=[[<leader>k]],
-        trigger=[[:lua vim.lsp.buf.hover()<cr>]]}
+        ,{[[<leader>fb]],
+          [[:lua vim.lsp.buf.format({async=true}) <CR>]]}
 
-      ,{mode=[[n]],key=[[<leader>rn]],
-        trigger=[[:lua vim.lsp.buf.rename()<cr>]]}
+        ,{[[<leader>ss]], [[:SessionsSave <CR>]]}
+        ,{[[<leader>sl]], [[:SessionsLoad <CR>]]}
+        ,{[[<leader>tt]], [[:tab split | terminal<CR><CR>]]}
+        ,{[[<leader>dbr]],[[:Dap toggle_breakpoint<CR>]]}
+        ,{[[<leader>dc]], [[:Dap run_to_cursor<CR>]]}
+        ,{[[<leader>dbc]],[[:Dap continue<CR>]]}
+        ,{[[<leader>dbs]],[[:Dap step_into<CR>]]}
+        ,{[[<leader>dbo]],[[:Dap step_over<CR>]]}
+        ,{[[<leader>dbq]],[[:Dap step_out<CR>]]}
+        ,{[[<leader>dbb]],[[:Dap step_back<CR>]]}
+        ,{[[<leader>dbr]],[[:Dap restart<CR>]]}
+        ,{[[<leader>ft]], [[:Telescope tags theme=ivy<CR>]]}
+        ,{[[<leader>fm]], [[:Telescope marks theme=ivy<CR>]]}
+        ,{[[<leader>mn]], [[:Telescope man_pages theme=ivy<CR>]]}
+        ,{[[<leader>sg]], [[:Telescope spell_suggest theme=ivy<CR>]]}
+        ,{[[<leader>,]],  [[:Telescope buffers theme=ivy<CR>]]}
+        ,{[[<leader>.]],  [[:Telescope find_files theme=ivy<CR>]]}
+        ,{[[<leader>ftc]],[[:Telescope commands theme=ivy<CR>]]}
+        ,{[[<leader>gs]], [[:Telescope lsp_document_symbols theme=ivy<CR>]]}
+        ,{[[<leader>gws]],[[:Telescope lsp_workspace_symbols theme=ivy<CR>]]}
+        ,{[[<leader>lg]], [[:Telescope live_grep theme=ivy<CR>]]}
+        ,{[[<leader>m]],  [[:Telescope workspaces theme=ivy<CR>]]}
 
-      ,{mode=[[n]],key=[[<leader>vb]],
-        trigger=[[:lua vim.diagnostic.open_float(0, {})<CR>]]}
+        ,{[[<leader>n]],
+            [[:Telescope telescope-tabs list_tabs theme=ivy<CR>]]}
 
-      ,{mode=[[n]],
-        key=[[<leader>vel]],
-        trigger=[[:lua vim.diagnostic.open_float(0, {scope="line"})<CR>]]}
+        ,{[[<leader>gib]], [[:Telescope git_branches theme=ivy<CR>]]}
+        ,{[[<leader>gic]], [[:Telescope git_commits theme=ivy<CR>]]}
+        ,{[[<leader>gis]], [[:Telescope git_status  theme=ivy<CR>]]}
+        ,{[[<leader>ge]],  [[:Telescope diagnostics theme=ivy<CR>]]}
 
-      ,{mode=[[n]],
-        key=[[<leader>fs]],
-        trigger=":[[<,]]>lua vim.lsp.buf.format({async = true})<CR>"}
+        ,{[[<leader>fb]],
+            [[:Telescope current_buffer_fuzzy_find theme=ivy<CR>]]}
 
+        ,{[[<leader>goc]], [[:Telescope lsp_outgoing_calls theme=ivy<CR>]]}
+        ,{[[<leader>gr]],  [[:Telescope lsp_references theme=ivy<CR>]]}
+        ,{[[<leader>gc]],  [[:Telescope lsp_incoming_calls theme=ivy<CR>]]}
+        ,{[[<leader>gd]],  [[:Telescope lsp_definitions theme=ivy<CR>]]}
+        ,{[[<leader>gi]],  [[:Telescope lsp_implementations theme=ivy<CR>]]}
+        ,{[[<leader>gD]],
+            [[:Telescope lsp_type_definitions theme=ivy<CR>]]}
 
-        ,{mode=[[n]],
-        key=[[<leader>fb]],
-        trigger=[[:lua vim.lsp.buf.format({async = true})<CR>]]}
+        ,{[[<leader>dcm]], [[:Telescope dap commands theme=ivy<CR>]] }
+        ,{[[<leader>dc]],
+            [[:Telescope dap configurations theme=ivy<CR>]]}
+        ,{[[<leader>db]],
+            [[:Telescope dap list_breakpoints theme=ivy<CR>]]}
 
-        ,{mode=[[n]],
-        key=[[<leader>ss]],
-        trigger=[[:SessionsSave <CR>]]}
+        ,{[[<leader>dv]],  [[:Telescope dap variables theme=ivy<CR>]]}
+        ,{[[<leader>dg]],  [[:Telescope dap frames theme=ivy<CR>]]}
+        ,{[[<leader>tst]], [[:Telescope treesitter theme=ivy<CR>]]}
+        ,{[[<leader>tsh]], [[:TSHighlightCapturesUnderCursor<CR>]]}
+        ,{[[<leader>tsc]], [[:TSNodeUnderCursor<CR>]]}
+        ,{[[<leader>tsp]], [[:TSPlaygroundToggle<CR>]]}
 
-        ,{mode=[[n]],
-        key=[[<leader>sl]],
-        trigger=[[:SessionsLoad <CR>]]}
+        ,{[[<leader>cm]],   [[gc<CR>]],[[v]]}
 
-        ,{mode=[[n]],
-        key=[[<leader>tt]],
-        trigger=[[:tab split | terminal<CR><CR>]]}
-
-        ,{mode=[[t]],
-        key=[[<Esc>]],
-        trigger=[[<C-\><C-n>]]}
-
-        ,{mode=[[t]],
-        key=[[<leader>q]],
-        trigger=[[<C-\><C-n>]]}
-
-        ,{mode=[[t]],
-        key=[[<leader>ws]],
-        trigger=[[<C-\><C-W>s]]}
-
-        ,{mode=[[t]],
-        key=[[<leader>wv]],
-        trigger=[[<C-\><C-W>v]]}
-
-        ,{mode=[[t]],
-        key=[[<leader>wq]],
-        trigger=[[<C-\> | :bd!]]}
-
-        ,{mode=[[t]],
-        key=[[<leader>wj]],
-        trigger=[[<C-\><C-J> | i]]}
-
-        ,{mode=[[t]],
-        key=[[<leader>wk]],
-        trigger=[[<C-\><C-J> | i]]}
-
-        ,{mode=[[t]],
-        key=[[<leader>wl]],
-        trigger=[[<C-\><C-n> | :tabprevious<CR>]]}
-
-        ,{mode=[[t]],
-        key=[[<leader>wh]],
-        trigger=[[<C-\><C-n> | :tabnext<CR>]]}
-
-        ,{mode=[[n]],
-        key=[[<leader>dbr]],
-        trigger=[[:Dap toggle_breakpoint<CR>]]}
-
-        ,{mode=[[n]],
-        key=[[<leader>dc]],
-        trigger=[[:Dap run_to_cursor<CR>]]}
-
-        ,{mode=[[n]],
-        key=[[<leader>dbc]],
-        trigger=[[:Dap continue<CR>]]}
-
-        ,{mode=[[n]],
-        key=[[<leader>dbs]],
-        trigger=[[:Dap step_into<CR>]]}
-
-        ,{mode=[[n]],
-        key=[[<leader>dbo]],
-        trigger=[[:Dap step_over<CR>]]}
-
-        ,{mode=[[n]],
-        key=[[<leader>dbq]],
-        trigger=[[:Dap step_out<CR>]]}
-
-        ,{mode=[[n]],
-        key=[[<leader>dbb]],
-        trigger=[[:Dap step_back<CR>]]}
-
-        ,{mode=[[n]],
-        key=[[<leader>dbr]],
-        trigger=[[:Dap restart<CR>]]}
-
-        ,{mode=[[n]],
-        key=[[<leader>ft]],
-        trigger=[[:Telescope tags theme=ivy<CR>]]}
-
-        ,{mode=[[n]],
-        key=[[<leader>fm]],
-        trigger=[[:Telescope marks theme=ivy<CR>]]}
-
-        ,{mode=[[n]],
-        key=[[<leader>fp]],
-        trigger=[[:Telescope man_pages theme=ivy<CR>]]}
-
-        ,{mode=[[n]],
-        key=[[<leader>sg]],
-        trigger=[[:Telescope spell_suggest theme=ivy<CR>]]}
-
-        ,{mode=[[n]],
-        key=[[<leader>,]],
-        trigger=[[:Telescope buffers theme=ivy<CR>]]}
-
-        ,{mode=[[n]],
-        key=[[<leader>.]],
-        trigger=[[:Telescope find_files theme=ivy<CR>]]}
-
-        ,{mode=[[n]],
-        key=[[<leader>ftc]],
-        trigger=[[:Telescope commands theme=ivy<CR>]]}
-
-        ,{mode=[[n]],
-        key=[[<leader>gs]],
-        trigger=[[:Telescope lsp_document_symbols theme=ivy<CR>]]}
-
-        ,{mode=[[n]],
-        key=[[<leader>gws]],
-        trigger=[[:Telescope lsp_workspace_symbols theme=ivy<CR>]]}
-
-        ,{mode=[[n]],
-        key=[[<leader>æ]],
-        trigger=[[:Telescope live_grep theme=ivy<CR>]]}
-
-        ,{mode=[[n]],
-        key=[[<leader>æb]],
-        trigger=[[:Telescope live_grep theme=ivy search_dirs=%:p<CR>]]}
-
-        ,{mode=[[n]],
-        key=[[<leader>m]],
-        trigger=[[:Telescope workspaces previewer=false theme=ivy<CR>]]}
-
-        ,{mode=[[n]],
-        key=[[<leader>n]],
-        trigger=[[:Telescope telescope-tabs list_tabs theme=ivy<CR>]]}
-
-        ,{mode=[[n]],
-        key=[[<leader>gib]],
-        trigger=[[:Telescope git_branches previewer=false theme=ivy<CR>]]}
-
-        ,{mode=[[n]],
-        key=[[<leader>gic]],
-        trigger=[[:Telescope git_commits previewer=false theme=ivy<CR>]]}
-
-        ,{mode=[[n]],
-        key=[[<leader>gis]],
-        trigger=[[:Telescope git_status  previewer=false theme=ivy<CR>]]}
-
-        ,{mode=[[n]],
-        key=[[<leader>ge]],
-        trigger=[[:Telescope diagnostics previewer=false theme=ivy<CR>]]}
-
-        ,{mode=[[n]],
-        key=[[<leader>fb]],
-        trigger=[[:Telescope current_buffer_fuzzy_find theme=ivy<CR>]]}
-
-        ,{mode=[[n]],
-        key=[[<leader>goc]],
-        trigger=[[:Telescope lsp_outgoing_calls theme=ivy<CR>]]}
-
-        ,{mode=[[n]],
-        key=[[<leader>gr]],
-        trigger=[[:Telescope lsp_references theme=ivy<CR>]]}
-
-        ,{mode=[[n]],
-        key=[[<leader>gc]],
-        trigger=[[:Telescope lsp_incoming_calls theme=ivy<CR>]]}
-
-        ,{mode=[[n]],
-        key=[[<leader>gd]],
-        trigger=[[:Telescope lsp_definitions theme=ivy<CR>]]}
-
-        ,{mode=[[n]],
-        key=[[<leader>gi]],
-        trigger=[[:Telescope lsp_implementations theme=ivy<CR>]]}
-
-        ,{mode=[[n]],
-        key=[[<leader>gD]],
-        trigger=[[:Telescope lsp_type_definitions theme=ivy<CR>]]}
-
-        ,{mode=[[n]],
-        key=[[<leader>dcm]],
-        trigger=[[:Telescope dap commands theme=ivy<CR>]] }
-
-        ,{mode=[[n]],
-        key=[[<leader>dc]],
-        trigger=[[:Telescope dap configurations theme=ivy<CR>]]}
-
-        ,{mode=[[n]],
-        key=[[<leader>db]],
-        trigger=[[:Telescope dap list_breakpoints theme=ivy<CR>]]}
-
-        ,{mode=[[n]],
-        key=[[<leader>dv]],
-        trigger=[[:Telescope dap variables theme=ivy<CR>]]}
-
-        ,{mode=[[n]],
-        key=[[<leader>dg]],
-        trigger=[[:Telescope dap frames theme=ivy<CR>]]}
-
-        ,{mode=[[n]],
-        key=[[<leader>tst]],
-        trigger=[[:Telescope treesitter theme=ivy<CR>]]}
-
-        ,{mode=[[n]],
-        key=[[<leader>tsp]],
-        trigger=[[:TSPlaygroundToggle<CR>]]}
-
-        ,{mode=[[n]],
-        key=[[<leader>tsh]],
-        trigger=[[:TSHighlightCapturesUnderCursor<CR>]]}
-
-        ,{mode=[[n]],
-        key=[[<leader>tsc]],
-        trigger=[[:TSNodeUnderCursor<CR>]]}
-        },
-        }
+        ,{[[<Esc>]],       [[CTRL-\ CTRL-n]],  "t"}
+        ,{[[<leader>q]],   [[CTRL-\ CTRL-n]],  "t"}
+        ,{[[<leader>wq]],  [[CTRL-\  | :bd!]], "t"}
+        ,{[[<leader>wl]],  [[CTRL-\ CTRL-n  | :tabprevious<CR>]], "t"}
+        ,{[[<leader>wh]],  [[CTRL-\ CTRL-n  | :tabnext<CR>]], "t"}
     },
     ignore_patterns = {
         wildignore = {'*.o', '*.a', '__pycache__',"node_modules","node%_modules/.*",".git/.*","*cache*","build*/"},
@@ -288,6 +114,5 @@ local vars = {
         lua = {[[.git/]],[[build/]]},
     }
 }
-
 
 return vars

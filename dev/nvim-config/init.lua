@@ -21,5 +21,6 @@ Ts:setup()
 
 require("config.tele")
 require("config.dap")
+
 require("config.neovim")
 require("config.autocmd")
