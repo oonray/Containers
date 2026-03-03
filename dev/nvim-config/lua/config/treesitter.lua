@@ -45,6 +45,9 @@ function libs:setup()
         indent = { enable = true },
     }
 
+    vim.opt.foldmethod = "expr"
+    vim.opt.foldexpr   = "nvim_treesitter#foldexpr()"
+
     vim.api.nvim_create_user_command("TSInstallAll", function()
       require("nvim-treesitter").install(self.names)
     end, {})
