@@ -23,4 +23,5 @@ require("config.tele")
 require("config.dap")
 
 require("config.neovim")
-require("config.autocmd")
+AU = require("config.autocmd")
+AU:setup()

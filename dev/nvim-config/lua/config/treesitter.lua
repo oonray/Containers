@@ -20,18 +20,6 @@ function libs:filetype(ev)
       return er;
 end
 
-function libs:start(ev)
-    local err,_ = pcall(function()
-         vim.treesitter.start(ev.buf)
-    end)
-    if not err then vim.bo[ev.buf].syntax = 'on' end
-    return err
-end
-
-function libs:stop(ev)
-    vim.treesitter.stop(ev.buf)
-end
-
 function libs:setup()
     require ('nvim-treesitter').setup {
         ensure_installed = self.names,
@@ -45,64 +33,65 @@ function libs:setup()
         indent = { enable = true },
     }
 
-    vim.opt.foldmethod = "expr"
-    vim.opt.foldexpr   = "nvim_treesitter#foldexpr()"
+    vim.o.foldexpr   = "v:lua.vim.treesitter.foldexpr()"
+    vim.o.foldmethod = "expr"
+    vim.o.foldlevel  = 99
+    vim.o.foldlevelstart  = 99
 
     vim.api.nvim_create_user_command("TSInstallAll", function()
       require("nvim-treesitter").install(self.names)
     end, {})
 
+    vim.api.nvim_create_user_command("TSstart", function()
+             pcall(vim.treesitter.start)
+    end, {})
+
+    vim.api.nvim_create_user_command("TSstop", function()
+             pcall(vim.treesitter.stop)
+    end, {})
+
     vim.api.nvim_create_autocmd(
-       {'BufEnter','BufRead','BufNew'}, {
-           callback = function(ev)
-                if not self:filetype(ev) then
-                    self:start(ev)
-                end
-           end
+       {'FileType' },
+       {
+        group = vim.api.nvim_create_augroup("TS",
+            { clear = true }),
+        callback = function()
+          pcall(vim.treesitter.start)
+        end
        }
     )
 
     vim.api.nvim_create_autocmd(
-       {'FileType' }, {
-           pattern=[[*]],
-           callback = function(ev)
-               self:start(ev)
-           end
-       }
-    )
-
-    vim.api.nvim_create_autocmd(
-        {'BufUnload','BufDelete'}, {
-        callback = function(ev)
-               self:stop(ev)
+        {'BufDelete'},
+        {
+        group = vim.api.nvim_create_augroup("TS",
+            { clear = true }),
+        callback = function()
+             pcall(vim.treesitter.stop)
         end
         }
     )
-    vim.api.nvim_create_autocmd(
-    { "UIEnter", "BufReadPost", "BufNewFile" }, {
-      group = vim.api.nvim_create_augroup("NvFilePost", { clear = true }),
-      callback = function(args)
-        local file = vim.api.nvim_buf_get_name(args.buf)
-        local buftype = vim.api.nvim_get_option_value("buftype", { buf = args.buf })
 
-        if not vim.g.ui_entered and args.event == "UIEnter" then
-          vim.g.ui_entered = true
-        end
+   vim.api.nvim_create_autocmd(
+      {
+         'BufNew',
+         'BufNewFile',
+         'BufEnter',
+         'BufReadPost'
+      },
+      {
+      group = vim.api.nvim_create_augroup("TS",
+          { clear = true }),
+      callback = function(ev)
+            if ev.file == "" then return end
+            if vim.bo[ev.buf].buftype == "nofile" then return end
+            if not vim.g.ui_entered then return end
 
-        if file ~= "" and buftype ~= "nofile" and vim.g.ui_entered then
-          vim.api.nvim_exec_autocmds("User", { pattern = "FilePost", modeline = false })
-          vim.api.nvim_del_augroup_by_name "NvFilePost"
-
-          vim.schedule(function()
-            vim.api.nvim_exec_autocmds("FileType", {})
-
-            if vim.g.editorconfig then
-              require("editorconfig").config(args.buf)
-            end
-          end)
-        end
-      end,
-    })
+            vim.api.nvim_exec_autocmds('User',{})
+            pcall(vim.treesitter.start)
+      end
+      }
+    )
 end
 
 return libs
