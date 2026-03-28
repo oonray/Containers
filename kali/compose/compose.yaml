@@ -1,0 +1,22 @@
+name: kali
+services:
+  kali:
+    image: oonray/kali:latest
+    entrypoint:
+      - zsh
+      - '-c'
+      - 'sleep infinity'
+    ports:
+      - "8800:8000"
+    restart: unless-stopped
+    cap_add:
+      - NET_ADMIN
+    volumes:
+      - type: volume
+        source: docker
+        target: /home/kali/htb
+        volume:
+          subpath: htb
+      - type: volume
+        source: git
+        target: /home/kali/git

@@ -40,9 +40,9 @@ RUN curl -Lo /tmp/bat.deb \
 
 SHELL ["/usr/bin/zsh","-c"]
 
-COPY ../tmux/tmux.conf /opt/conf
-COPY ../tmux/zshrc /opt/conf
-COPY ../tmux/dircolors /opt/conf
+COPY ../user/tmux.conf /opt/conf
+COPY ../user/zshrc /opt/conf
+COPY ../user/dircolors /opt/conf
 
 FROM install AS installgo
 ENV GOROOT="/usr/local/go"

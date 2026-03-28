@@ -1,0 +1,21 @@
+name: vpn
+
+services:
+  vpn:
+    image: oonray/vpn:latest
+    ports:
+      - "8800:8000"
+    restart: unless-stopped
+    command:
+      - '-v'
+    volumes:
+      - type: volume
+        source: docker
+        target: /home/$USR/htb
+        volume:
+          subpath: htb
+      - type: volume
+        source: docker
+        target: /home/$USR/git
+        volume:
+          subpath: git

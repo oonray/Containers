@@ -1,22 +1,10 @@
 name: ollama
 
 services:
-  openwebui:
-    image: ghcr.io/open-webui/open-webui:main-slim
-    ports:
-      - "8288:3000"
-    volumes:
-      - type: volume
-        source: ai_path
-        target: /app/backend/data
-        volume:
-          subpath: openwebui
-    environment:
-        OLLAMA_BASE_URL: https://ollama:11434
   ollama:
     image: ollama/ollama:latest
-      #ports:
-      #- "11434:11434"
+    ports:
+      - "11434:11434"
     restart: unless-stopped
     volumes:
       - type: volume
@@ -31,3 +19,16 @@ services:
             - driver: nvidia
               count: 1
               capabilities: [gpu]
+  openwebui:
+    image: ghcr.io/open-webui/open-webui:main
+    restart: always
+    environment:
+      - OLLAMA_BASE_URL=http://ollama:11434
+    ports:
+      - "8288:8080"
+    volumes:
+      - type: volume
+        source: ai_path
+        target: /app/backend/data
+        volume:
+          subpath: openwebui

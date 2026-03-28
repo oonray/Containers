@@ -42,7 +42,8 @@ COPY --chown=${USR}:${USR} \
 COPY --chown=${USR}:${USR} entrypoint.sh $ENTRY
 RUN echo "source /home/${USR}/comfy/bin/activate" > ~/.zshrc \
 && source /home/${USR}/comfy/bin/activate \
-&& pip install gguf opencv-python platformdirs \
+&& pip install gguf opencv-python platformdirs piexif natsort\
+&& chown -R ${USR}:${USR} /home/${USR}/ComfyUI \
 && chmod +x ${ENTRY} \
 && sudo usermod -u ${PUID} -g ${PGID} ${USR}
 

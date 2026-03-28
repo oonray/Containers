@@ -58,6 +58,11 @@ services:
         target: /home/$USR/ComfyUI/models/diffusion_models
         volume:
           subpath: models
+      - type: volume
+        source: ai_path
+        target: /home/$USR/ComfyUI/models/clip_vision
+        volume:
+          subpath: vision
     deploy:
       resources:
         reservations:

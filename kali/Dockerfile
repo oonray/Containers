@@ -37,6 +37,9 @@ thc-pptp-bruter traceroute udptunnel unix-privesc-check upx-ucl vboot-kernel-uti
 vboot-utils neovim vlan voiphopper vpnc wce webshells wfuzz whatweb whois windows-binaries \
 wpscan
 
-USER $USR
+COPY ../base/user/tmux.conf /opt/conf
+COPY ../base/user/zshrc /opt/conf
+COPY ../base/user/dircolors /opt/conf
 
+USER $USR
 ENTRYPOINT ["/opt/entrypoint.sh"]

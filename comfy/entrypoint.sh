@@ -10,6 +10,4 @@ cd ./ComfyUI \
         --force-fp16 \
         --preview-method none \
         --cache-classic \
-        --normalvram \
-        --force-non-blocking \
-        --disable-smart-memory
+        --normalvram 

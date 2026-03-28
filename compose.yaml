@@ -19,10 +19,19 @@ volumes:
       type: none
       device: ${D_GIT}
       o: bind, rw, uid=999,gid=999
+  docker:
+    driver: local
+    driver_opts:
+      type: none
+      device: ${D_DKR}
+      o: bind, rw, uid=999,gid=999
 
 include:
   - path:
-    - ${D_DKR:-.}/dev/compose/compose.yaml
+    - ${D_DKR:-.}/Containers/dev/compose/compose.yaml
+   #- path:
+    #- ${D_DKR:-.}/Containers/comfy/compose/compose.yaml
   - path:
-    - ${D_DKR:-.}/comfy/compose/compose.yaml
-    - ${D_DKR:-.}/ollama/compose/compose.yaml
+    - ${D_DKR:-.}/Containers/ollama/compose/compose.yaml
+  - path:
+    - ${D_DKR:-.}/Containers/kali/compose/compose.yaml
