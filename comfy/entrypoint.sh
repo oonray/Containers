@@ -8,6 +8,10 @@ cd ./ComfyUI \
         --port 8080 \
         --disable-auto-launch \
         --force-fp16 \
+        --fp16-vae \
+        --fast \
         --preview-method none \
         --cache-classic \
-        --normalvram 
+        --lowvram \
+        --reserve-vram 0.5 \
+        $*
