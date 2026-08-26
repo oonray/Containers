@@ -15,6 +15,20 @@ function auto:bufname(ev)
 end
 
 function auto:setup()
+   vim.api.nvim_create_autocmd(
+      {
+         'BufNew',
+         'BufNewFile',
+         'BufEnter',
+         'BufRead',
+      },
+      {
+      pattern = {"*.go"},
+      callback = function(ev)
+        vim.opt.expandtab = true
+      end
+      }
+   )
 --   vim.api.nvim_create_autocmd(
 --      {
 --         'UIEnter',

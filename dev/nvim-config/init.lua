@@ -11,19 +11,19 @@ end
 Lazy = require("config.install")
 Lazy:setup()
 
+Nvm = require("config.neovim")
+Nvm:setup()
+
 Works = require("config.works")
 Works:load()
 
 require("config.sess")
+require("config.dap")
+require("config.tele")
 
 Ts = require("config.treesitter")
 Ts:setup()
 
-require("config.tele")
-require("config.dap")
-
-Nvm = require("config.neovim")
-Nvm:setup()
 
 AU = require("config.autocmd")
 AU:setup()
