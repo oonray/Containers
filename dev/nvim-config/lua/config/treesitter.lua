@@ -34,7 +34,7 @@ function libs:setup()
     }
 
     vim.o.foldexpr   = "v:lua.vim.treesitter.foldexpr()"
-    vim.o.foldmethod = "expr"
+    vim.o.foldmethod = "manual"
     vim.o.foldlevel  = 99
     vim.o.foldlevelstart  = 99
 
