@@ -22,6 +22,8 @@ Ts:setup()
 require("config.tele")
 require("config.dap")
 
-require("config.neovim")
+Nvm = require("config.neovim")
+Nvm:setup()
+
 AU = require("config.autocmd")
 AU:setup()

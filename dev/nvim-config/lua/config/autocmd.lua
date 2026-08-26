@@ -1,5 +1,4 @@
 local auto = {
-
 }
 
 function auto:ui_load(ev)
@@ -16,36 +15,37 @@ function auto:bufname(ev)
 end
 
 function auto:setup()
-
-   vim.api.nvim_create_autocmd(
-      {
-         'UIEnter',
-         'BufNew',
-         'BufNewFile',
-         'BufEnter',
-         'BufRead',
-         'BufWinEnter'
-      },
-      {
-      group = vim.api.nvim_create_augroup("CDev",{ clear = true }),
-      pattern = {"*.c","*.h"},
-      callback = function(ev)
-          vim.bo[ev.buf].filetype = 'c'
-      end
-      }
-   )
-   vim.api.nvim_create_autocmd({ 'UIEnter' },
-      {
-        group = vim.api.nvim_create_augroup("CUI",
-          { clear = true }),
-        callback = function()
-            if not vim.g.ui_entered
-            then
-                vim.g.ui_entered=true
-            end
-        end
-      }
-    )
+--   vim.api.nvim_create_autocmd(
+--      {
+--         'UIEnter',
+--         'BufNew',
+--         'BufNewFile',
+--         'BufEnter',
+--         'BufRead',
+--         'BufWinEnter'
+--      },
+--      {
+--      group = vim.api.nvim_create_augroup("CDev",{ clear = true }),
+--      pattern = {"*.c","*.h"},
+--      callback = function(ev)
+--         vim.bo[ev.buf].filetype          = 'c'
+--      end
+--      }
+--   )
+--
+--   vim.api.nvim_create_autocmd({ 'UIEnter' },
+--      {
+--        group = vim.api.nvim_create_augroup("CUI",
+--          { clear = true }),
+--        callback = function()
+--            if not vim.g.ui_entered
+--            then
+--                vim.g.ui_entered=true
+--            end
+--        end
+--      }
+--    )
 end
 
 return auto
+
