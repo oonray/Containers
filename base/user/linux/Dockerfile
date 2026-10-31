@@ -5,7 +5,7 @@ ARG USR=oonray \
     GH_USR=oonray \
     PUID=999 \
     PGID=999 \
-    VERSION="1.0.3"\
+    VERSION="1.0.4"\
     ARCH=amd64
 
 ARG B_VER=0.25.0
