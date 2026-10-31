@@ -56,8 +56,7 @@ COPY --chown $USR:$USR tmux.conf .tmux.conf
 COPY --chown $USR:$USR zshrc .zshrc
 COPY --chown $USR:$USR dircolors .config/dircolors
 
-RUN git clone \
-https://github.com/ohmyzsh/ohmyzsh.git \
-.oh-my-zsh \
+RUN git clone https://github.com/ohmyzsh/ohmyzsh.git .oh-my-zsh \
+&& git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm \
 && ssh-import-id gh:$GH_USR
 
