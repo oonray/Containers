@@ -11,7 +11,7 @@ jobs:
     uses: oonray/Containers/.github/workflows/container.yml@main
     with:
       image: linux
-      tag: v1.0.0
+      tag: v1.0.1
       base: debian:latest
       context: base/user/linux
     secrets:
