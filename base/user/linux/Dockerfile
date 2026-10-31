@@ -32,7 +32,7 @@ RUN apt-get update \
     openssh-client ssh-import-id \
     tmux zsh git jq yq curl \
     sudo zip 7zip tar xxd golang \
-    netcat-traditional net-tools dns-utils \
+    netcat-traditional net-tools \
     python3 python3-pip python3-venv \
     cryptsetup cryptsetup-initramfs \
     cryptsetup-nuke-password 
