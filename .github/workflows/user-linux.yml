@@ -1,5 +1,4 @@
 name: Docker image user linux
-      - 'base/user/linux/**'
 
 on:
   push:
