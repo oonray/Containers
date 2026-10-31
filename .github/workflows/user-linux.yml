@@ -5,13 +5,14 @@ on:
     paths:
       - 'base/user/linux/*'
       - 'base/user/linux/**'
+      - '.github/worflows/user-linux.yml'
 
 jobs:
   build-user-debian:
     uses: oonray/Containers/.github/workflows/container.yml@main
     with:
       image: linux
-      tag: v1.0.1
+      tag: v1.0.2
       base: debian:latest
       context: base/user/linux
     secrets:
