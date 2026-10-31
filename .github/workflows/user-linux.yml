@@ -6,6 +6,7 @@ on:
       - 'base/user/linux/*'
       - 'base/user/linux/**'
 
+jobs:
   build-user-debian:
     uses: oonray/Containers/.github/workflows/container.yml@main
     with:
