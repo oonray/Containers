@@ -1,0 +1,17 @@
+name: Docker image user linux
+
+on:
+  push:
+    paths:
+      - 'base/user/linux/*'
+      - 'base/user/linux/**'
+
+  build-user-debian:
+    uses: oonray/Containers/.github/workflows/container.yml@main
+    with:
+      image: user linux
+      base: debian:latest
+      context: base/user/linux
+    secrets:
+      username: ${{ secrets.DOCKERHUB_USERNAME }}
+      password: ${{ secrets.DOCKERHUB_TOKEN }}

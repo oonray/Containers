@@ -20,16 +20,6 @@ jobs:
       username: ${{ secrets.DOCKERHUB_USERNAME }}
       password: ${{ secrets.DOCKERHUB_TOKEN }}
 
-  build-user-debian:
-    uses: oonray/Containers/.github/workflows/container.yml@main
-    with:
-      image: user-debian
-      tag: v1.0.0
-      base: oonray/base-debian:latest
-      context: base/user
-    secrets:
-      username: ${{ secrets.DOCKERHUB_USERNAME }}
-      password: ${{ secrets.DOCKERHUB_TOKEN }}
 
   build-user-evilginx:
     uses: oonray/Containers/.github/workflows/container.yml@main

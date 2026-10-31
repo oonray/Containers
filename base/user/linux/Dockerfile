@@ -8,6 +8,8 @@ ARG USR=oonray \
     VERSION="1.0.3"\
     ARCH=amd64
 
+ARG B_VER=0.25.0
+
 ENV VERSION="$VERSION"\
     GH_USR=${GH_USR} USR=${USR} \
     GOPATH="/home/$USR/.go" \
@@ -16,19 +18,43 @@ ENV VERSION="$VERSION"\
     C_USR_CONF="/home/$USR/.config/dircolors" \
     PGID=${PGID} PUID=${PUID} ARCH=${ARCH}
 
+
 LABEL version="${VERSION}" \
       org.opencontainers.image.version="${VERSION}" \
       org.opencontainers.image.title="${ARCH}-user" 
 
+SHELL ["/usr/bin/zsh","-c"]
+
+USER root
+
+# APT
+RUN apt-get update \
+    && apt-get install -y dumb-init \
+    openssh-client ssh-import-id \
+    tmux zsh git jq yq curl unrar \
+    sudo zip 7zip tar xxd golang\
+    netcat-traditional net-tools dns-utils \
+    python3 python3-pip python3-venv \
+    cryptsetup cryptsetup-initramfs \
+    cryptsetup-nuke-password 
+
+# USER
 RUN useradd -r -m -u $PUID -s /usr/bin/zsh $USR \
     && echo "$USR ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers.d/$USR
 
-USER ${USR}
-WORKDIR "/home/$USR/"
+# BAT
+RUN curl -Lo /tmp/bat.deb \
+    https://github.com/sharkdp/bat/releases/download/v${B_VER}/bat_${B_VER}_${ARC}.deb \
+    && apt install -y /opt/deb/bat.deb
 
-COPY tmux.conf ${T_USR_CONF}
-COPY zshrc ${Z_USR_CONF}
-COPY dircolors ${C_USR_CONF}
+USER ${USR}
+WORKDIR ~
+
+RUN mkdir -p .config
+
+COPY --chown $USR:$USR tmux.conf .tmux.conf
+COPY --chown $USR:$USR zshrc .zshrc
+COPY --chown $USR:$USR dircolors .config/dircolors
 
 RUN git clone \
 https://github.com/ohmyzsh/ohmyzsh.git \
