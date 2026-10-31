@@ -19,9 +19,9 @@ ENV VERSION="$VERSION"\
     PGID=${PGID} PUID=${PUID} ARCH=${ARCH}
 
 
-LABEL version="${VERSION}" \
-      org.opencontainers.image.version="${VERSION}" \
-      org.opencontainers.image.title="${ARCH}-user" 
+LABEL version=${VERSION} \
+      org.opencontainers.image.version=${VERSION} \
+      org.opencontainers.image.title=${ARCH}-user
 
 SHELL ["/usr/bin/zsh","-c"]
 
