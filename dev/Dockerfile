@@ -11,7 +11,7 @@ ARG GO_VERSION=latest \
 #
 # ZSH and shell
 #
-FROM oonray/user:neovim AS user
+FROM oonray/user:latest AS base
 
 ARG USR ARCH \
     PUID PGID \

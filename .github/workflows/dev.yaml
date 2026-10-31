@@ -3,17 +3,18 @@ name: Docker image Dev
 on:
   push:
     paths:
-      - 'base/dev/full/*'
-      - 'base/dev/full/**'
+      - 'dev/*'
+      - 'dev/**'
+      - '!dev/compose/**'
 
 jobs:
-  build-base-dev:
+  build-dev:
     uses: oonray/Containers/.github/workflows/container.yml@main
     with:
       image: dev
-      tag: base
-      base: oonray/user-debian:latest
-      context: base/dev/full
+      tag: v1.0.0
+      base: oonray/user:latest
+      context: dev
     secrets:
       username: ${{ secrets.DOCKERHUB_USERNAME }}
       password: ${{ secrets.DOCKERHUB_TOKEN }}

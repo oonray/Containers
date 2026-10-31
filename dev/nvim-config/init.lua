@@ -1,3 +1,5 @@
+vim.loader.enable()
+
 System = require("config.system")
 System:checkOS()
 
