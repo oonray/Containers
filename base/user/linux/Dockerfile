@@ -30,7 +30,7 @@ USER root
 RUN apt-get update \
     && apt-get install -y dumb-init \
     openssh-client ssh-import-id \
-    tmux zsh git jq yq curl unrar \
+    tmux zsh git jq yq curl \
     sudo zip 7zip tar xxd golang \
     netcat-traditional net-tools dns-utils \
     python3 python3-pip python3-venv \
