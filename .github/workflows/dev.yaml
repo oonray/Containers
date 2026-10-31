@@ -6,7 +6,6 @@ on:
       - 'dev/*'
       - 'dev/**'
       - '!dev/compose/**'
-
 jobs:
   build-dev:
     uses: oonray/Containers/.github/workflows/container.yml@main

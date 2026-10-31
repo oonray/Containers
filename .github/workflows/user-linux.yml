@@ -9,7 +9,8 @@ on:
   build-user-debian:
     uses: oonray/Containers/.github/workflows/container.yml@main
     with:
-      image: debian:latest
+      image: linux
+      tag: v1.0.0
       base: debian:latest
       context: base/user/linux
     secrets:
