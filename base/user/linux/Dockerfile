@@ -46,7 +46,7 @@ SHELL ["/usr/bin/zsh","-c"]
 # BAT
 RUN curl -Lo /tmp/bat.deb \
     https://github.com/sharkdp/bat/releases/download/v${B_VER}/bat_${B_VER}_${ARCH}.deb \
-    && dpkg install /tmp/bat.deb \
+    && dpkg -i /tmp/bat.deb \
     && rm -rf /tmp/bat.deb
 
 USER ${USR}
