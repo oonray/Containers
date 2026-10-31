@@ -23,7 +23,6 @@ LABEL version=${VERSION} \
       org.opencontainers.image.version=${VERSION} \
       org.opencontainers.image.title=${ARCH}-user
 
-SHELL ["/usr/bin/zsh","-c"]
 
 USER root
 
@@ -41,6 +40,8 @@ RUN apt-get update \
 # USER
 RUN useradd -r -m -u $PUID -s /usr/bin/zsh $USR \
     && echo "$USR ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers.d/$USR
+
+SHELL ["/usr/bin/zsh","-c"]
 
 # BAT
 RUN curl -Lo /tmp/bat.deb \
